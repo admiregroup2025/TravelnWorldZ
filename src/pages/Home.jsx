@@ -1,10 +1,10 @@
 import React from "react";
 import VideoBackground from "../components/VideoBackground";
 import BannerAds from "../components/homeComponent/BannerAds";
-import HomeContactUs from "../components/homeComponent/homeContactUs";
-import Testimonials from "../components/homeComponent/Testimonials";
-import GetAQuote from "../forms/GetAQuote";
-import TrendingDestination from "../components/homeComponent/TrendingDestination";
+import HomeContactUs from "../components/homeComponent/homeContactUs.jsx";
+import Testimonials from "../components/homeComponent/Testimonials..jsx";
+import GetAQuote from "../forms/GetAQuote.jsx";
+import TrendingDestination from "../components/homeComponent/TrendingDestination.jsx";
 
 
 

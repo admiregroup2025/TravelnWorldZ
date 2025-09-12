@@ -1,6 +1,6 @@
 import React from 'react'
-import HeroSection from '../components/contactUs/HeroSection'
-import ContactForm from '../forms/ContactForm'
+import HeroSection from '../components/contactUs/HeroSection.jsx'
+import ContactForm from '../forms/ContactForm.jsx'
 
 const ContactUs = () => {
   return (
