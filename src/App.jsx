@@ -1,18 +1,18 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
-import NavBar from './components/NavBar';
-import Footer from './components/Footer';
-import Home from './pages/Home';
-import AboutUs from './pages/AboutUs';
-import Packages from './pages/Packages';
-import Destination from './pages/Destination';
-import B2bLogin from './pages/B2bLogin';
-import Blogs from './pages/Blogs';
-import Testimonials from './pages/Testimonials';
-import ContactUs from './pages/ContactUs';
-import TrendingDestination from './components/homeComponent/TrendingDestination';
-import TrendingDestinationCards from './components/homeComponent/TrendingDestinationCards';
-import AgentDetailPage from './pages/AgentDetailPage';
+import NavBar from './components/NavBar.jsx';
+import Footer from './components/Footer.jsx';
+import Home from './pages/Home.jsx';
+import AboutUs from './pages/AboutUs.jsx';
+import Packages from './pages/Packages.jsx';
+import Destination from './pages/Destination.jsx';
+import B2bLogin from './pages/B2bLogin.jsx';
+import Blogs from './pages/Blogs.jsx';
+import Testimonials from './pages/Testimonials.jsx';
+import ContactUs from './pages/ContactUs.jsx';
+import TrendingDestination from './components/homeComponent/TrendingDestination.jsx';
+import TrendingDestinationCards from './components/homeComponent/TrendingDestinationCards.jsx';
+import AgentDetailPage from './pages/AgentDetailPage.jsx';
 
 const App = () => {
   return (
