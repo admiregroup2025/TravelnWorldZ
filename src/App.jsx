@@ -6,7 +6,7 @@ import Home from './pages/Home.jsx';
 import AboutUs from './pages/AboutUs.jsx';
 import Packages from './pages/Packages.jsx';
 import Destination from './pages/Destination.jsx';
-import B2bLogin from './pages/B2bLogin.jsx';
+import B2BLogin from './pages/B2BLogin.jsx';
 import Blogs from './pages/Blogs.jsx';
 import Testimonials from './pages/Testimonials.jsx';
 import ContactUs from './pages/ContactUs.jsx';
@@ -24,7 +24,7 @@ const App = () => {
         <Route path='/aboutUs' element={<AboutUs />} />
         <Route path='/packages' element={<Packages />} />
         <Route path='/destination' element={<Destination />} />
-        <Route path='/b2blogin' element={<B2bLogin />} />
+        <Route path='/b2blogin' element={<B2BLogin />} />
         <Route path='/blogs' element={<Blogs />} />
         <Route path='/testimonials' element={<Testimonials />} />
         <Route path='/contactUs' element={<ContactUs />} />
