@@ -2,7 +2,7 @@ import React from "react";
 import VideoBackground from "../components/VideoBackground";
 import BannerAds from "../components/homeComponent/BannerAds";
 import HomeContactUs from "../components/homeComponent/HomeContactUs.jsx";
-import Testimonials from "../components/homeComponent/Testimonials..jsx";
+import Testimonials from "../components/homeComponent/Testimonials.jsx";
 import GetAQuote from "../forms/GetAQuote.jsx";
 import TrendingDestination from "../components/homeComponent/TrendingDestination.jsx";
 
