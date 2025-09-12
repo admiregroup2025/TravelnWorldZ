@@ -1,41 +1,41 @@
 import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import logo from '../assets/images/logo1.jpg';
+import logo from '../assets/images/logo/logo.jpeg';
 
 const NavBar = () => {
   const [open, setOpen] = useState(false);
 
   const navLinkClass = ({ isActive }) =>
     isActive
-      ? 'text-blue-900 font-semibold border-b-2 border-red-600 pb-1'
-      : 'text-gray-700 hover:text-blue-900 transition block';
+      ? 'text-red-600 font-semibold border-b-2 border-red-600 pb-1'
+      : 'text-gray-700 hover:text-red-600 transition';
 
   return (
-    <nav className="bg-white border-b border-gray-200 shadow-sm sticky top-0 z-50">
+    <nav className="bg-white shadow-sm sticky top-0 z-50 border-b">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
 
-          {/* Logo */}
+          {/* Left: Logo */}
           <NavLink to="/" onClick={() => setOpen(false)} className="flex-shrink-0">
-            <img src={ logo } alt="TripToHoneymoon Logo" className="h-8" />
+            <img src={logo} alt="Logo" className="h-9" />
           </NavLink>
 
-          {/* Desktop Links */}
-          <div className="hidden md:flex space-x-6 items-center">
+          {/* Center: Nav Links */}
+          <div className="hidden md:flex space-x-6 items-center justify-center flex-1 ml-10">
             <NavLink to="/" className={navLinkClass}>Home</NavLink>
-            <NavLink to="/aboutUs" className={navLinkClass}>About Us</NavLink>
-            <NavLink to="/domestic" className={navLinkClass}>Domestic</NavLink>
-            <NavLink to="/international" className={navLinkClass}>International</NavLink>
+            <NavLink to="/aboutUs" className={navLinkClass}>About us</NavLink>
+            <NavLink to="/packages" className={navLinkClass}>Packages</NavLink>
+            <NavLink to="/destination" className={navLinkClass}>Destination</NavLink>
+            <NavLink to="/b2blogin" className={navLinkClass}>B2B login</NavLink>
             <NavLink to="/blogs" className={navLinkClass}>Blogs</NavLink>
-            <NavLink to="/contactUs" className={navLinkClass}>Contact</NavLink>
+            <NavLink to="/testimonials" className={navLinkClass}>Testimonials</NavLink>
           </div>
 
-          {/* Auth Buttons Desktop */}
-          <div className="hidden md:flex items-center space-x-4">
-            <NavLink to="/login" className="text-blue-900 underline text-sm font-semibold">Login</NavLink>
-            <NavLink to="/register">
-              <button className="bg-blue-900 text-white px-4 py-2 rounded text-sm font-semibold hover:bg-blue-800 transition focus:outline-none">
-                Register
+          {/* Right: Contact Us Button */}
+          <div className="hidden md:flex items-center">
+            <NavLink to="/contactUs">
+              <button className="bg-blue-900 text-white px-5 py-2 rounded-full text-sm font-medium hover:bg-blue-800 transition">
+                Contact Us
               </button>
             </NavLink>
           </div>
@@ -57,23 +57,21 @@ const NavBar = () => {
         </div>
       </div>
 
-      {/* Mobile Dropdown Menu */}
+      {/* Mobile Dropdown */}
       {open && (
-        <div className="md:hidden bg-white px-4 pt-4 pb-6 shadow-lg space-y-3">
+        <div className="md:hidden bg-white px-4 pt-4 pb-6 shadow space-y-3">
           <NavLink to="/" onClick={() => setOpen(false)} className={navLinkClass}>Home</NavLink>
-          <NavLink to="/aboutUs" onClick={() => setOpen(false)} className={navLinkClass}>About Us</NavLink>
-          <NavLink to="/domestic" onClick={() => setOpen(false)} className={navLinkClass}>Domestic</NavLink>
-          <NavLink to="/international" onClick={() => setOpen(false)} className={navLinkClass}>International</NavLink>
+          <NavLink to="/aboutUs" onClick={() => setOpen(false)} className={navLinkClass}>About us</NavLink>
+          <NavLink to="/packages" onClick={() => setOpen(false)} className={navLinkClass}>Packages</NavLink>
+          <NavLink to="/destination" onClick={() => setOpen(false)} className={navLinkClass}>Destination</NavLink>
+          <NavLink to="/b2b" onClick={() => setOpen(false)} className={navLinkClass}>B2B login</NavLink>
           <NavLink to="/blogs" onClick={() => setOpen(false)} className={navLinkClass}>Blogs</NavLink>
-          <NavLink to="/contactUs" onClick={() => setOpen(false)} className={navLinkClass}>Contact</NavLink>
+          <NavLink to="/testimonials" onClick={() => setOpen(false)} className={navLinkClass}>Testimonials</NavLink>
 
-          <div className="border-t pt-3">
-            <NavLink to="/login" onClick={() => setOpen(false)} className="block text-blue-900 underline font-semibold">
-              Login
-            </NavLink>
-            <NavLink to="/register" onClick={() => setOpen(false)}>
-              <button className="w-full bg-blue-900 text-white mt-2 px-4 py-2 rounded text-sm font-semibold hover:bg-blue-800 transition focus:outline-none">
-                Register
+          <div className="pt-3 border-t">
+            <NavLink to="/contactUs" onClick={() => setOpen(false)}>
+              <button className="w-full bg-blue-900 text-white mt-2 px-4 py-2 rounded-full text-sm font-medium hover:bg-blue-800 transition">
+                Contact Us
               </button>
             </NavLink>
           </div>

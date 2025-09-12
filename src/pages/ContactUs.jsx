@@ -1,25 +1,12 @@
 import React from 'react'
-import ContactHeroSection from '../components/contact/ContactHeroSection'
+import HeroSection from '../components/contactUs/HeroSection'
 import ContactForm from '../forms/ContactForm'
-import ContactInfo from '../components/contact/ContactInfo'
 
-
-function ContactUs() {
+const ContactUs = () => {
   return (
-    <div className="min-h-screen bg-gray-50">
-        <ContactHeroSection />
-        {/* Two-column section (Form + Info) */}
-        <section className="py-20 animate-fade-in-up">
-            <div className="max-w-7xl mx-auto px-4 grid lg:grid-cols-2 gap-16">
-                {/* Left: Contact Form */}
-                <ContactForm />
-        
-                {/* Right: Info */}
-                <div>
-                    <ContactInfo />           
-                </div>
-            </div>
-        </section>
+    <div>
+      <HeroSection />
+      <ContactForm />
     </div>
   )
 }

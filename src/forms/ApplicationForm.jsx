@@ -32,9 +32,8 @@ const ApplicationForm = ({ jobTitle, onClose }) => {
       linkedIn: '',
       portfolio: '',
       hearAboutUs: '',
-      
     },
-    validationSchema,
+    validationSchema, 
     onSubmit: async (values) => {
       setIsSubmitting(true);
       try {

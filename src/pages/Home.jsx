@@ -1,29 +1,36 @@
-import React, { useEffect } from 'react';
-import { motion, useAnimation } from 'framer-motion';
-import DestinationCard from '../components/DestinationCard';
-import TrendingPlaces from './Trendingplaces';
-import BestResortforHoneymoon from './BestResortforHoneymoon'
-import Hero from '../components/homeComponent/Hero';
-import Banner from '../components/Banner';
-import ServicesWeOffer from '../components/ServicesWeOffer';
+import React from "react";
+import VideoBackground from "../components/VideoBackground";
+import BannerAds from "../components/homeComponent/BannerAds";
+import HomeContactUs from "../components/homeComponent/homeContactUs";
+import Testimonials from "../components/homeComponent/Testimonials";
+import GetAQuote from "../forms/GetAQuote";
+import TrendingDestination from "../components/homeComponent/TrendingDestination";
+
 
 
 const Home = () => {
   return (
-    <div className="font-sans text-gray-800 overflow-hidden">
-    <Hero />
-    <DestinationCard />
-    <TrendingPlaces />
-    <Banner />
-    <ServicesWeOffer />  
-    <BestResortforHoneymoon />
-    
-      
+    <div>
+      {/* Hero Section with Video + Form   */}
+      <VideoBackground />
 
-    
-    
-    
-    </div>
+      {/*  Next section after Hero */}
+      <section className="p-10 text-center">
+        <h2 className="text-2xl font-bold"></h2>
+        <p className="mt-4 text-gray-600">
+          
+        </p>
+      </section>
+      <div> 
+        <BannerAds/>
+        <TrendingDestination />
+        
+        <HomeContactUs/>
+        <Testimonials />
+        <GetAQuote />
+      </div>
+    </div>   
   );
 };
-export default Home;
+
+export default Home; 
