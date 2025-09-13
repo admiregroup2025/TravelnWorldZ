@@ -15,7 +15,7 @@ export default function WhyUs() {
       {/* H1 Text */}
       <div className="absolute top-6 w-full flex justify-center px-4">
         <h1 className="text-white text-2xl md:text-3xl font-bold text-center drop-shadow-lg">
-          If you can’t find the tour you are looking for, just contact us tomorrow
+          If you can’t find the tour you are looking for, just contact us 
         </h1>
       </div>
 
