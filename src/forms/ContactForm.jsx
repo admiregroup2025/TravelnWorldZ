@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import Swal from 'sweetalert2';
+import { Mail, Phone, MapPin } from 'lucide-react';
+import { FaWhatsapp } from 'react-icons/fa';
 
 const ContactForm = () => {
   const [formData, setFormData] = useState({
@@ -15,15 +17,16 @@ const ContactForm = () => {
   const validate = () => {
     const newErrors = {};
 
-    // First Name validation
     if (!formData.firstName.trim()) {
       newErrors.firstName = 'First name is required';
     } else if (/\d/.test(formData.firstName)) {
       newErrors.firstName = 'First name cannot contain numbers';
     }
 
-   if (formData.lastName.trim() && /\d/.test(formData.lastName)) {
-      newErrors.lastName = 'Last name cannot contain numbers';
+    if (!formData.lastName.trim()) {
+      newErrors.lastName = 'Company name is required';
+    } else if (/\d/.test(formData.lastName)) {
+      newErrors.lastName = 'Company name cannot contain numbers';
     }
 
     if (!formData.phone.trim()) {
@@ -56,9 +59,9 @@ const ContactForm = () => {
     if (validate()) {
       Swal.fire({
         title: 'Success!',
-        text: 'Form submitted successfully.',
+        text: 'Your message has been sent.',
         icon: 'success',
-        confirmButtonColor: '#16a34a',
+        confirmButtonColor: '#2563eb',
       });
 
       setFormData({
@@ -79,102 +82,161 @@ const ContactForm = () => {
   };
 
   return (
-    <div className="max-w-2xl mx-auto mt-10 p-6 bg-white shadow-md rounded">
-      <h2 className="text-2xl text-pink-700 font-bold text-center mb-6">Contact Form</h2>
-      <form onSubmit={handleSubmit} className="space-y-6" noValidate>
+    <div className="min-h-screen bg-orange-50 flex items-center justify-center px-4 md:px-0 py-12">
+      <div className="max-w-3xl w-full grid md:grid-cols-5 shadow-2xl bg-yellow-200 rounded-xl overflow-hidden">
+        {/* Left Side - Form */}
+        <div className="md:col-span-3 p-6 bg-white">
+          <h2 className="text-3xl font-mono font-bold text-blue-800 mb-6 text-center uppercase">Contact Us</h2>
+          <form onSubmit={handleSubmit} className="space-y-4" noValidate>
+            {/* Name + Email */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-sm font-semibold text-orange-700 mb-1">
+                  Name <span className="text-red-500">*</span>
+                </label>
+                <input
+                  type="text"
+                  name="firstName"
+                  value={formData.firstName}
+                  onChange={handleChange}
+                  placeholder="Your first name"
+                  className={`w-full px-2 py-1 border rounded-md focus:outline-none focus:ring-2 ${
+                    errors.firstName ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 focus:ring-blue-500'
+                  }`}
+                />
+                {errors.firstName && <p className="text-red-600 text-xs mt-1">{errors.firstName}</p>}
+              </div>
+              <div>
+                <label className="block text-sm font-semibold text-orange-700 mb-1">
+                  Email <span className="text-red-500">*</span>
+                </label>
+                <input
+                  type="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  placeholder="Your email address"
+                  className={`w-full px-2 py-1 border rounded-md focus:outline-none focus:ring-2 ${
+                    errors.email ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 focus:ring-blue-500'
+                  }`}
+                />
+                {errors.email && <p className="text-red-600 text-xs mt-1">{errors.email}</p>}
+              </div>
+            </div>
 
-        {/* Row 1: First Name | Last Name */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div>
-            <label className="block text-sm font-medium text-pink-700 mb-2">First Name *</label>
-            <input
-              type="text"
-              name="firstName"
-              value={formData.firstName}
-              onChange={handleChange}
-              className={`w-full px-4 py-2 border outline-none ${
-                errors.firstName ? 'border-red-500' : 'border-gray-300'
-              } rounded-lg focus:ring-2 focus:ring-indigo-500`}
-              placeholder="First name"
-            />
-            {errors.firstName && <p className="text-red-500 text-sm mt-1">{errors.firstName}</p>}
-          </div>
+            {/* Phone + Company */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-sm font-semibold text-orange-700 mb-1">
+                  Phone <span className="text-red-500">*</span>
+                </label>
+                <input
+                  type="text"
+                  name="phone"
+                  value={formData.phone}
+                  onChange={handleChange}
+                  placeholder="10-digit phone number"
+                  className={`w-full px-2 py-1 border rounded-md focus:outline-none focus:ring-2 ${
+                    errors.phone ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 focus:ring-blue-500'
+                  }`}
+                />
+                {errors.phone && <p className="text-red-600 text-xs mt-1">{errors.phone}</p>}
+              </div>
+              <div>
+                <label className="block text-sm font-semibold text-orange-700 mb-1">
+                  Company <span className="text-red-500">*</span>
+                </label>
+                <input
+                  type="text"
+                  name="lastName"
+                  value={formData.lastName}
+                  onChange={handleChange}
+                  placeholder="Your company (optional)"
+                  className="w-full px-2 py-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+              </div>
+            </div>
 
-          <div>
-            <label className="block text-sm font-medium text-pink-700 mb-2">Last Name </label>
-            <input
-              type="text"
-              name="lastName"
-              value={formData.lastName}
-              onChange={handleChange}
-              className={`w-full px-4 py-2 border outline-none ${
-                errors.lastName ? 'border-red-500' : 'border-gray-300'
-              } rounded-lg focus:ring-2 focus:ring-indigo-500`}
-              placeholder="Last name"
-            />
-            {errors.lastName && <p className="text-red-500 text-sm mt-1">{errors.lastName}</p>}
-          </div>
+            {/* Message */}
+            <div>
+              <label className="block text-sm font-semibold text-orange-700 mb-1">
+                Message <span className="text-red-500">*</span>
+              </label>
+              <textarea
+                name="description"
+                rows="4"
+                value={formData.description}
+                onChange={handleChange}
+                placeholder="Write your message here..."
+                className={`w-full px-2 py-1 border rounded-md focus:outline-none focus:ring-2 resize-none ${
+                  errors.description ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 focus:ring-blue-500'
+                }`}
+              ></textarea>
+              {errors.description && <p className="text-red-600 text-xs mt-1">{errors.description}</p>}
+            </div>
+
+            {/* Centered Button */}
+            <button
+              type="submit"
+              className="mt-3 mx-auto block bg-blue-600 hover:bg-blue-700 transition text-white font-semibold py-2 px-6 rounded-md shadow-sm"
+            >
+              Send Message
+            </button>
+          </form>
         </div>
 
-        {/* Row 2: Phone | Email */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div>
-            <label className="block text-sm font-medium text-pink-700 mb-2">Phone *</label>
-            <input
-              type="text"
-              name="phone"
-              value={formData.phone}
-              onChange={handleChange}
-              className={`w-full px-4 py-2 border outline-none ${
-                errors.phone ? 'border-red-500' : 'border-gray-300'
-              } rounded-lg focus:ring-2 focus:ring-indigo-500`}
-              placeholder="10-digit phone number"
-            />
-            {errors.phone && <p className="text-red-500 text-sm mt-1">{errors.phone}</p>}
-          </div>
+        {/* Right Side - Contact Info */}
+        <div className="md:col-span-2 bg-blue-600 text-white p-8 flex flex-col justify-center space-y-6">
+          <h3 className="text-xl font-bold mb-3 border-b border-blue-500 pb-1">Contact Information</h3>
+          <p className="text-sm tracking-wide leading-relaxed">
+            Planning your next journey? Reach out and let’s make it unforgettable.
+          </p>
+          <ul className="space-y-4 text-sm">
+            <li>
+              <a
+                href="https://www.google.com/maps?q=34,+Sewak+Park,+Dwarka+More+Metro,+New+Delhi+110059"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-start gap-3 hover:underline"
+              >
+                <MapPin className="w-5 h-5 text-blue-300 mt-1" />
+                <span>
+                  34, Sewak Park (1st floor), Dwarka More Metro,<br />
+                  Near Pillar No-772, New Delhi, 110059
+                </span>
+              </a>
+            </li>
 
-          <div>
-            <label className="block text-sm font-medium text-pink-700 mb-2">Email *</label>
-            <input
-              type="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              className={`w-full px-4 py-2 border outline-none ${
-                errors.email ? 'border-red-500' : 'border-gray-300'
-              } rounded-lg focus:ring-2 focus:ring-indigo-500`}
-              placeholder="your@email.com"
-            />
-            {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email}</p>}
-          </div>
-        </div>
+            <li>
+              <a href="tel:01140612834" className="flex items-start gap-3 hover:underline">
+                <Phone className="w-5 h-5 text-blue-300 mt-1" />
+                <span>
+                  01140612834 <br /> 7290087051
+                </span>
+              </a>
+            </li>
 
-        {/* Row 3: Message*/}
-        <div>
-          <label className="block text-sm font-medium text-pink-700 mb-2">Message *</label>
-          <textarea
-            name="description"
-            rows={3}
-            value={formData.description}
-            onChange={handleChange}
-            className={`w-full px-4 py-2 border outline-none ${
-              errors.description ? 'border-red-500' : 'border-gray-300'
-            } rounded-lg focus:ring-2 focus:ring-indigo-500 resize-none`}
-            placeholder="Here write ...."
-          />
-          {errors.description && <p className="text-red-500 text-sm mt-1">{errors.description}</p>}
-        </div>
+            <li>
+              <a
+                href="https://wa.me/7290086552"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-start gap-3 hover:underline"
+              >
+                <FaWhatsapp className="w-5 h-5 text-green-400 mt-1" />
+                <span>7290086552</span>
+              </a>
+            </li>
 
-        {/* Submit Button */}
-        <div className='flex justify-center'>
-          <button
-            type="submit"
-            className="w-1/2 bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2 px-4 rounded-lg transition-colors"
-          >
-            Submit
-          </button>
+            <li>
+              <a href="mailto:info@travelnworld.com" className="flex items-start gap-3 hover:underline">
+                <Mail className="w-5 h-5 text-blue-300 mt-1" />
+                <span>info@travelnworld.com</span>
+              </a>
+            </li>
+          </ul>
         </div>
-      </form>
+      </div>
     </div>
   );
 };
