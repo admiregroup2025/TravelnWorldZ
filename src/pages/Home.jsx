@@ -5,6 +5,7 @@ import HomeContactUs from "../components/homeComponent/HomeContactUs.jsx";
 import Testimonials from "../components/homeComponent/Testimonials.jsx";
 import GetAQuote from "../forms/GetAQuote.jsx";
 import TrendingDestination from "../components/homeComponent/TrendingDestination.jsx";
+import Hero from "../components/homeComponent/Hero.jsx";
 
 
 
@@ -12,7 +13,7 @@ const Home = () => {
   return (
     <div>
       {/* Hero Section with Video + Form   */}
-      <VideoBackground />
+       <Hero/>
 
       {/*  Next section after Hero */}
       <section className="p-10 text-center">

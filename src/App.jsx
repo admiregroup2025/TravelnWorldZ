@@ -13,6 +13,8 @@ import ContactUs from './pages/ContactUs.jsx';
 import TrendingDestination from './components/homeComponent/TrendingDestination.jsx';
 import TrendingDestinationCards from './components/homeComponent/TrendingDestinationCards.jsx';
 import AgentDetailPage from './pages/AgentDetailPage.jsx';
+import BlogDetails from './pages/BlogDetails.jsx';
+import EnquiryForm from './forms/EnquiryForm.jsx';
 
 const App = () => {
   return (
@@ -26,11 +28,14 @@ const App = () => {
         <Route path='/destination' element={<Destination />} />
         <Route path='/b2blogin' element={<B2BLogin />} />
         <Route path='/blogs' element={<Blogs />} />
+       
+        <Route path='/blogs/:id' element={<BlogDetails />} />
         <Route path='/testimonials' element={<Testimonials />} />
         <Route path='/contactUs' element={<ContactUs />} />
         <Route path='/trending' element={<TrendingDestination/>} />
         <Route path='/trending/:destinationId' element={<TrendingDestinationCards />} />
         <Route path='/trending-destinations/:destinationId/:agencyId' element={<AgentDetailPage/>} />
+             <Route path='/nawlesh' element={<EnquiryForm/>} />
         {/* Add more routes here as needed */}
       </Routes>
       
