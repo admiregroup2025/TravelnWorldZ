@@ -6,7 +6,10 @@ const Hero = () => {
   return (
     <div className="w-full">
       {/* Hero Section */}
-      <div className="relative w-full h-screen overflow-hidden">
+      <div
+        className="relative w-full overflow-hidden"
+        style={{ height: "calc(91vh - 120px)" }}
+      >
         {/* Background video */}
         <video
           src={HeroVideo}
@@ -19,10 +22,10 @@ const Hero = () => {
         <div className="absolute w-full h-full bg-black opacity-40"></div>
 
         {/* Content */}
-        <div className="relative z-10 flex flex-col md:flex-row items-center md:items-center justify-center md:justify-between h-full px-6 md:px-12">
+        <div className="relative z-10 flex flex-col md:flex-row items-center justify-between h-full px-6 md:px-12">
           {/* Left side text */}
           <div className="text-white max-w-lg text-center md:text-left">
-            <h1 className="text-4xl md:text-5xl font-bold mb-4">
+            <h1 className="text-3xl md:text-5xl font-bold mb-4">
               Let's Explore Goa
             </h1>
             <p className="text-base md:text-lg text-gray-200">
@@ -31,10 +34,20 @@ const Hero = () => {
             </p>
           </div>
 
-          {/* Right side form (only for md and above) */}
-          <div className="hidden md:flex md:items-center md:justify-end md:pr-8">
-            <div className="w-[320px] lg:w-[340px] xl:w-[360px] md:ml-6">
-              <EnquiryForm variant="transparent" />
+          {/* Right side form (desktop) */}
+          <div className="hidden md:flex md:items-start md:justify-end md:pr-8">
+            <div className="mt-8 mb-8">   {/* 👈 Added margin top & bottom */}
+              <EnquiryForm
+                variant="transparent"
+                className="w-[300px] lg:w-[320px] xl:w-[340px] md:ml-6 bg-white/20 backdrop-blur-md rounded-xl"
+                style={{
+                  padding: "20px 16px",
+                  height: "auto", // let content decide height
+                  width: "340px", // fixed width like in screenshot
+                  display: "flex",
+                  alignItems: "center",
+                }}
+              />
             </div>
           </div>
         </div>
@@ -42,7 +55,12 @@ const Hero = () => {
 
       {/* Form below video for small screens */}
       <div className="block md:hidden px-4 py-6 flex justify-center">
-        <div className="w-full max-w-md">
+        <div
+          className="w-full max-w-md bg-white/10 backdrop-blur-md rounded-xl"
+          style={{
+            padding: "16px 14px",
+          }}
+        >
           <EnquiryForm variant="solid" />
         </div>
       </div>
@@ -50,4 +68,6 @@ const Hero = () => {
   );
 };
 
-export default Hero;
+export default Hero;       
+
+

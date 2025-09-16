@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+  import React, { useState } from "react";
 import Swal from "sweetalert2";
 
 const countryCodes = [
@@ -55,7 +55,7 @@ const EnquiryForm = ({ variant = "transparent" }) => {
   };
 
   const handlePhoneChange = (e) => {
-    const value = e.target.value.replace(/\D/g, "").slice(0, 12);
+    const value = e.target.value.replace(/\D/g, "").slice(0, 12); // allow only digits max 12
     setFormData((prev) => ({ ...prev, phone: value }));
   };
 
@@ -75,7 +75,7 @@ const EnquiryForm = ({ variant = "transparent" }) => {
       className={`rounded-xl shadow-lg p-5 md:p-6 w-full ${
         variant === "transparent"
           ? "bg-gray-200/40 backdrop-blur-md text-white"
-          : "bg-white text-gray-800"
+          : "bg-white text-gray-900"
       }`}
     >
       <h2
@@ -141,7 +141,9 @@ const EnquiryForm = ({ variant = "transparent" }) => {
             value={formData.phone}
             onChange={handlePhoneChange}
             required
-            className={`flex-1 border rounded-md px-3 h-10 text-sm focus:outline-none focus:ring-1 ${
+            inputMode="numeric"
+            maxLength={12}
+            className={`flex-1 border rounded-md px-3 h-9 text-sm focus:outline-none focus:ring-1 ${
               variant === "transparent"
                 ? "bg-transparent border-gray-300 text-white placeholder-gray-200 focus:ring-blue-300"
                 : "bg-white border-gray-300 text-gray-800 placeholder-gray-500 focus:ring-blue-500"
@@ -208,7 +210,7 @@ const EnquiryForm = ({ variant = "transparent" }) => {
 
         <button
           type="submit"
-          className="w-full bg-blue-700 hover:bg-blue-800 text-white rounded-md py-2 text-sm font-medium mt-1"
+          className="w-full bg-blue-700 hover:bg-blue-800 text-white rounded-md py-1.5 text-sm font-medium mt-1"
         >
           Submit
         </button>
