@@ -18,7 +18,7 @@ const DestinationCard = ({
   const navigate = useNavigate();
 
   const handleKnowMore = () => {
-    navigate(`/trending/${id}`); // Updated to match the route path
+    navigate(`/trending/${id}`); 
   };
 
   return (

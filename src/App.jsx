@@ -15,6 +15,7 @@ import TrendingDestinationCards from './components/homeComponent/TrendingDestina
 import AgentDetailPage from './pages/AgentDetailPage.jsx';
 import BlogDetails from './pages/BlogDetails.jsx';
 import EnquiryForm from './forms/EnquiryForm.jsx';
+import GetAQuote from './components/GetAQuote.jsx';
 
 const App = () => {
   return (
@@ -35,7 +36,8 @@ const App = () => {
         <Route path='/trending' element={<TrendingDestination/>} />
         <Route path='/trending/:destinationId' element={<TrendingDestinationCards />} />
         <Route path='/trending-destinations/:destinationId/:agencyId' element={<AgentDetailPage/>} />
-             <Route path='/nawlesh' element={<EnquiryForm/>} />
+        <Route path='/nawlesh' element={<EnquiryForm/>} />
+        <Route path='/get-a-quote/:destinationId/:agencyId' element={<GetAQuote />} />
         {/* Add more routes here as needed */}
       </Routes>
       
