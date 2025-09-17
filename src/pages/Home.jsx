@@ -7,6 +7,7 @@ import GetAQuote from "../forms/GetAQuote.jsx";
 import TrendingDestination from "../components/homeComponent/TrendingDestination.jsx";
 import Hero from "../components/homeComponent/Hero.jsx";
 import TopMostBanner from "../components/homeComponent/TopMostBanner.jsx";
+import VerifiedTransportCard from "../components/homeComponent/VerifiedTransportCard.jsx";
 
 
 
@@ -27,7 +28,7 @@ const Home = () => {
       <div> 
         <BannerAds/>
         <TrendingDestination />
-        
+        <VerifiedTransportCard />
         <HomeContactUs/>
         <Testimonials />
         <GetAQuote />
