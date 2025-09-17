@@ -19,7 +19,7 @@ const NavBar = () => {
 
           {/* Logo */}
           <NavLink to="/" onClick={() => setOpen(false)} className="flex-shrink-0">
-            <img src={logo} alt="Logo" className="h-14 object-contain" />
+            <img src={logo} alt="Logo" className="h-14" />
           </NavLink>
 
           {/* Desktop Navigation */}
