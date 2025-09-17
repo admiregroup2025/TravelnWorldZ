@@ -25,7 +25,7 @@ import {
   FaDownload,
 } from "react-icons/fa";
 
-// Optimized data structure with better organization
+
 const agentData = {
   "agency1": {
     id: "agency1",
@@ -119,7 +119,287 @@ const agentData = {
       { name: "Bank Transfer", description: "NEFT, RTGS, IMPS", icon: "🏧" },
       { name: "Cash", description: "At office location", icon: "💵" }
     ]
-  }
+  },
+   "agency2": {
+    id: "agency1",
+    title: "Agent Uttarakhand",
+    subtitle: "Premium Himalayan Travel Expert",
+    description: "Connect with our expert Uttarakhand travel agent for the best deals, personalized planning, and insider access to hidden gems across the Himalayas. Experience authentic mountain culture with our locally-rooted expertise.",
+    price: "Contact for Pricing",
+    duration: "Custom Packages",
+    rating: 4.8,
+    reviewCount: 127,
+    verified: true,
+    responseTime: "Within 2 hours",
+    images: [
+      "https://images.unsplash.com/photo-1589330694653-ded6df03f754?w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1621351183012-e2f9972dd9bf?w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1562565652-914c2c8f704d?w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1544735716-392fe2489ffa?w=800&auto=format&fit=crop"
+    ],
+    photo: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&auto=format&fit=crop&crop=face",
+    contact: {
+      phone: "+91-9876543210",
+      email: "agent.uttarakhand@travelworld.com",
+      whatsapp: "919876543210"
+    },
+    highlights: [
+      "Personalized trip planning with local insights",
+      "24/7 on-trip support and emergency assistance",
+      "Access to remote & offbeat destinations",
+      "Exclusive partnerships with local hotels",
+      "Sustainable and eco-friendly travel options",
+      "Multi-language support (Hindi, English, Local dialects)"
+    ],
+    itinerary: [
+      {
+        day: 1,
+        title: "Free Consultation & Planning",
+        description: "Schedule a comprehensive consultation to discuss your travel preferences, budget, timeline, and special requirements. Our expert will provide initial recommendations and gather detailed requirements.",
+        duration: "45-60 minutes",
+        type: "consultation"
+      },
+      {
+        day: 2,
+        title: "Custom Itinerary Design",
+        description: "Based on your consultation, we'll craft a detailed, personalized itinerary with accommodations, activities, transportation, and local experiences tailored to your interests.",
+        duration: "2-3 business days",
+        type: "planning"
+      },
+      {
+        day: 3,
+        title: "Booking Confirmation & Support Setup",
+        description: "Finalize bookings, receive detailed travel documentation, emergency contacts, and setup 24/7 support system for your journey.",
+        duration: "1-2 business days",
+        type: "booking"
+      }
+    ],
+    inclusions: [
+      "Comprehensive travel consultation",
+      "Custom itinerary design and planning",
+      "Local expert guidance and recommendations",
+      "24/7 customer support during travel",
+      "Emergency assistance and backup planning",
+      "Detailed travel documentation and guides"
+    ],
+    exclusions: [
+      "Flight/train ticket bookings",
+      "Hotel accommodation costs",
+      "Meals and dining expenses",
+      "Entry fees for tourist attractions",
+      "Personal expenses and shopping",
+      "Travel insurance (recommended separately)"
+    ],
+    terms: [
+      "All consultations require advance booking and are subject to availability",
+      "50% advance payment required for confirmed itinerary bookings",
+      "Itinerary modifications allowed up to 7 days before travel date",
+      "Prices may vary during peak seasons and festive periods",
+      "Service agreement must be signed before trip commencement"
+    ],
+    cancellation: [
+      "100% refund for cancellations made 10+ days before travel",
+      "50% refund for cancellations made 3-10 days before travel",
+      "No refund for cancellations within 3 days of travel",
+      "Consultation fees are non-refundable in all cases",
+      "Refunds processed within 7-10 business days"
+    ],
+    paymentModes: [
+      { name: "UPI", description: "Google Pay, PhonePe, Paytm", icon: "📱" },
+      { name: "Cards", description: "Visa, MasterCard, RuPay", icon: "💳" },
+      { name: "Net Banking", description: "All major banks", icon: "🏦" },
+      { name: "Digital Wallets", description: "Paytm, Amazon Pay", icon: "💰" },
+      { name: "Bank Transfer", description: "NEFT, RTGS, IMPS", icon: "🏧" },
+      { name: "Cash", description: "At office location", icon: "💵" }
+    ]
+  },
+   "agency3": {
+    id: "agency1",
+    title: "Agent Uttarakhand",
+    subtitle: "Premium Himalayan Travel Expert",
+    description: "Connect with our expert Uttarakhand travel agent for the best deals, personalized planning, and insider access to hidden gems across the Himalayas. Experience authentic mountain culture with our locally-rooted expertise.",
+    price: "Contact for Pricing",
+    duration: "Custom Packages",
+    rating: 4.8,
+    reviewCount: 127,
+    verified: true,
+    responseTime: "Within 2 hours",
+    images: [
+      "https://images.unsplash.com/photo-1589330694653-ded6df03f754?w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1621351183012-e2f9972dd9bf?w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1562565652-914c2c8f704d?w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1544735716-392fe2489ffa?w=800&auto=format&fit=crop"
+    ],
+    photo: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&auto=format&fit=crop&crop=face",
+    contact: {
+      phone: "+91-9876543210",
+      email: "agent.uttarakhand@travelworld.com",
+      whatsapp: "919876543210"
+    },
+    highlights: [
+      "Personalized trip planning with local insights",
+      "24/7 on-trip support and emergency assistance",
+      "Access to remote & offbeat destinations",
+      "Exclusive partnerships with local hotels",
+      "Sustainable and eco-friendly travel options",
+      "Multi-language support (Hindi, English, Local dialects)"
+    ],
+    itinerary: [
+      {
+        day: 1,
+        title: "Free Consultation & Planning",
+        description: "Schedule a comprehensive consultation to discuss your travel preferences, budget, timeline, and special requirements. Our expert will provide initial recommendations and gather detailed requirements.",
+        duration: "45-60 minutes",
+        type: "consultation"
+      },
+      {
+        day: 2,
+        title: "Custom Itinerary Design",
+        description: "Based on your consultation, we'll craft a detailed, personalized itinerary with accommodations, activities, transportation, and local experiences tailored to your interests.",
+        duration: "2-3 business days",
+        type: "planning"
+      },
+      {
+        day: 3,
+        title: "Booking Confirmation & Support Setup",
+        description: "Finalize bookings, receive detailed travel documentation, emergency contacts, and setup 24/7 support system for your journey.",
+        duration: "1-2 business days",
+        type: "booking"
+      }
+    ],
+    inclusions: [
+      "Comprehensive travel consultation",
+      "Custom itinerary design and planning",
+      "Local expert guidance and recommendations",
+      "24/7 customer support during travel",
+      "Emergency assistance and backup planning",
+      "Detailed travel documentation and guides"
+    ],
+    exclusions: [
+      "Flight/train ticket bookings",
+      "Hotel accommodation costs",
+      "Meals and dining expenses",
+      "Entry fees for tourist attractions",
+      "Personal expenses and shopping",
+      "Travel insurance (recommended separately)"
+    ],
+    terms: [
+      "All consultations require advance booking and are subject to availability",
+      "50% advance payment required for confirmed itinerary bookings",
+      "Itinerary modifications allowed up to 7 days before travel date",
+      "Prices may vary during peak seasons and festive periods",
+      "Service agreement must be signed before trip commencement"
+    ],
+    cancellation: [
+      "100% refund for cancellations made 10+ days before travel",
+      "50% refund for cancellations made 3-10 days before travel",
+      "No refund for cancellations within 3 days of travel",
+      "Consultation fees are non-refundable in all cases",
+      "Refunds processed within 7-10 business days"
+    ],
+    paymentModes: [
+      { name: "UPI", description: "Google Pay, PhonePe, Paytm", icon: "📱" },
+      { name: "Cards", description: "Visa, MasterCard, RuPay", icon: "💳" },
+      { name: "Net Banking", description: "All major banks", icon: "🏦" },
+      { name: "Digital Wallets", description: "Paytm, Amazon Pay", icon: "💰" },
+      { name: "Bank Transfer", description: "NEFT, RTGS, IMPS", icon: "🏧" },
+      { name: "Cash", description: "At office location", icon: "💵" }
+    ]
+  },
+   "agency4": {
+    id: "agency1",
+    title: "Agent Uttarakhand",
+    subtitle: "Premium Himalayan Travel Expert",
+    description: "Connect with our expert Uttarakhand travel agent for the best deals, personalized planning, and insider access to hidden gems across the Himalayas. Experience authentic mountain culture with our locally-rooted expertise.",
+    price: "Contact for Pricing",
+    duration: "Custom Packages",
+    rating: 4.8,
+    reviewCount: 127,
+    verified: true,
+    responseTime: "Within 2 hours",
+    images: [
+      "https://images.unsplash.com/photo-1589330694653-ded6df03f754?w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1621351183012-e2f9972dd9bf?w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1562565652-914c2c8f704d?w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1544735716-392fe2489ffa?w=800&auto=format&fit=crop"
+    ],
+    photo: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&auto=format&fit=crop&crop=face",
+    contact: {
+      phone: "+91-9876543210",
+      email: "agent.uttarakhand@travelworld.com",
+      whatsapp: "919876543210"
+    },
+    highlights: [
+      "Personalized trip planning with local insights",
+      "24/7 on-trip support and emergency assistance",
+      "Access to remote & offbeat destinations",
+      "Exclusive partnerships with local hotels",
+      "Sustainable and eco-friendly travel options",
+      "Multi-language support (Hindi, English, Local dialects)"
+    ],
+    itinerary: [
+      {
+        day: 1,
+        title: "Free Consultation & Planning",
+        description: "Schedule a comprehensive consultation to discuss your travel preferences, budget, timeline, and special requirements. Our expert will provide initial recommendations and gather detailed requirements.",
+        duration: "45-60 minutes",
+        type: "consultation"
+      },
+      {
+        day: 2,
+        title: "Custom Itinerary Design",
+        description: "Based on your consultation, we'll craft a detailed, personalized itinerary with accommodations, activities, transportation, and local experiences tailored to your interests.",
+        duration: "2-3 business days",
+        type: "planning"
+      },
+      {
+        day: 3,
+        title: "Booking Confirmation & Support Setup",
+        description: "Finalize bookings, receive detailed travel documentation, emergency contacts, and setup 24/7 support system for your journey.",
+        duration: "1-2 business days",
+        type: "booking"
+      }
+    ],
+    inclusions: [
+      "Comprehensive travel consultation",
+      "Custom itinerary design and planning",
+      "Local expert guidance and recommendations",
+      "24/7 customer support during travel",
+      "Emergency assistance and backup planning",
+      "Detailed travel documentation and guides"
+    ],
+    exclusions: [
+      "Flight/train ticket bookings",
+      "Hotel accommodation costs",
+      "Meals and dining expenses",
+      "Entry fees for tourist attractions",
+      "Personal expenses and shopping",
+      "Travel insurance (recommended separately)"
+    ],
+    terms: [
+      "All consultations require advance booking and are subject to availability",
+      "50% advance payment required for confirmed itinerary bookings",
+      "Itinerary modifications allowed up to 7 days before travel date",
+      "Prices may vary during peak seasons and festive periods",
+      "Service agreement must be signed before trip commencement"
+    ],
+    cancellation: [
+      "100% refund for cancellations made 10+ days before travel",
+      "50% refund for cancellations made 3-10 days before travel",
+      "No refund for cancellations within 3 days of travel",
+      "Consultation fees are non-refundable in all cases",
+      "Refunds processed within 7-10 business days"
+    ],
+    paymentModes: [
+      { name: "UPI", description: "Google Pay, PhonePe, Paytm", icon: "📱" },
+      { name: "Cards", description: "Visa, MasterCard, RuPay", icon: "💳" },
+      { name: "Net Banking", description: "All major banks", icon: "🏦" },
+      { name: "Digital Wallets", description: "Paytm, Amazon Pay", icon: "💰" },
+      { name: "Bank Transfer", description: "NEFT, RTGS, IMPS", icon: "🏧" },
+      { name: "Cash", description: "At office location", icon: "💵" }
+    ]
+  },
+
 };
 
 // Custom hooks for better code organization
