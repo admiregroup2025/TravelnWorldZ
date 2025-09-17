@@ -10,7 +10,7 @@ const VerifiedTransportCard = () => {
   return (
     <div className="w-full py-10 bg-gray-100"> 
       <h2 className="text-2xl font-bold mb-6 text-center text-gray-800">
-        Verified Transports
+        Verified Transporters
       </h2>
 
       <div className="overflow-hidden relative w-full"> {/* Reduced side padding to 8px */}

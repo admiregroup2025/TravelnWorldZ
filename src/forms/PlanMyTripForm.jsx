@@ -3,13 +3,13 @@ import Swal from "sweetalert2";
 import axios from "axios";
 import backgroundImage from "../assets/images/planmytrip.jpg";
 
-// Dropdown options
+
 const cityOptions = [
   "New Delhi", "Mumbai", "Bengaluru", "Chennai", "Kolkata",
   "Pune", "Hyderabad", "Ahmedabad", "Jaipur", "Goa",
 ];
 
-const destinationTypeOptions = ["Domestic", "International"];
+const destinationTypeOptions = ["Domestic Trip", "International Trip"];
 
 const destinationOptions = [
   "Kashmir", "Kerala", "Himachal Pradesh", "Goa",
@@ -311,7 +311,6 @@ const InputField = ({ label, name, value, onChange, type = "text", placeholder =
   </div>
 );
 
-// Select Field Component
 const SelectField = ({ label, name, value, onChange, options, error }) => (
   <div className="mb-1">
     <label className="block text-[14px] text-black mb-1">{label}</label>

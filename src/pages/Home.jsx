@@ -3,7 +3,6 @@ import VideoBackground from "../components/VideoBackground";
 import BannerAds from "../components/homeComponent/BannerAds";
 import HomeContactUs from "../components/homeComponent/HomeContactUs.jsx";
 import Testimonials from "../components/homeComponent/Testimonials.jsx";
-import GetAQuote from "../forms/GetAQuote.jsx";
 import TrendingDestination from "../components/homeComponent/TrendingDestination.jsx";
 import Hero from "../components/homeComponent/Hero.jsx";
 import TopMostBanner from "../components/homeComponent/TopMostBanner.jsx";
@@ -29,9 +28,10 @@ const Home = () => {
         <BannerAds/>
         <TrendingDestination />
         <VerifiedTransportCard />
+        <TrendingDestination />
         <HomeContactUs/>
         <Testimonials />
-        <GetAQuote />
+        
       </div>
     </div>   
   );
