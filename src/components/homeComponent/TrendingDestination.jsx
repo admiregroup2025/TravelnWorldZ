@@ -1,11 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, EffectFade } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/effect-fade";
 
-// Destination Card Component
 const DestinationCard = ({
   id,
   title,
@@ -18,7 +17,7 @@ const DestinationCard = ({
   const navigate = useNavigate();
 
   const handleKnowMore = () => {
-    navigate(`/trending/${id}`); 
+    navigate(`/trending/${id}`);
   };
 
   return (
@@ -27,7 +26,6 @@ const DestinationCard = ({
       onMouseLeave={onHoverEnd}
       className="cursor-pointer flex-shrink-0 w-[320px] flex flex-col md:flex-row bg-[#fffaf1] border border-gray-300 rounded-lg overflow-hidden shadow-md transition-opacity duration-300"
     >
-      {/* Text Section */}
       <div className="flex flex-col justify-between p-4 w-full md:w-2/3">
         <div>
           <h2 className="text-xl font-semibold text-gray-800">{title}</h2>
@@ -36,12 +34,10 @@ const DestinationCard = ({
           </p>
         </div>
         <div className="mt-3">
-          <p className="text-red-600 font-bold text-md">
-            {price || "From"} 4000.00 RS
-          </p>
+          <p className="text-red-600 font-bold text-md">{price || "From ₹4,000"}</p>
           <button
             onClick={(e) => {
-              e.stopPropagation(); // Prevent hover reset
+              e.stopPropagation();
               handleKnowMore();
             }}
             className="mt-2 px-4 py-1.5 bg-[#00004a] text-white text-sm rounded hover:bg-blue-900 transition"
@@ -51,7 +47,6 @@ const DestinationCard = ({
         </div>
       </div>
 
-      {/* Image Section */}
       <div className="w-full md:w-1/3 h-40 md:h-auto">
         <Swiper
           modules={[Autoplay, EffectFade]}
@@ -82,11 +77,66 @@ const DestinationCard = ({
   );
 };
 
-// Trending Destination Component
 const TrendingDestination = () => {
   const [isPaused, setIsPaused] = useState(false);
+  const scrollContainerRef = useRef(null);
 
-  const destinations = [
+  // For dragging
+const isDragging = useRef(false);
+const startX = useRef(0);
+const scrollLeft = useRef(0);
+
+
+  // Handle mouse down: start drag
+  const handleMouseDown = (e) => {
+    isDragging.current = true; 
+     startX.current = e.pageX - scrollContainerRef.current.offsetLeft;
+  scrollLeft.current = scrollContainerRef.current.scrollLeft;
+  };
+
+  // Handle mouse leave or up: stop drag
+  const handleMouseLeave = () => {
+    isDragging.current = false;
+    // scrollContainerRef.current.classList.remove("cursor-grabbing");
+  };
+
+  const handleMouseUp = () => {
+    isDragging.current = false;
+    // scrollContainerRef.current.classList.remove("cursor-grabbing");
+    // setIsPaused(false);
+  };
+
+  const handleMouseMove = (e) => {
+    if (!isDragging.current) return;
+    e.preventDefault();
+  
+  const x = e.pageX - scrollContainerRef.current.offsetLeft;
+  const walk = x - startX.current; // Positive when mouse moves right, negative when left
+  scrollContainerRef.current.scrollLeft = scrollLeft.current - walk;
+
+  };
+
+const handleTouchStart = (e) => {
+  isDragging.current = true;
+  startX.current = e.touches[0].pageX - scrollContainerRef.current.offsetLeft;
+  scrollLeft.current = scrollContainerRef.current.scrollLeft;
+};
+
+  const handleTouchMove = (e) => {
+  if (!isDragging.current) return;
+  e.preventDefault();
+
+  const x = e.touches[0].pageX - scrollContainerRef.current.offsetLeft;  // Correct offset property
+  const walk = x - startX.current;
+  scrollContainerRef.current.scrollLeft = scrollLeft.current - walk;  // Use scrollLeft instead of scroll or scrollRight
+};
+
+
+  const handleTouchEnd = () => {
+    isDragging.current = false;
+  };
+
+   const destinations = [
     {
       id: "uttarakhand",
       title: "Uttarakhand",
@@ -94,7 +144,7 @@ const TrendingDestination = () => {
       price: "From ₹15,000",
       images: [
         "https://images.unsplash.com/photo-1589330694653-ded6df03f754?w=800&auto=format&fit=crop",
-        "https://images.unsplash.com/photo-1621351183012-e2f9972dd9bf?w=800&auto=format&fit=crop"
+        "https://images.unsplash.com/photo-1621351183012-e2f9972dd9bf?w=800&auto=format&fit=crop",
       ],
     },
     {
@@ -104,7 +154,7 @@ const TrendingDestination = () => {
       price: "From ₹12,500",
       images: [
         "https://plus.unsplash.com/premium_photo-1697730277839-440df1a4415f?w=800&auto=format&fit=crop",
-        "https://images.unsplash.com/photo-1564507592333-c60657eea523?w=800&auto=format&fit=crop"
+        "https://images.unsplash.com/photo-1564507592333-c60657eea523?w=800&auto=format&fit=crop",
       ],
     },
     {
@@ -114,7 +164,7 @@ const TrendingDestination = () => {
       price: "From ₹18,000",
       images: [
         "https://images.unsplash.com/photo-1563906267088-b029e7101114?w=800&auto=format&fit=crop",
-        "https://images.unsplash.com/photo-1505765050516-f72dcac9c60e?w=800&auto=format&fit=crop"
+        "https://images.unsplash.com/photo-1505765050516-f72dcac9c60e?w=800&auto=format&fit=crop",
       ],
     },
     {
@@ -124,7 +174,7 @@ const TrendingDestination = () => {
       price: "From ₹8,000",
       images: [
         "https://plus.unsplash.com/premium_photo-1697730150003-26a1d469adb4?w=800&auto=format&fit=crop",
-        "https://images.unsplash.com/photo-1587334274527-ba54f0b5a357?w=800&auto=format&fit=crop"
+        "https://images.unsplash.com/photo-1587334274527-ba54f0b5a357?w=800&auto=format&fit=crop",
       ],
     },
     {
@@ -134,7 +184,7 @@ const TrendingDestination = () => {
       price: "From ₹11,000",
       images: [
         "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=800&auto=format&fit=crop",
-        "https://images.unsplash.com/photo-1598947146667-47b6865deb64?w=800&auto=format&fit=crop"
+        "https://images.unsplash.com/photo-1598947146667-47b6865deb64?w=800&auto=format&fit=crop",
       ],
     },
     {
@@ -144,7 +194,7 @@ const TrendingDestination = () => {
       price: "From ₹14,000",
       images: [
         "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&auto=format&fit=crop",
-        "https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=800&auto=format&fit=crop"
+        "https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=800&auto=format&fit=crop",
       ],
     },
     {
@@ -154,7 +204,7 @@ const TrendingDestination = () => {
       price: "From ₹13,000",
       images: [
         "https://images.unsplash.com/photo-1589330694653-ded6df03f754?w=800&auto=format&fit=crop",
-        "https://images.unsplash.com/photo-1605108721178-97a9514c0b9b?w=800&auto=format&fit=crop"
+        "https://images.unsplash.com/photo-1605108721178-97a9514c0b9b?w=800&auto=format&fit=crop",
       ],
     },
     {
@@ -164,7 +214,7 @@ const TrendingDestination = () => {
       price: "From ₹16,000",
       images: [
         "https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=800&auto=format&fit=crop",
-        "https://images.unsplash.com/photo-1588666309990-d68f08e3d4a6?w=800&auto=format&fit=crop"
+        "https://images.unsplash.com/photo-1588666309990-d68f08e3d4a6?w=800&auto=format&fit=crop",
       ],
     },
     {
@@ -174,7 +224,7 @@ const TrendingDestination = () => {
       price: "From ₹14,500",
       images: [
         "https://images.unsplash.com/photo-1590523278191-995cbcda646b?w=800&auto=format&fit=crop",
-        "https://images.unsplash.com/photo-1616392967126-2d9f46b475c0?w=800&auto=format&fit=crop"
+        "https://images.unsplash.com/photo-1616392967126-2d9f46b475c0?w=800&auto=format&fit=crop",
       ],
     },
     {
@@ -184,7 +234,7 @@ const TrendingDestination = () => {
       price: "From ₹13,500",
       images: [
         "https://images.unsplash.com/photo-1589330694653-ded6df03f754?w=800&auto=format&fit=crop",
-        "https://images.unsplash.com/photo-1616392967126-2d9f46b475c0?w=800&auto=format&fit=crop"
+        "https://images.unsplash.com/photo-1616392967126-2d9f46b475c0?w=800&auto=format&fit=crop",
       ],
     },
     {
@@ -194,7 +244,7 @@ const TrendingDestination = () => {
       price: "From ₹12,000",
       images: [
         "https://images.unsplash.com/photo-1589330694653-ded6df03f754?w=800&auto=format&fit=crop",
-        "https://images.unsplash.com/photo-1598947146667-47b6865deb64?w=800&auto=format&fit=crop"
+        "https://images.unsplash.com/photo-1598947146667-47b6865deb64?w=800&auto=format&fit=crop",
       ],
     },
     {
@@ -204,7 +254,7 @@ const TrendingDestination = () => {
       price: "From ₹11,500",
       images: [
         "https://images.unsplash.com/photo-1563906267088-b029e7101114?w=800&auto=format&fit=crop",
-        "https://images.unsplash.com/photo-1587334274527-ba54f0b5a357?w=800&auto=format&fit=crop"
+        "https://images.unsplash.com/photo-1587334274527-ba54f0b5a357?w=800&auto=format&fit=crop",
       ],
     },
     {
@@ -214,23 +264,49 @@ const TrendingDestination = () => {
       price: "From ₹15,500",
       images: [
         "https://images.unsplash.com/photo-1589330694653-ded6df03f754?w=800&auto=format&fit=crop",
-        "https://images.unsplash.com/photo-1588666309990-d68f08e3d4a6?w=800&auto=format&fit=crop"
+        "https://images.unsplash.com/photo-1588666309990-d68f08e3d4a6?w=800&auto=format&fit=crop",
       ],
     },
   ];
 
-  const marqueeDestinations = [...destinations, ...destinations]; 
+  const marqueeDestinations = [...destinations, ...destinations];
 
   return (
-    <div className="flex flex-col items-center gap-6 p-4 bg-gray-100 min-h-fit">
-      <h1 className="text-3xl font-bold text-blue-950 mb-4">
-        Trending Destinations
-      </h1>
+    <div className="flex flex-col items-center gap-6 p-4 bg-gray-100 min-h-fit md:px-8 lg:px-16">
+      <div className="flex justify-between items-center w-full relative p-4 ">
+        <h1 className="absolute left-1/2 transform -translate-x-1/2 text-3xl font-bold text-blue-950">Trending Destinations</h1>
+        <button
+          onClick={() => alert("View All clicked")}
+          className="absolute right-0 text-sm px-4 py-1.5 bg-blue-950 text-white rounded hover:bg-blue-900 transition"
+        >
+          View All
+        </button>
+      </div>
 
-      {/* Marquee Section */}
+      
       <div
-        className="overflow-hidden mx-auto px-4 md:px-12"
+        ref={scrollContainerRef}
+        className="overflow-x-auto cursor-grab select-none no-scrollbar mx-auto px-4 md:px-12 w-full max-w-[calc(100%-100px)] "
         style={{ maxWidth: "calc(100% - 100px)" }}
+        onMouseDown={(e) => {
+          handleMouseDown(e);
+          setIsPaused(true);
+        }}
+        onMouseMove={handleMouseMove}
+        onMouseUp={handleMouseUp}
+        onMouseLeave={(e) => {
+          handleMouseLeave(e);
+          setIsPaused(false);
+        }}
+        onTouchStart={(e) => {
+          handleTouchStart(e);
+          setIsPaused(true);
+        }}
+
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
+        onTouchCancel={handleTouchEnd}
+        onMouseEnter={() => setIsPaused(true)}
       >
         <div
           className="flex whitespace-nowrap gap-6 animate-marquee"

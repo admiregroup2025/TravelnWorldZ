@@ -13,11 +13,8 @@ import VerifiedTransportCard from "../components/homeComponent/VerifiedTransport
 const Home = () => {
   return (
     <div>
-      {/* Hero Section with Video + Form   */}
-        <TopMostBanner/>
+       <TopMostBanner/>
        <Hero/>
-
-      {/*  Next section after Hero */}
       <section className="p-10 text-center">
         <h2 className="text-2xl font-bold"></h2>
         <p className="mt-4 text-gray-600">
@@ -26,8 +23,8 @@ const Home = () => {
       </section>
       <div> 
         <BannerAds/>
-        <TrendingDestination />
         <VerifiedTransportCard />
+        <TrendingDestination />
         <HomeContactUs/>
         <Testimonials />
 

@@ -1,17 +1,16 @@
 // src/data/agentData.js
-
+import img from '../assets/images/topBannerAds/image1.jpg'
 export const trendingDestinations = [
   {
     id: "agency1",
-    title: "Agent Uttarakhand",
+    title: "Hello ",
     description:
       "Connect with our expert Uttarakhand travel agent for the best deals, personalized planning, and insider access to hidden gems across the Himalayas.",
     price: "Contact for Pricing",
     duration: "Custom Packages",    
     images: [
-      "https://images.unsplash.com/photo-1589330694653-ded6df03f754?w=800&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1621351183012-e2f9972dd9bf?w=800&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1562565652-914c2c8f704d?w=800&auto=format&fit=crop",
+      img,
+ 
     ],
     highlights: [
       "Personalized trip planning",
