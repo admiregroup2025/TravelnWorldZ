@@ -1,4 +1,4 @@
-import ayodhaya from '../assets/images/verified/ayodhaya.png';
+import ayodhya from '../assets/images/verified/ayodhaya.jpg';
 import ram from '../assets/images/verified/ram.jpg';
 import shivam from '../assets/images/verified/shivam_travels.jpeg';
 import arora from '../assets/images/verified/arora.jpeg'
@@ -6,13 +6,17 @@ import arora from '../assets/images/verified/arora.jpeg'
 const transportData = [
   {
     id: 1,
-    image: ayodhaya,
+    image: ayodhya,
     title: "Ayodhya Darshan Yatra",
     location: "Jharkhandi, Rikabganj, Ayodhya",
     rating: 4.8,
     reviews: 120,
     verified: true,
     website: "https://ayodhyadarshanyatra.com/",
+    distance: "500 mts",
+    phone: "08147943975",
+    whatsapp: "918147943975",
+    tags: ["Hotels", "Hotels Rs 501 To Rs 1000"],
   },
   {
     id: 2,

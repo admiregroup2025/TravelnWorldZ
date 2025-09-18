@@ -5,15 +5,10 @@ import { Autoplay, EffectFade } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/effect-fade";
 
-const DestinationCard = ({
-  id,
-  title,
-  description,
-  price,
-  images,
-  onHoverStart,
-  onHoverEnd,
-}) => {
+const CARD_WIDTH = 320;
+const CARD_GAP = 24;
+
+const DestinationCard = ({ id, title, description, price, images, onHoverStart, onHoverEnd }) => {
   const navigate = useNavigate();
 
   const handleKnowMore = () => {
@@ -80,63 +75,62 @@ const DestinationCard = ({
 const TrendingDestination = () => {
   const [isPaused, setIsPaused] = useState(false);
   const scrollContainerRef = useRef(null);
+  const isDragging = useRef(false);
+  const startX = useRef(0);
+  const scrollLeft = useRef(0);
+  const navigate = useNavigate();
 
-  // For dragging
-const isDragging = useRef(false);
-const startX = useRef(0);
-const scrollLeft = useRef(0);
-
-
-  // Handle mouse down: start drag
+  // Scroll handlers (dragging, touch)
   const handleMouseDown = (e) => {
-    isDragging.current = true; 
-     startX.current = e.pageX - scrollContainerRef.current.offsetLeft;
-  scrollLeft.current = scrollContainerRef.current.scrollLeft;
+    isDragging.current = true;
+    startX.current = e.pageX - scrollContainerRef.current.offsetLeft;
+    scrollLeft.current = scrollContainerRef.current.scrollLeft;
   };
 
-  // Handle mouse leave or up: stop drag
   const handleMouseLeave = () => {
     isDragging.current = false;
-    // scrollContainerRef.current.classList.remove("cursor-grabbing");
   };
 
   const handleMouseUp = () => {
     isDragging.current = false;
-    // scrollContainerRef.current.classList.remove("cursor-grabbing");
-    // setIsPaused(false);
   };
 
   const handleMouseMove = (e) => {
     if (!isDragging.current) return;
     e.preventDefault();
-  
-  const x = e.pageX - scrollContainerRef.current.offsetLeft;
-  const walk = x - startX.current; // Positive when mouse moves right, negative when left
-  scrollContainerRef.current.scrollLeft = scrollLeft.current - walk;
-
+    const x = e.pageX - scrollContainerRef.current.offsetLeft;
+    const walk = x - startX.current;
+    scrollContainerRef.current.scrollLeft = scrollLeft.current - walk;
   };
 
-const handleTouchStart = (e) => {
-  isDragging.current = true;
-  startX.current = e.touches[0].pageX - scrollContainerRef.current.offsetLeft;
-  scrollLeft.current = scrollContainerRef.current.scrollLeft;
-};
+  const handleTouchStart = (e) => {
+    isDragging.current = true;
+    startX.current = e.touches[0].pageX - scrollContainerRef.current.offsetLeft;
+    scrollLeft.current = scrollContainerRef.current.scrollLeft;
+  };
 
   const handleTouchMove = (e) => {
-  if (!isDragging.current) return;
-  e.preventDefault();
-
-  const x = e.touches[0].pageX - scrollContainerRef.current.offsetLeft;  // Correct offset property
-  const walk = x - startX.current;
-  scrollContainerRef.current.scrollLeft = scrollLeft.current - walk;  // Use scrollLeft instead of scroll or scrollRight
-};
-
+    if (!isDragging.current) return;
+    e.preventDefault();
+    const x = e.touches[0].pageX - scrollContainerRef.current.offsetLeft;
+    const walk = x - startX.current;
+    scrollContainerRef.current.scrollLeft = scrollLeft.current - walk;
+  };
 
   const handleTouchEnd = () => {
     isDragging.current = false;
   };
 
-   const destinations = [
+  // Prev/Next button handlers
+  const handleScroll = (direction) => {
+    const container = scrollContainerRef.current;
+    const scrollAmount = direction === "next" ? CARD_WIDTH + CARD_GAP : -(CARD_WIDTH + CARD_GAP);
+    container.scrollBy({ left: scrollAmount, behavior: "smooth" });
+    setIsPaused(true);
+    setTimeout(() => setIsPaused(false), 1000);
+  };
+
+  const destinations = [
     {
       id: "uttarakhand",
       title: "Uttarakhand",
@@ -272,21 +266,60 @@ const handleTouchStart = (e) => {
   const marqueeDestinations = [...destinations, ...destinations];
 
   return (
-    <div className="flex flex-col items-center gap-6 p-4 bg-gray-100 min-h-fit md:px-8 lg:px-16">
-      <div className="flex justify-between items-center w-full relative p-4 ">
-        <h1 className="absolute left-1/2 transform -translate-x-1/2 text-3xl font-bold text-blue-950">Trending Destinations</h1>
+    <div className="flex flex-col items-center gap-6 p-4 bg-gray-100 min-h-fit md:px-8 lg:px-16 relative">
+      {/* Heading + View All with fixed max width matching cards */}
+      <div className="w-full max-w-[calc(100%-100px)] flex justify-between items-center relative px-4 md:px-0 mb-4">
+        <h1 className="text-3xl font-bold text-blue-950 mx-auto">
+          Trending Destinations
+        </h1>
         <button
-          onClick={() => alert("View All clicked")}
-          className="absolute right-0 text-sm px-4 py-1.5 bg-blue-950 text-white rounded hover:bg-blue-900 transition"
+          onClick={() => navigate("/trending-destination-list")}
+          className="text-sm px-4 py-1.5 bg-blue-950 text-white rounded hover:bg-blue-900 transition absolute right-0"
         >
           View All
         </button>
       </div>
 
-      
+      {/* Prev Button */}
+      <button
+        onClick={() => handleScroll("prev")}
+        className="hidden sm:flex absolute left-2 top-1/2 transform -translate-y-1/2 z-20 bg-blue-600 text-white p-2 rounded-full shadow hover:bg-blue-700 transition"
+        aria-label="Previous"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          className="h-6 w-6"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          strokeWidth={2}
+        >
+          <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+        </svg>
+      </button>
+
+      {/* Next Button */}
+      <button
+        onClick={() => handleScroll("next")}
+        className="hidden sm:flex absolute right-2 top-1/2 transform -translate-y-1/2 z-20 bg-blue-600 text-white p-2 rounded-full shadow hover:bg-blue-700 transition"
+        aria-label="Next"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          className="h-6 w-6"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          strokeWidth={2}
+        >
+          <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+        </svg>
+      </button>
+
+      {/* Cards container */}
       <div
         ref={scrollContainerRef}
-        className="overflow-x-auto cursor-grab select-none no-scrollbar mx-auto px-4 md:px-12 w-full max-w-[calc(100%-100px)] "
+        className="overflow-x-auto cursor-grab select-none no-scrollbar mx-auto px-4 md:px-12 w-full max-w-[calc(100%-100px)]"
         style={{ maxWidth: "calc(100% - 100px)" }}
         onMouseDown={(e) => {
           handleMouseDown(e);
@@ -302,7 +335,6 @@ const handleTouchStart = (e) => {
           handleTouchStart(e);
           setIsPaused(true);
         }}
-
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
         onTouchCancel={handleTouchEnd}
