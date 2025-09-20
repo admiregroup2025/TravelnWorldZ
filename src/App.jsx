@@ -37,7 +37,7 @@ const App = () => {
         <Route path='/trending' element={<TrendingDestination/>} />
         <Route path='/trending/:destinationId' element={<TrendingDestinationCards />} />
         <Route path='/trending-destinations/:destinationId/:agencyId' element={<AgentDetailPage/>} />
-            
+             <Route path='/nawlesh' element={<EnquiryForm/>} />
         {/* Add more routes here as needed */}
       </Routes>
       
