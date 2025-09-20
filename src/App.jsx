@@ -15,6 +15,7 @@ import TrendingDestinationCards from './components/homeComponent/TrendingDestina
 import AgentDetailPage from './pages/AgentDetailPage.jsx';
 import BlogDetails from './pages/BlogDetails.jsx';
 import EnquiryForm from './forms/EnquiryForm.jsx';
+import InternationalDestination from './pages/InternationalDestination.jsx';
 
 const App = () => {
   return (
@@ -28,6 +29,7 @@ const App = () => {
         <Route path='/destination' element={<Destination />} />
         <Route path='/b2blogin' element={<B2BLogin />} />
         <Route path='/blogs' element={<Blogs />} />
+                <Route path='/international' element={<InternationalDestination />} />
        
         <Route path='/blogs/:id' element={<BlogDetails />} />
         <Route path='/testimonials' element={<Testimonials />} />
@@ -35,7 +37,7 @@ const App = () => {
         <Route path='/trending' element={<TrendingDestination/>} />
         <Route path='/trending/:destinationId' element={<TrendingDestinationCards />} />
         <Route path='/trending-destinations/:destinationId/:agencyId' element={<AgentDetailPage/>} />
-             <Route path='/nawlesh' element={<EnquiryForm/>} />
+            
         {/* Add more routes here as needed */}
       </Routes>
       

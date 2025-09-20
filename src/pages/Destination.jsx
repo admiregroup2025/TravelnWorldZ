@@ -1,8 +1,11 @@
 import React from 'react'
+import InternationandDomestic from '../components/InternationandDomestic'
 
 const Destination = () => {
   return (
-    <div>Destination</div>
+    <div>
+      <InternationandDomestic/>
+    </div>
   )
 }
 
