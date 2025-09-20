@@ -1,6 +1,6 @@
 import ayodhaya from '../assets/images/verified/ayodhaya.png';
-import ram from '../assets/images/verified/ram.jpg';
-import shivam from '../assets/images/verified/shivam_travels.jpeg';
+import ram from '../assets/images/verified/ram.JPG';
+import shivam from '../assets/images/verified/Shivam_travels.jpeg';
 import arora from '../assets/images/verified/arora.jpeg'
 
 const transportData = [
