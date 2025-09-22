@@ -1,6 +1,6 @@
 const AdminPannel = () => {
   return (
-    <div>AdminPannel</div>
+    <div className="h-[91vh]">AdminPannel</div>
   )
 }
 

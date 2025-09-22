@@ -12,7 +12,7 @@ export default function AdminHeader() {
   };
 
   return (
-    <header className="flex fixed w-full z-30 my-0 px-10 items-center justify-between border shadow-md bg-white">
+    <header className="flex fixed w-full h-[9vh] z-30 my-0 px-10 items-center justify-between border shadow-md bg-white">
       {/* Left: Logo */}
       <div className="flex items-center space-x-2">
         <img

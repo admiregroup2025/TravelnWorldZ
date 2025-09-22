@@ -245,7 +245,7 @@ const ResetPassword = () => {
         <button
           type="submit"
           disabled={isSubmitting}
-          className="px-4 py-2 bg-black text-white rounded-md hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 disabled:opacity-50 transition-colors flex items-center gap-2"
+          className="px-4 py-2 bg-orange-500 text-white rounded-md hover:bg-[#312E81] focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 disabled:opacity-50 transition-colors flex items-center gap-2"
         >
           {isSubmitting ? (
             <>

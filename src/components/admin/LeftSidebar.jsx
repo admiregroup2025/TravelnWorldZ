@@ -70,7 +70,7 @@ const LeftSidebar = () => {
   ];
 
   return (
-    <nav className="flex flex-col mt-6 space-y-1">
+    <nav className="flex  overflow-y-hidden flex-col mt-6 ">
       {menuItems.map((item) => (
         <NavLink
           key={item.path}
