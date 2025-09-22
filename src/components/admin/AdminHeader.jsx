@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import logo from "../../assets/images/logo/logo.jpeg";
 import profilImg from "../../assets/images/profile.png";
 
-export default function AdminHeader() {
+export default function adminHeader() {
   const navigate = useNavigate();
 
   const handleLogout = () => {
