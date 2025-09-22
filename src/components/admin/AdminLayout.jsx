@@ -1,5 +1,5 @@
 import { Outlet } from "react-router-dom";
-import AdminHeader from "./adminHeader";
+import AdminHeader from "./AdminHeader.jsx";
 import LeftSidebar from "./LeftSidebar";
 import RightSidebar from "./RightSidebar";
 import destinations from "../admin/MyItineraries/data.json"
