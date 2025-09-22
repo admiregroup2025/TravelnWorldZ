@@ -1,0 +1,52 @@
+[
+  {
+    "id": "1",
+    "name": "Bali, Indonesia",
+    "slug": "bali-indonesia",
+    "images": [
+      "https://images.unsplash.com/photo-1507525428034-b723cf961d3e",
+      "https://images.unsplash.com/photo-1507525428034-b723cf961d3e"
+    ],
+    "type": "international"
+  },
+  {
+    "id": "2",
+    "name": "Goa, India",
+    "slug": "goa-india",
+    "images": [
+      "https://images.unsplash.com/photo-1601315484569-9021d5d45a42",
+      "https://images.unsplash.com/photo-1601315484569-9021d5d45a42"
+    ],
+    "type": "domestic"
+  },
+  {
+    "id": "3",
+    "name": "Paris, France",
+    "slug": "paris-france",
+    "images": [
+      "https://images.unsplash.com/photo-1502602898657-3e91760cbb34",
+      "https://images.unsplash.com/photo-1502602898657-3e91760cbb34"
+    ],
+    "type": "international"
+  },
+  {
+    "id": "4",
+    "name": "Jaipur, India",
+    "slug": "jaipur-india",
+    "images": [
+      "https://images.unsplash.com/photo-1585508883020-9fa0f7a28f52",
+      "https://images.unsplash.com/photo-1585508883020-9fa0f7a28f52"
+    ],
+    "type": "domestic"
+  },
+  {
+    "id": "5",
+    "name": "Dubai, UAE",
+    "slug": "dubai-uae",
+    "images": [
+      "https://images.unsplash.com/photo-1549921296-3fd62a3c6a3b",
+      "https://images.unsplash.com/photo-1549921296-3fd62a3c6a3b"
+    ],
+    "type": "international"
+  }
+]

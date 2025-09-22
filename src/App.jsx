@@ -1,7 +1,7 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import MainLayout from './MainLayout';
-import AdminLayout from './AdminLayout';
+import AdminLayout from './components/admin/AdminLayout';
 
 import Home from './pages/Home';
 import AboutUs from './pages/AboutUs';
@@ -22,6 +22,10 @@ import InternationalDestination from './pages/InternationalDestination';
 // import AdminDashboard from './pages/admin/AdminDashboard';
 // import AdminUsers from './pages/admin/AdminUsers';
 import AdminPannel from './components/admin/AdminPannel';
+import MyLeads from './components/admin/MyLeads/MyLeads';
+import Profile from './components/admin/MyAccount/Profile';
+import ResetPassword from './components/admin/MyAccount/ResetPassword';
+import MyItineraries from './components/admin/MyItineraries/MyItineraries';
 
 const App = () => {
   return (
@@ -46,9 +50,15 @@ const App = () => {
 
       {/* Admin routes without Navbar + Footer */}
       <Route path="/admin" element={<AdminLayout />}>
-        <Route index element={<AdminPannel />} />   {/* /admin */}
-        {/* <Route path='buy-lead' element={<AdminLeads/>}/> */}
-        {/* <Route path="users" element={<AdminUsers />} /> /admin/users */}
+        <Route index element={<AdminPannel />} />
+        <Route path='my-leads' element={<MyLeads/>}/>
+        {/* <Route path="my-account" element={<MyAccount />} /> */}
+        {/* <Route path="my-account" element={<MyAccount />}> */}
+  <Route path="profile" element={<Profile />} />
+  <Route path="reset-password" element={<ResetPassword />} />
+  <Route path="my-itineraries" element={<MyItineraries />} />
+{/* </Route> */}
+
         {/* more admin routes here */}
       </Route>
     </Routes>
