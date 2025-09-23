@@ -136,6 +136,29 @@ const internationalItineraryData = {
       name: "Romantic Paris",
       title: "4 Days - Eiffel Tower & Seine River Cruise",
       image: parisImg,
+      details: [
+      { title: "Arrival & Leisure", description: "Transfer to hotel and relax." },
+      { title: "Theme Park Day", description: "Visit IMG Worlds of Adventure or Motiongate." },
+      { title: "Burj Khalifa & Fountain Show", description: "Visit 124th floor and watch Dubai Fountain." },
+      { title: "Departure", description: "Breakfast and transfer to airport." }
+    ],
+    inclusions: [
+      "3 Nights Accommodation",
+      "Entry Tickets to Parks",
+      "Burj Khalifa Entry",
+      "Daily Breakfast",
+      "Airport Transfers"
+    ],
+    exclusions: [
+        "International Airfare",
+        "Visa Fees",
+        "Personal Expenses",
+        "Travel Insurance",
+        "Tips and Gratuities"
+      ],
+      terms: "Booking must be confirmed at least 15 days prior to departure. Prices are subject to change based on availability.",
+      cancellation: "Full refund if cancelled 10 days prior to departure. 50% refund if cancelled 5 days before. No refund thereafter.",
+      paymentPolicy: "50% advance payment required to confirm booking. Balance payable 7 days before departure."
     },
     {
       id: 6,
