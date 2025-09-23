@@ -1,7 +1,96 @@
-import React, { useState, useCallback } from "react";
+import { useState, useCallback } from "react";
 import { AlertCircle, Check, Camera, Plus, Minus } from "lucide-react";
+import { country_and_states } from "./country-states";
 
-const MAX_FILE_SIZE = 2 * 1024 * 1024; // 2MB
+const MAX_FILE_SIZE = 2 * 1024 * 1024;
+
+const AddressField = ({ address, onChange, onRemove, label, errors, isBranch }) => {
+  const handleChange = (field, value) => {
+    onChange(field, value);
+  };
+
+  return (
+   <div className="border border-gray-200 mb-4 p-2">
+  <div className="flex justify-between items-center mb-2">
+    <label className="block text-xs font-medium text-gray-700">
+      {label}
+    </label>
+    {isBranch && (
+      <button
+        type="button"
+        onClick={onRemove}
+        className="w-8 h-8 flex items-center justify-center rounded-full border border-gray-300 bg-white hover:bg-gray-50"
+        aria-label="Remove Address"
+      >
+        <Minus className="w-4 h-4 text-gray-600" />
+      </button>
+    )}
+  </div>
+
+  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+    {[
+  { key: "house", placeholder: "House / Apartment / Flat Number" },
+  { key: "street", placeholder: "Street / Road / Locality" },
+  { key: "area", placeholder: "Area / Colony / Neighborhood" },
+  { key: "city", placeholder: "City / Town" },
+  { key: "state", placeholder: "State / Province / Region" },
+  { key: "zip", placeholder: "ZIP / Postal Code" },
+  { key: "country", placeholder: "Country" },
+].map(({ key, placeholder }) => (
+  <div key={key}>
+   {key === "state" ? (
+  <select
+    value={address.country}
+    onChange={(e) => {
+      handleChange("country", e.target.value);
+      handleChange("state", ""); // reset state when country changes
+    }}
+    className="w-full px-3 py-1.5 border rounded-lg text-sm"
+  >
+    <option value="">Select Country</option>
+    {Object.keys(country_and_states.country).map((code) => (
+      <option key={code} value={code}>
+        {country_and_states.country[code]}
+      </option>
+    ))}
+  </select>
+
+) : key === "country" ? (
+    <select
+    value={address.state}
+    onChange={(e) => handleChange("state", e.target.value)}
+    className="w-full px-3 py-1.5 border rounded-lg text-sm"
+    disabled={!address.country} // disable until country is selected
+  >
+    <option value="">Select State</option>
+    {address.country &&
+      country_and_states.states[address.country]?.map((state) => (
+        <option key={state.code} value={state.name}>
+          {state.name}
+        </option>
+      ))}
+  </select>) : (
+      <input
+        type="text"
+        placeholder={placeholder}
+        value={address[key]}
+        onChange={(e) => handleChange(key, e.target.value)}
+        className="w-full px-3 py-1.5 border rounded-lg text-sm"
+      />
+    )}
+    {errors?.[key] && (
+      <p className="text-red-500 text-xs mt-1" role="alert">
+        {errors[key]}
+      </p>
+    )}
+  </div>
+))}
+
+  </div>
+</div>
+
+  );
+};
 
 const Profile = () => {
   const [formData, setFormData] = useState({
@@ -13,8 +102,27 @@ const Profile = () => {
     // address: "",
     photo: null,
     secondaryEmail: [],
-    companyAddress: "",
-    branchAddresses: [],
+    companyAddress: {
+    house: "",
+    street: "",
+    area: "",
+    city: "",
+    state: "",
+    zip: "",
+    country: "",
+  },
+    branchAddresses: [
+  {
+    house: "",
+    street: "",
+    area: "",
+    city: "",
+    state: "",
+    zip: "",
+    country: "",
+  },
+],
+
   });
 
   const [errors, setErrors] = useState({});
@@ -56,6 +164,34 @@ const Profile = () => {
   }
 });
 
+// Validate company address
+const companyErrors = {};
+if (!formData.companyAddress.house.trim()) companyErrors.house = "House Number is required";
+if (!formData.companyAddress.street.trim()) companyErrors.street = "Street is required";
+if (!formData.companyAddress.area.trim()) companyErrors.area = "Area is required";
+if (!formData.companyAddress.city.trim()) companyErrors.city = "City is required";
+// if (!formData.companyAddress.state.trim()) companyErrors.state = "State is required";
+if (!formData.companyAddress.zip.trim()) companyErrors.zip = "ZIP code is required";
+// if (!formData.companyAddress.country.trim()) companyErrors.country = "Country is required";
+if (!formData.companyAddress.state.trim()) companyErrors.state = "State is required";
+if (!formData.companyAddress.country.trim()) companyErrors.country = "Country is required"
+if (Object.keys(companyErrors).length > 0) newErrors.companyAddress = companyErrors;
+
+// Validate branch addresses
+formData.branchAddresses.forEach((branch, idx) => {
+  const branchErrors = {};
+  if (!branch.house.trim()) branchErrors.house = "House Number is required";
+  if (!branch.street.trim()) branchErrors.street = "Street  is required";
+  if (!branch.area.trim()) branchErrors.area = "Area is required";
+  if (!branch.city.trim()) branchErrors.city = "City is required";
+  // if (!branch.state.trim()) branchErrors.state = "State is required";
+  if (!branch.zip.trim()) branchErrors.zip = "ZIP code is required";
+  // if (!branch.country.trim()) branchErrors.country = "Country is required";
+  if (!branch.state.trim()) branchErrors.state = "State is required";
+if (!branch.country.trim()) branchErrors.country = "Country is required";
+
+  if (Object.keys(branchErrors).length > 0) newErrors[`branch_${idx}`] = branchErrors;
+});
 
     if (!formData.phone.trim()) {
       newErrors.phone = "Phone number is required";
@@ -70,46 +206,38 @@ const Profile = () => {
         newErrors.photo = "Only image files are allowed";
       }
     }
-
-    if (!formData.companyAddress.trim()) {
-      newErrors.companyAddress = "Company address is required";
-    }
-
-    formData.branchAddresses.forEach((branch, i) => {
-      if (!branch.trim()) {
-        newErrors[`branch_${i}`] = "Branch address cannot be empty";
-      }
-    });
-
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   }, [formData]);
 
-
   const handleAddBranch = () => {
-    setFormData((prev) => ({
-      ...prev,
-      branchAddresses: [...prev.branchAddresses, ""],
-    }));
-  };
-  const handleRemoveBranch = (index) => {
-    setFormData((prev) => {
-      const updated = [...prev.branchAddresses];
-      updated.splice(index, 1);
-      return { ...prev, branchAddresses: updated };
-    });
-  };
-  const handleBranchChange = (index, value) => {
-    setFormData((prev) => {
-      const updated = [...prev.branchAddresses];
-      updated[index] = value;
-      return { ...prev, branchAddresses: updated };
-    });
-    const key = `branch_${index}`;
-    if (errors[key]) {
-      setErrors((prev) => ({ ...prev, [key]: "" }));
-    }
-  };
+  setFormData((prev) => ({
+    ...prev,
+    branchAddresses: [
+      ...prev.branchAddresses,
+      { house: "", street: "", area: "", city: "", state: "", zip: "", country: "" },
+    ],
+  }));
+};
+
+const handleRemoveBranch = (index) => {
+  setFormData((prev) => {
+    const updated = [...prev.branchAddresses];
+    updated.splice(index, 1);
+    return { ...prev, branchAddresses: updated };
+  });
+};
+
+const handleBranchChange = (index, field, value) => {
+  setFormData((prev) => {
+    const updated = [...prev.branchAddresses];
+    updated[index][field] = value;
+    return { ...prev, branchAddresses: updated };
+  });
+  const key = `branch_${index}_${field}`;
+  if (errors[key]) setErrors((prev) => ({ ...prev, [key]: "" }));
+};
+
 
   const handleInputChange = useCallback(
     (field, value) => {
@@ -121,6 +249,17 @@ const Profile = () => {
     },
     [errors]
   );
+
+  const handleCompanyAddressChange = (field, value) => {
+  setFormData((prev) => ({
+    ...prev,
+    companyAddress: {
+      ...prev.companyAddress,
+      [field]: value,
+    },
+  }));
+};
+
 
   const handleFileChange = (e) => {
     const file = e.target.files?.[0] || null;
@@ -381,70 +520,45 @@ const Profile = () => {
           </div>
         </div>
       ))}
-      
-      {/* Company Address with Add Branch button */}
-      <div className="flex items-center gap-2">
-        <button
-          type="button"
-          onClick={handleAddBranch}
-          className="w-8 h-8 flex items-center justify-center rounded-full border border-gray-300 bg-white hover:bg-gray-50"
-          aria-label="Add Branch Address"
-        >
-          <Plus className="w-4 h-4 text-gray-600" />
-        </button>
-        <div className="flex-1">
-          <label className="block text-xs font-medium text-gray-700 mb-0.5">
-            Company Address *
-          </label>
-          <input
-            type="text"
-            value={formData.companyAddress}
-            onChange={(e) =>
-              handleInputChange("companyAddress", e.target.value)
-            }
-            placeholder="Main Office Address"
-            disabled={isSubmitting}
-            className="w-full px-3 py-1.5 border border-gray-300 rounded-lg text-sm"
-          />
-          {errors.companyAddress && (
-            <p className="text-red-500 text-xs mt-1" role="alert">
-              {errors.companyAddress}
-            </p>
-          )}
-        </div>
-      </div>
 
-      {/* Branch Addresses */}
-      {formData.branchAddresses.map((branch, idx) => (
-        <div key={idx} className="flex items-center gap-2">
-          <button
-            type="button"
-            onClick={() => handleRemoveBranch(idx)}
-            className="w-8 h-8 flex items-center justify-center rounded-full border border-gray-300 bg-white hover:bg-gray-50"
-            aria-label="Remove Branch Address"
-          >
-            <Minus className="w-4 h-4 text-gray-600" />
-          </button>
-          <div className="flex-1">
-            <label className="block text-xs font-medium text-gray-700 mb-0.5">
-              Branch Address {idx + 1}
-            </label>
-            <input
-              type="text"
-              value={branch}
-              onChange={(e) => handleBranchChange(idx, e.target.value)}
-              placeholder="Branch Office Address"
-              disabled={isSubmitting}
-              className="w-full px-3 py-1.5 border border-gray-300 rounded-lg text-sm"
-            />
-            {errors[`branch_${idx}`] && (
-              <p className="text-red-500 text-xs mt-1" role="alert">
-                {errors[`branch_${idx}`]}
-              </p>
-            )}
-          </div>
-        </div>
-      ))}
+
+
+
+<div>
+
+<AddressField
+  address={formData.companyAddress}
+  onChange={handleCompanyAddressChange}
+  label="Company Address *"
+  errors={errors.companyAddress || {}}
+/>
+
+
+
+  {/* Branch Addresses */}
+  {formData.branchAddresses.map((branch, idx) => (
+    <AddressField
+      key={idx}
+      address={branch}
+      onChange={(field, value) => handleBranchChange(idx, field, value)}
+      onRemove={() => handleRemoveBranch(idx)}
+      label={`Branch Address ${idx + 1}`}
+      errors={errors[`branch_${idx}`] || {}}
+      isBranch
+    />
+  ))}
+
+  {/* Add Branch Button */}
+  <button
+    type="button"
+    onClick={handleAddBranch}
+    className="flex items-center gap-2 px-3 py-1 bg-blue-500 text-white rounded"
+  >
+    <Plus className="w-4 h-4" /> Add Branch Address
+  </button>
+</div>
+
+
 
       {/* Submit */}
       <button
