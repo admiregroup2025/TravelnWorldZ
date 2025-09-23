@@ -27,6 +27,7 @@ import Profile from './components/admin/MyAccount/Profile';
 import ResetPassword from './components/admin/MyAccount/ResetPassword';
 import MyItineraries from './components/admin/MyItineraries/MyItineraries';
 import ItineraryForm from './components/admin/MyItineraries/ItineraryForm';
+import ItineraryDetail from './components/admin/MyItineraries/ItineraryDetail';
 
 const App = () => {
   return (
@@ -50,19 +51,16 @@ const App = () => {
       </Route>
 
       {/* Admin routes without Navbar + Footer */}
-      <Route path="/admin" element={<AdminLayout />}>
-        <Route index element={<AdminPannel />} />
-        <Route path='my-leads' element={<MyLeads/>}/>
-        {/* <Route path="my-account" element={<MyAccount />} /> */}
-        {/* <Route path="my-account" element={<MyAccount />}> */}
+     <Route path="/admin" element={<AdminLayout />}>
+  <Route index element={<AdminPannel />} />
+  <Route path="my-leads" element={<MyLeads />} />
   <Route path="profile" element={<Profile />} />
   <Route path="reset-password" element={<ResetPassword />} />
-  <Route path="my-itineraries" element={<MyItineraries />} />
-    <Route path="Create-Itinary" element={<ItineraryForm />} />
-{/* </Route> */}
+  <Route path="Manage-Itianary" element={<MyItineraries />} />
+  <Route path="Create-Itinary" element={<ItineraryForm />} />
+  <Route path="destinations/:slug" element={<ItineraryDetail />} />
+</Route>
 
-        {/* more admin routes here */}
-      </Route>
     </Routes>
   );
 };

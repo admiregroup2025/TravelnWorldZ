@@ -70,8 +70,8 @@ const LeftSidebar = () => {
     // { path: "my-account/security", label: "Security" },
   ];
   const myItianarySubItems =[
-      { path: "Create-Itinary", label: "Create Itianery" },
-    { path: "Manage-Itianary", label: "Manage Itianery" },
+      { path: "Create-Itinary", label: "Create Itinerary" },
+    { path: "Manage-Itianary", label: "Manage Itinerary" },
         { path: "Add-Gallary", label: "Add Gallary" },
   ]
 
