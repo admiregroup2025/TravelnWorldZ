@@ -26,6 +26,7 @@ import MyLeads from './components/admin/MyLeads/MyLeads';
 import Profile from './components/admin/MyAccount/Profile';
 import ResetPassword from './components/admin/MyAccount/ResetPassword';
 import MyItineraries from './components/admin/MyItineraries/MyItineraries';
+import ItineraryForm from './components/admin/MyItineraries/ItineraryForm';
 
 const App = () => {
   return (
@@ -57,6 +58,7 @@ const App = () => {
   <Route path="profile" element={<Profile />} />
   <Route path="reset-password" element={<ResetPassword />} />
   <Route path="my-itineraries" element={<MyItineraries />} />
+    <Route path="Create-Itinary" element={<ItineraryForm />} />
 {/* </Route> */}
 
         {/* more admin routes here */}
