@@ -1,15 +1,31 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import DestinationCard from "../components/DestinationCard";
 import internationalDestinations from "../data/internationalDestinationsData";
+import { getJson } from "../utils/api";
 
 const InternationalDestinationsList = () => {
   const [showAll, setShowAll] = useState(false);
   const navigate = useNavigate();
   
-  const visibleDestinations = showAll
-    ? internationalDestinations
-    : internationalDestinations.slice(0, 8);
+  const [apiDestinations, setApiDestinations] = useState(null);
+
+  useEffect(() => {
+    getJson("/api/itineraries/cards?type=international")
+      .then((items) => {
+        // Map to shape used by DestinationCard without changing UI
+        const mapped = items.map((it) => ({
+          title: it.country ? it.country.replace(/-/g, " ") : it.title,
+          description: it.shortDescription || "",
+          image: it.coverImageUrl,
+        }));
+        setApiDestinations(mapped);
+      })
+      .catch(() => setApiDestinations(null));
+  }, []);
+
+  const source = apiDestinations && apiDestinations.length > 0 ? apiDestinations : internationalDestinations;
+  const visibleDestinations = showAll ? source : source.slice(0, 8);
   
   const handleCardClick = (title) => {
     const slug = title.toLowerCase().replace(/\s+/g, "-");

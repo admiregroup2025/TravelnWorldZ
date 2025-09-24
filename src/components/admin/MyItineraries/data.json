@@ -1,4 +1,3 @@
-
 [
   {
     "id": "1",
@@ -8,16 +7,41 @@
       "https://images.unsplash.com/photo-1507525428034-b723cf961d3e",
       "https://images.unsplash.com/photo-1507525428034-b723cf961d3e"
     ],
-    "type": "international"
+    "type": "international",
+    "itineraries": [
+      {
+        "id": "bali-1",
+        "title": "Bali Luxury Retreat",
+        "subtitle": "5 Days - Beaches, Spa & Culture",
+        "image": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e",
+        "days": 5
+      },
+      {
+        "id": "bali-2",
+        "title": "Family Fun in Bali",
+        "subtitle": "4 Days - Waterparks & Temples",
+        "image": "https://images.unsplash.com/photo-1549887534-4a23a5e5b2be",
+        "days": 4
+      }
+    ]
   },
   {
     "id": "2",
     "name": "Goa, India",
     "slug": "goa-india",
     "images": [
-     "https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?q=80&w=1074&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+      "https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?q=80&w=1074&auto=format&fit=crop"
     ],
-    "type": "domestic"
+    "type": "domestic",
+    "itineraries": [
+      {
+        "id": "goa-1",
+        "title": "Goa Beach Escape",
+        "subtitle": "3 Days - Sun, Sand & Sea",
+        "image": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e",
+        "days": 3
+      }
+    ]
   },
   {
     "id": "3",
@@ -27,24 +51,58 @@
       "https://images.unsplash.com/photo-1502602898657-3e91760cbb34",
       "https://images.unsplash.com/photo-1502602898657-3e91760cbb34"
     ],
-    "type": "international"
+    "type": "international",
+    "itineraries": [
+      {
+        "id": "paris-1",
+        "title": "Romantic Paris",
+        "subtitle": "4 Days - Eiffel Tower, Louvre & Seine Cruise",
+        "image": "https://images.unsplash.com/photo-1502602898657-3e91760cbb34",
+        "days": 4
+      }
+    ]
   },
   {
     "id": "4",
     "name": "Jaipur, India",
     "slug": "jaipur-india",
     "images": [
-    "https://images.unsplash.com/photo-1603262110263-fb0112e7cc33?q=80&w=1171&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+      "https://images.unsplash.com/photo-1603262110263-fb0112e7cc33?q=80&w=1171&auto=format&fit=crop"
     ],
-    "type": "domestic"
+    "type": "domestic",
+    "itineraries": [
+      {
+        "id": "jaipur-1",
+        "title": "Royal Jaipur Tour",
+        "subtitle": "3 Days - Palaces, Forts & Culture",
+        "image": "https://images.unsplash.com/photo-1603262110263-fb0112e7cc33",
+        "days": 3
+      }
+    ]
   },
   {
     "id": "5",
     "name": "Dubai, UAE",
     "slug": "dubai-uae",
     "images": [
-     " https://images.unsplash.com/photo-1518684079-3c830dcef090?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8ZHViYWl8ZW58MHx8MHx8fDA%3D"
+      "https://images.unsplash.com/photo-1518684079-3c830dcef090?w=600&auto=format&fit=crop&q=60"
     ],
-    "type": "international"
+    "type": "international",
+    "itineraries": [
+      {
+        "id": "dubai-1",
+        "title": "Dubai Luxury Tour",
+        "subtitle": "5 Days - Luxury Shopping & Desert Safari",
+        "image": "https://images.unsplash.com/photo-1549887534-4a23a5e5b2be",
+        "days": 5
+      },
+      {
+        "id": "dubai-2",
+        "title": "Family Fun in Dubai",
+        "subtitle": "4 Days - Theme Parks & Burj Khalifa",
+        "image": "https://images.unsplash.com/photo-1533681706739-6d94e7b05e3f",
+        "days": 4
+      }
+    ]
   }
 ]

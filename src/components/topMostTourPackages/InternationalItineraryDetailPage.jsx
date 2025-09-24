@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
+import { getJson, USE_BACKEND } from "../../utils/api";
 import internationalItineraryData from "../../data/internationalItineraryData";
 import {
   FaArrowLeft,
@@ -14,9 +15,21 @@ import {
 
 const InternationalItineraryDetailPage = () => {
   const { destinationId, itineraryId } = useParams();
-  const itineraries = internationalItineraryData[destinationId] || [];
-  const itinerary = itineraries.find((item) => item.id === parseInt(itineraryId, 10));
+  const [itinerary, setItinerary] = useState(null);
   const [activeTab, setActiveTab] = useState("overview");
+
+  useEffect(() => {
+    if (!itineraryId) return;
+    if (!USE_BACKEND) {
+      const items = internationalItineraryData[destinationId] || [];
+      const local = items.find((item) => String(item.id) === String(itineraryId));
+      setItinerary(local || null);
+      return;
+    }
+    getJson(`/api/itineraries/${itineraryId}`)
+      .then((doc) => setItinerary(doc))
+      .catch(() => setItinerary(null));
+  }, [itineraryId]);
 
   if (!itinerary) {
     return (
@@ -53,15 +66,15 @@ const InternationalItineraryDetailPage = () => {
       </Link>
 
       {/* Title */}
-      <h1 className="text-4xl font-bold text-blue-900 mb-6">{itinerary.name}</h1>
+      <h1 className="text-4xl font-bold text-blue-900 mb-6">{itinerary.title || itinerary.name}</h1>
 
       {/* Image and Profile Container */}
       <div className="flex gap-8 mb-8">
         {/* Left: Image 60% */}
         <div className="w-3/5">
           <img
-            src={itinerary.image}
-            alt={itinerary.name}
+            src={itinerary.coverImageUrl || itinerary.image}
+            alt={itinerary.title || itinerary.name}
             className="w-full h-[400px] object-cover rounded-lg shadow"
           />
         </div>
@@ -110,20 +123,20 @@ const InternationalItineraryDetailPage = () => {
         {activeTab === "overview" && (
           <div>
             <h2 className="text-xl font-semibold text-gray-800 mb-4">About this Trip</h2>
-            <p className="text-gray-700 leading-relaxed">{itinerary.title}</p>
+            <p className="text-gray-700 leading-relaxed">{itinerary.shortDescription || itinerary.title}</p>
           </div>
         )}
 
         {activeTab === "itinerary" && (
           <div>
             <h2 className="text-xl font-semibold text-gray-800 mb-4">Day-wise Itinerary</h2>
-            {itinerary.details?.map((day, index) => (
+            {(itinerary.dayPlans || itinerary.details)?.map((day, index) => (
               <div
                 key={index}
                 className="mb-4 border-l-4 border-blue-500 pl-4 py-2 bg-gray-50 rounded"
               >
                 <h3 className="font-bold text-blue-700">
-                  Day {index + 1}: {day.title}
+                  Day {day.day || index + 1}: {day.title}
                 </h3>
                 <p className="text-gray-700">{day.description}</p>
               </div>
@@ -158,21 +171,21 @@ const InternationalItineraryDetailPage = () => {
         {activeTab === "terms" && (
           <div>
             <h2 className="text-xl font-semibold text-gray-800 mb-4">Terms & Conditions</h2>
-            <p className="text-gray-700 leading-relaxed">{itinerary.terms || "No terms available."}</p>
+            <p className="text-gray-700 leading-relaxed">{"No terms available."}</p>
           </div>
         )}
 
         {activeTab === "cancellation" && (
           <div>
             <h2 className="text-xl font-semibold text-gray-800 mb-4">Cancellation Policy</h2>
-            <p className="text-gray-700 leading-relaxed">{itinerary.cancellation || "No cancellation policy available."}</p>
+            <p className="text-gray-700 leading-relaxed">{"No cancellation policy available."}</p>
           </div>
         )}
 
         {activeTab === "paymentPolicy" && (
           <div>
             <h2 className="text-xl font-semibold text-gray-800 mb-4">Payment Policy</h2>
-            <p className="text-gray-700 leading-relaxed">{itinerary.paymentPolicy || "No payment policy available."}</p>
+            <p className="text-gray-700 leading-relaxed">{"No payment policy available."}</p>
           </div>
         )}
       </div>

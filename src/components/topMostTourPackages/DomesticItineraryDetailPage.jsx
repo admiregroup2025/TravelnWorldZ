@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
-import domesticItineraryData from "../../data/domesticItineraryData"; // update path if needed
+import { getJson, USE_BACKEND } from "../../utils/api";
+import domesticItineraryData from "../../data/domesticItineraryData";
 import {
   FaArrowLeft,
   FaMapMarkerAlt,
@@ -13,9 +14,21 @@ import {
 
 const DomesticItineraryDetailPage = () => {
   const { destinationId, itineraryId } = useParams();
-  const itineraries = domesticItineraryData[destinationId] || [];
-  const itinerary = itineraries.find((item) => item.id === parseInt(itineraryId, 10));
+  const [itinerary, setItinerary] = useState(null);
   const [activeTab, setActiveTab] = useState("overview");
+
+  useEffect(() => {
+    if (!itineraryId) return;
+    if (!USE_BACKEND) {
+      const items = domesticItineraryData[destinationId] || [];
+      const local = items.find((item) => String(item.id) === String(itineraryId));
+      setItinerary(local || null);
+      return;
+    }
+    getJson(`/api/itineraries/${itineraryId}`)
+      .then((doc) => setItinerary(doc))
+      .catch(() => setItinerary(null));
+  }, [itineraryId]);
 
   if (!itinerary) {
     return (
@@ -52,25 +65,25 @@ const DomesticItineraryDetailPage = () => {
       </Link>
 
       {/* Title */}
-      <h1 className="text-3xl font-bold text-blue-900 mb-4">{itinerary.name}</h1>
+      <h1 className="text-3xl font-bold text-blue-900 mb-4">{itinerary.title || itinerary.name}</h1>
 
       <div className="flex gap-6 mb-6">
         {/* Image Left - 60% */}
         <img
-          src={itinerary.image}
-          alt={itinerary.name}
+          src={itinerary.coverImageUrl || itinerary.image}
+          alt={itinerary.title || itinerary.name}
           className="w-3/5 h-80 object-cover rounded-lg shadow"
         />
 
         {/* Profile / Summary Right - 40% */}
         <div className="w-2/5 bg-white p-4 rounded-lg shadow flex flex-col justify-center">
-          <h2 className="text-xl font-semibold mb-2">{itinerary.title}</h2>
+          <h2 className="text-xl font-semibold mb-2">{itinerary.shortDescription || itinerary.title}</h2>
           {/* You can customize profile or summary details here */}
           <p className="text-gray-700 mb-4">
             {/* Example summary - replace or add your agent/contact info or highlights */}
-            Duration: {itinerary.duration || "N/A"}
+            Duration: {itinerary.durationDays || itinerary.duration || "N/A"}
             <br />
-            Starting Price: {itinerary.startingPrice || "Contact for pricing"}
+            Starting Price: {itinerary.priceFrom || itinerary.startingPrice || "Contact for pricing"}
           </p>
           {/* Example contact buttons - replace or remove as needed */}
           <div className="flex flex-col gap-3">
@@ -112,13 +125,13 @@ const DomesticItineraryDetailPage = () => {
         {activeTab === "itinerary" && (
           <div>
             <h2 className="text-xl font-semibold text-gray-800 mb-4">Day-wise Itinerary</h2>
-            {itinerary.details?.map((day, index) => (
+            {(itinerary.dayPlans || itinerary.details)?.map((day, index) => (
               <div
                 key={index}
                 className="mb-4 border-l-4 border-blue-500 pl-4 py-2 bg-gray-50 rounded"
               >
                 <h3 className="font-bold text-blue-700">
-                  Day {index + 1}: {day.title}
+                  Day {day.day || index + 1}: {day.title}
                 </h3>
                 <p className="text-gray-700">{day.description}</p>
               </div>
@@ -151,21 +164,21 @@ const DomesticItineraryDetailPage = () => {
         {activeTab === "terms" && (
           <div>
             <h2 className="text-xl font-semibold text-gray-800 mb-4">Terms & Conditions</h2>
-            <p className="text-gray-700 leading-relaxed">{itinerary.terms || "No terms available."}</p>
+            <p className="text-gray-700 leading-relaxed">{"No terms available."}</p>
           </div>
         )}
 
         {activeTab === "cancellation" && (
           <div>
             <h2 className="text-xl font-semibold text-gray-800 mb-4">Cancellation Policy</h2>
-            <p className="text-gray-700 leading-relaxed">{itinerary.cancellation || "No cancellation policy available."}</p>
+            <p className="text-gray-700 leading-relaxed">{"No cancellation policy available."}</p>
           </div>
         )}
 
         {activeTab === "paymentPolicy" && (
           <div>
             <h2 className="text-xl font-semibold text-gray-800 mb-4">Payment Policy</h2>
-            <p className="text-gray-700 leading-relaxed">{itinerary.paymentPolicy || "No payment policy specified."}</p>
+            <p className="text-gray-700 leading-relaxed">{"No payment policy specified."}</p>
           </div>
         )}
       </div>
