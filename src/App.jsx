@@ -179,7 +179,7 @@ const App = () => {
   <Route path="reset-password" element={<ResetPassword />} />
   <Route path="Manage-Itianary" element={<MyItineraries />} />
   <Route path="Create-Itinary" element={<ItineraryForm />} />
-  <Route path="destinations/:slug" element={<ItineraryParticularCard />} />
+  <Route path="destinations/:slug" element={<ItineraryDetail />} />
 </Route>
 
     </Routes>
