@@ -7,6 +7,7 @@ import TrendingDestination from "../components/homeComponent/TrendingDestination
 import Hero from "../components/homeComponent/Hero.jsx";
 import TopMostBanner from "../components/homeComponent/TopMostBanner.jsx";
 import VerifiedTransportCard from "../components/homeComponent/VerifiedTransportCard.jsx";
+import TourPackages from "../components/homeComponent/TourPackages.jsx";
 
 
 
@@ -26,8 +27,10 @@ const Home = () => {
       </section>
       <div> 
         <BannerAds/>
-        <TrendingDestination />
         <VerifiedTransportCard />
+        <TrendingDestination />
+        <TourPackages />
+        
         <HomeContactUs/>
         <Testimonials />
 

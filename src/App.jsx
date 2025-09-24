@@ -16,6 +16,10 @@ import AgentDetailPage from './pages/AgentDetailPage.jsx';
 import BlogDetails from './pages/BlogDetails.jsx';
 import EnquiryForm from './forms/EnquiryForm.jsx';
 import GetAQuote from './components/GetAQuote.jsx';
+import InternationalDestination from './pages/InternationalDestination.jsx';
+import InternationalTourPackagesList from './pages/InternationalTourPackagesList.jsx';
+import TransportersList from './components/homeComponent/TranspotersLists.jsx';
+import VerifiedTransportDetails from './components/VerifiedTransportDetails.jsx';
 
 const App = () => {
   return (
@@ -38,6 +42,10 @@ const App = () => {
         <Route path='/trending-destinations/:destinationId/:agencyId' element={<AgentDetailPage/>} />
         <Route path='/nawlesh' element={<EnquiryForm/>} />
         <Route path='/get-a-quote/:destinationId/:agencyId' element={<GetAQuote />} />
+        <Route path='/verified-transporters-list' element={<TransportersList />} />
+        <Route path='/verified-transport-details/:id' element={<VerifiedTransportDetails />} />
+        <Route path='/international' element={<InternationalDestination />} />
+        <Route path='/international-list' element={<InternationalTourPackagesList />} />
         {/* Add more routes here as needed */}
       </Routes>
       
