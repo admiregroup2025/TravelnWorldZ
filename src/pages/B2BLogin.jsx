@@ -15,7 +15,6 @@ const B2BLogin = () => {
 
   const navigate = useNavigate();
 
-  // ✅ Validation
   const validateForm = useCallback(() => {
     const newErrors = {};
 

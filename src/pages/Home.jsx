@@ -7,17 +7,15 @@ import TrendingDestination from "../components/homeComponent/TrendingDestination
 import Hero from "../components/homeComponent/Hero.jsx";
 import TopMostBanner from "../components/homeComponent/TopMostBanner.jsx";
 import VerifiedTransportCard from "../components/homeComponent/VerifiedTransportCard.jsx";
+import TourPackages from "../components/homeComponent/TourPackages.jsx";
 
 
 
 const Home = () => {
   return (
     <div>
-      {/* Hero Section with Video + Form   */}
-        <TopMostBanner/>
+       <TopMostBanner/>
        <Hero/>
-
-      {/*  Next section after Hero */}
       <section className="p-10 text-center">
         <h2 className="text-2xl font-bold"></h2>
         <p className="mt-4 text-gray-600">
@@ -26,8 +24,9 @@ const Home = () => {
       </section>
       <div> 
         <BannerAds/>
-        <TrendingDestination />
         <VerifiedTransportCard />
+        <TrendingDestination />
+        <TourPackages />
         <HomeContactUs/>
         <Testimonials />
 

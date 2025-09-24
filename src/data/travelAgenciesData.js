@@ -3,7 +3,7 @@ const travelAgenciesData = {
     {
       id: "agency1",
       agentId: "agent1",
-      name: "Himalayan Treks",
+      name: "Himalayan",
       title: "Expert mountain trekking agency",
       image: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=400&auto=format&fit=crop"
     },

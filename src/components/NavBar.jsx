@@ -41,7 +41,6 @@ const NavBar = () => {
             >
               Plan My Trip
             </button>
-            
           </div>
 
           {/* Mobile Menu Toggle */}
@@ -87,9 +86,7 @@ const NavBar = () => {
             >
               Plan My Trip
             </button>
-            
           </div>
-          
         </div>
       )}
 

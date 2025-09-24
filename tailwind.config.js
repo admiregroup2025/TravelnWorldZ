@@ -73,5 +73,19 @@ module.exports = {
       },
     },
   },
-  plugins: [],
+  plugins: [
+  function ({ addUtilities }) {
+    addUtilities({
+      '.no-scrollbar': {
+        /* Chrome, Safari and Opera */
+        '&::-webkit-scrollbar': {
+          display: 'none',
+        },
+        /* Firefox */
+        '-ms-overflow-style': 'none',
+        'scrollbar-width': 'none',
+      },
+    });
+  },
+],
 };
