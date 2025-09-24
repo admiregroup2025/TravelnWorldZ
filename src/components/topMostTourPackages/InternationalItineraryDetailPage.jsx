@@ -192,10 +192,10 @@ const InternationalItineraryDetailPage = () => {
 
       {/* Buttons */}
       <div className="mt-8 flex gap-4">
-        <button className="bg-blue-700 hover:bg-blue-900 text-white px-6 py-3 rounded">
+        <button  className="bg-blue-700 hover:bg-blue-900 text-white px-6 py-3 rounded">
           Get a Quote
         </button>
-        <Link to="/contactUS">
+        <Link to="/contactUs">
           <button className="border border-gray-400 px-6 py-3 rounded hover:bg-gray-100">
             Enquire Now
           </button>

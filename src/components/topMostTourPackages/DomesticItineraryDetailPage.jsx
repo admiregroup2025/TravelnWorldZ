@@ -76,22 +76,23 @@ const DomesticItineraryDetailPage = () => {
         />
 
         {/* Profile / Summary Right - 40% */}
-        <div className="w-2/5 bg-white p-4 rounded-lg shadow flex flex-col justify-center">
-          <h2 className="text-xl font-semibold mb-2">{itinerary.shortDescription || itinerary.title}</h2>
-          {/* You can customize profile or summary details here */}
-          <p className="text-gray-700 mb-4">
-            {/* Example summary - replace or add your agent/contact info or highlights */}
-            Duration: {itinerary.durationDays || itinerary.duration || "N/A"}
-            <br />
-            Starting Price: {itinerary.priceFrom || itinerary.startingPrice || "Contact for pricing"}
-          </p>
-          {/* Example contact buttons - replace or remove as needed */}
-          <div className="flex flex-col gap-3">
-            <button className="bg-blue-600 text-white py-2 rounded">Contact Agent</button>
-            <Link to="/contact" className="text-center border border-blue-600 py-2 rounded text-blue-600 hover:bg-blue-50">
-              Enquire Now
-            </Link>
-          </div>
+        <div className="w-2/5 bg-white p-6 rounded-lg shadow flex flex-col items-center">
+          <img
+            src="https://via.placeholder.com/120"
+            alt="Agent Profile"
+            className="rounded-full border-4 border-orange-300 mb-4"
+          />
+          <h3 className="text-xl font-bold text-blue-900 mb-1">Agent Uttarakhand</h3>
+          <p className="text-orange-500 mb-4">Travel Expert</p>
+          <button className="bg-orange-500 text-white w-full mb-3 py-2 rounded flex items-center justify-center gap-2">
+            Call: +91-9876543210
+          </button>
+          <button className="bg-blue-600 text-white w-full mb-3 py-2 rounded flex items-center justify-center gap-2">
+            Email Us
+          </button>
+          <button className="bg-green-500 text-white w-full py-2 rounded flex items-center justify-center gap-2">
+            WhatsApp
+          </button>
         </div>
       </div>
 
@@ -188,7 +189,7 @@ const DomesticItineraryDetailPage = () => {
         <button className="bg-blue-700 hover:bg-blue-900 text-white px-6 py-3 rounded">
           Get a Quote
         </button>
-        <Link to="/contact">
+        <Link to="/contactUs">
           <button className="border border-gray-400 px-6 py-3 rounded hover:bg-gray-100">
             Enquire Now
           </button>

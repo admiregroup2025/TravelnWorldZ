@@ -1,21 +1,21 @@
 // src/data/domesticDestinationData.js
 
-import goaImg from "../assets/images/tourPackages/goa.jpg";
-import darjeelingImg from "../assets/images/tourPackages/goa.jpg";
-import kashmirImg from "../assets/images/tourPackages/goa.jpg";
-import mumbaiImg from "../assets/images/tourPackages/mumbai.JPG";
-import jaipurImg from "../assets/images/tourPackages/goa.jpg";
-import keralaImg from "../assets/images/tourPackages/goa.jpg";
-import ladakhImg from "../assets/images/tourPackages/goa.jpg";
-import andamanImg from "../assets/images/tourPackages/goa.jpg";
-import varanasiImg from "../assets/images/tourPackages/goa.jpg";
-import rishikeshImg from "../assets/images/tourPackages/goa.jpg";
-import shimlaImg from "../assets/images/tourPackages/goa.jpg";
-import ootyImg from "../assets/images/tourPackages/goa.jpg";
-import agraImg from "../assets/images/tourPackages/goa.jpg";
-import mysoreImg from "../assets/images/tourPackages/goa.jpg";
-import pondicherryImg from "../assets/images/tourPackages/goa.jpg";
-import masuriImg from "../assets/images/tourPackages/goa.jpg"; // fix name
+import goaImg from "../assets/images/tourPackages/domestic/goa.png";
+import darjeelingImg from "../assets/images/tourPackages/domestic/darjeeling.jpg";
+import kashmirImg from "../assets/images/tourPackages/domestic/kashmir.jpg";
+import mumbaiImg from "../assets/images/tourPackages/domestic/mumbai.JPG";
+import jaipurImg from "../assets/images/tourPackages/domestic/jaipur.png";
+import keralaImg from "../assets/images/tourPackages/domestic/kerala .png";
+import ladakhImg from "../assets/images/tourPackages/domestic/ladakh.png";
+import andamanImg from "../assets/images/tourPackages/domestic/andaman.png";
+import varanasiImg from "../assets/images/tourPackages/domestic/varanasi.png";
+import rishikeshImg from "../assets/images/tourPackages/domestic/rishikesh.png";
+import shimlaImg from "../assets/images/tourPackages/domestic/shimla.png";
+import ootyImg from "../assets/images/tourPackages/domestic/ooty.png";
+import agraImg from "../assets/images/tourPackages/domestic/agra.png";
+import mysoreImg from "../assets/images/tourPackages/domestic/mysore.png";
+import pondicherryImg from "../assets/images/tourPackages/domestic/pondicherry.png";
+import masuriImg from "../assets/images/tourPackages/domestic/masuri.png";
 
 const domesticDestinations = [
   {
@@ -54,7 +54,7 @@ const domesticDestinations = [
     image: ladakhImg,
   },
   {
-    title: "Andaman Islands",
+    title: "Andaman",
     description: "Pristine beaches, coral reefs, and water sports.",
     image: andamanImg,
   },

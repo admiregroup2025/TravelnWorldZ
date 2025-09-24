@@ -2,14 +2,14 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import DestinationCard from "../DestinationCard";
 
-import vietnamImg from "../../assets/images/tourPackages/vietnam.jpeg";
-import dubaiImg from "../../assets/images/tourPackages/dubai.jpeg";
-import parisImg from "../../assets/images/tourPackages/paris.jpeg";
-import maldiveImg from "../../assets/images/tourPackages/maldive.jpeg";
-import goaImg from "../../assets/images/tourPackages/goa.jpg";
-import darjeelingImg from "../../assets/images/tourPackages/darjeeling.jpg";
-import kashmirImg from "../../assets/images/tourPackages/kashmir.jpg";
-import MumbaiImg from "../../assets/images/tourPackages/mumbai.JPG";
+import vietnamImg from "../../assets/images/tourPackages/international/vietnam.jpeg";
+import dubaiImg from "../../assets/images/tourPackages/international/dubai.jpeg";
+import parisImg from "../../assets/images/tourPackages/international/paris.jpeg";
+import maldiveImg from "../../assets/images/tourPackages/international/maldive.jpeg";
+import goaImg from "../../assets/images/tourPackages/domestic/goa.png";
+import darjeelingImg from "../../assets/images/tourPackages/domestic/darjeeling.jpg";
+import kashmirImg from "../../assets/images/tourPackages/domestic/kashmir.jpg";
+import MumbaiImg from "../../assets/images/tourPackages/domestic/mumbai.JPG";
 
 const TourPackages = () => {
   const navigate = useNavigate();

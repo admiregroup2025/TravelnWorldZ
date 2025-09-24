@@ -123,6 +123,7 @@ import DomesticItinerary from './components/topMostTourPackages/DomesticItinerar
 import InternationalItinerary from './components/topMostTourPackages/InternationalItinerary.jsx';
 import InternationalItineraryDetailPage from './components/topMostTourPackages/InternationalItineraryDetailPage.jsx';
 import DomesticItineraryDetailPage from './components/topMostTourPackages/DomesticItineraryDetailPage.jsx';
+import TourPGetAQuote from './components/topMostTourPackages/tourPGetAQuote.jsx';
 // admin pages
 // import AdminDashboard from './pages/admin/AdminDashboard';
 // import AdminUsers from './pages/admin/AdminUsers';
@@ -134,6 +135,7 @@ import MyItineraries from './components/admin/MyItineraries/MyItineraries';
 import ItineraryForm from './components/admin/MyItineraries/ItineraryForm';
 import ItineraryDetail from './components/admin/MyItineraries/ItineraryDetail';
 import ItineraryParticularCard from './components/admin/MyItineraries/ItineraryParticularCard.jsx';
+
 
 const App = () => {
   return (
@@ -166,6 +168,7 @@ const App = () => {
         <Route path='/domestic' element={<DomesticDestinationsList />} />
         <Route path='/domestic-itinerary/:destinationId' element={<DomesticItinerary />} />
         <Route path='/domestic-itinerary/:destinationId/:itineraryId' element={<DomesticItineraryDetailPage />} />
+        <Route path='/get-a-quote/:type/:destinationId/:id' element={<TourPGetAQuote />} />
       </Route>
 
       {/* Admin routes without Navbar + Footer */}
