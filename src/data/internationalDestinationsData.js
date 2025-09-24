@@ -1,19 +1,19 @@
-import dubaiImg from "../assets/images/tourPackages/vietnam.jpeg";
-import vietnamImg from "../assets/images/tourPackages/vietnam.jpeg";
-import parisImg from "../assets/images/tourPackages/paris.jpeg";
-import maldiveImg from "../assets/images/tourPackages/maldive.jpeg";
-import thailandImg from "../assets/images/tourPackages/paris.jpeg";
-import singaporeImg from "../assets/images/tourPackages/vietnam.jpeg";
-import baliImg from "../assets/images/tourPackages/maldive.jpeg";
-import londonImg from "../assets/images/tourPackages/vietnam.jpeg";
-import romeImg from "../assets/images/tourPackages/maldive.jpeg";
-import switzerlandImg from "../assets/images/tourPackages/vietnam.jpeg";
-import turkeyImg from "../assets/images/tourPackages/maldive.jpeg";
-import greeceImg from "../assets/images/tourPackages/vietnam.jpeg";
-import newyorkImg from "../assets/images/tourPackages/maldive.jpeg";
-import tokyoImg from "../assets/images/tourPackages/vietnam.jpeg";
-import sydneyImg from "../assets/images/tourPackages/maldive.jpeg";
-import egyptImg from "../assets/images/tourPackages/vietnam.jpeg";
+import dubaiImg from "../assets/images/tourPackages/international/dubai.jpeg";
+import vietnamImg from "../assets/images/tourPackages/international/vietnam.jpeg";
+import parisImg from "../assets/images/tourPackages/international/paris.jpeg";
+import maldiveImg from "../assets/images/tourPackages/international/maldive.jpeg";
+import thailandImg from "../assets/images/tourPackages/international/thailand.png";
+import singaporeImg from "../assets/images/tourPackages/international/singapore.png";
+import baliImg from "../assets/images/tourPackages/international/bali .png";
+import londonImg from "../assets/images/tourPackages/international/london.png";
+import romeImg from "../assets/images/tourPackages/international/rome.png";
+import switzerlandImg from "../assets/images/tourPackages/international/switzerland.png";
+import turkeyImg from "../assets/images/tourPackages/international/turkey.png";
+import greeceImg from "../assets/images/tourPackages/international/greece.png";
+import newyorkImg from "../assets/images/tourPackages/international/US.png";
+import tokyoImg from "../assets/images/tourPackages/international/tokyo.png";
+import sydneyImg from "../assets/images/tourPackages/international/sydney.png";
+import egyptImg from "../assets/images/tourPackages/international/egypt.png";
 
 const internationalDestinations = [
   {

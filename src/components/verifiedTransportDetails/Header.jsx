@@ -131,6 +131,7 @@ const Header = ({ travelItem }) => {
       <a href="#info" className="hover:text-blue-600">Quick Info</a>
       <a href="#services" className="hover:text-blue-600">Services</a>
       <a href="#reviews" className="hover:text-blue-600">Reviews</a>
+      <a href="#blog" className="hover:text-blue-600">Blog</a>
     </nav>
   </div>
 

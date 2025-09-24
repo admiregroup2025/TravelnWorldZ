@@ -27,7 +27,9 @@ const DomesticItinerary = () => {
               />
               <h3 className="text-lg font-semibold">{name}</h3>
               <p className="text-sm text-gray-600 mb-4 text-center">{title}</p>
-              <button className="bg-blue-700 hover:bg-blue-900 text-white px-4 py-2 rounded w-full">
+              <button 
+                onClick={() => navigate(`/get-a-quote/domestic/${destinationId}/${id}`)}
+                className="bg-blue-700 hover:bg-blue-900 text-white px-4 py-2 rounded w-full">
                 Get a Quote
               </button>
                <button 
