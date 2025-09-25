@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from 'react-router-dom';
 import { Bookmark, Share2, Edit3 } from "lucide-react";
 import CustomerEnquiryForm from "../../forms/CustomerEnquiryFrom";
 const Header = ({ travelItem }) => {
@@ -8,7 +9,7 @@ const Header = ({ travelItem }) => {
     const shareData = {
       title: travelItem.title,
       text: `Check out this travel spot: ${travelItem.title}`,
-      url: window.location.href, // or any URL you want to share
+      url: window.location.href, 
     };
 
     if (navigator.share) {
@@ -131,7 +132,13 @@ const Header = ({ travelItem }) => {
       <a href="#info" className="hover:text-blue-600">Quick Info</a>
       <a href="#services" className="hover:text-blue-600">Services</a>
       <a href="#reviews" className="hover:text-blue-600">Reviews</a>
-      <a href="#blog" className="hover:text-blue-600">Blog</a>
+      <Link
+        to={`/transporter/${travelItem.id}/${travelItem.slug}/blogs`}
+        className="hover:text-blue-600"
+      >
+        Blog
+      </Link>
+
     </nav>
   </div>
 

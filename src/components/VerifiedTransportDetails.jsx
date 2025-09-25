@@ -11,6 +11,7 @@ import RightSide from "./verifiedTransportDetails/RightSide";
 // import HappyCustomerImages from "./verifiedTransportDetails/HappyCustomerImages";
 import HappyCustomerVideo from "./verifiedTransportDetails/HappyCustomerVideo";
 
+
 const VerifiedTransportDetails = () => {
   const { id } = useParams();
   const travelItem = transportData.find((item) => item.id === parseInt(id));
@@ -39,7 +40,7 @@ const VerifiedTransportDetails = () => {
 
           {/* Photos */}
            <Gallery  travelItem={travelItem}/>
-
+          
           {/* Tour Packages */}
         
             <VerifyTour travelItem={travelItem}/>

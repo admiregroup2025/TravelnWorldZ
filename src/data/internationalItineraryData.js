@@ -587,7 +587,7 @@ const internationalItineraryData = {
       id: 7,
       name: "singapore Honeymoon",
       title: "5 Days - Overwater Villas & Private Beaches",
-      image: maldiveImg,
+      image: singaporeImg,
       details: [
         { title: "Arrival in Dubai", description: "Transfer to hotel and rest." },
         { title: "City Tour", description: "Explore Dubai Marina, Palm Jumeirah, and Dubai Mall." },
@@ -618,7 +618,7 @@ const internationalItineraryData = {
       id: 8,
       name: "Adventure in singapore",
       title: "4 Days - Diving, Snorkeling & Jet Skiing",
-      image: maldiveImg,
+      image: singaporeImg,
       details: [
         { title: "Arrival in Dubai", description: "Transfer to hotel and rest." },
         { title: "City Tour", description: "Explore Dubai Marina, Palm Jumeirah, and Dubai Mall." },
@@ -649,7 +649,7 @@ const internationalItineraryData = {
       id: 7,
       name: "singapore Honeymoon",
       title: "5 Days - Overwater Villas & Private Beaches",
-      image: maldiveImg,
+      image: singaporeImg,
       details: [
         { title: "Arrival in Dubai", description: "Transfer to hotel and rest." },
         { title: "City Tour", description: "Explore Dubai Marina, Palm Jumeirah, and Dubai Mall." },
@@ -680,7 +680,7 @@ const internationalItineraryData = {
       id: 8,
       name: "Adventure in singapore",
       title: "4 Days - Diving, Snorkeling & Jet Skiing",
-      image: maldiveImg,
+      image: singaporeImg,
       details: [
         { title: "Arrival in Dubai", description: "Transfer to hotel and rest." },
         { title: "City Tour", description: "Explore Dubai Marina, Palm Jumeirah, and Dubai Mall." },
@@ -713,7 +713,7 @@ const internationalItineraryData = {
       id: 7,
       name: "bali Honeymoon",
       title: "5 Days -Overwater Villas & Private Beaches",
-      image: maldiveImg,
+      image: baliImg,
       details: [
         { title: "Arrival in Dubai", description: "Transfer to hotel and rest." },
         { title: "City Tour", description: "Explore Dubai Marina, Palm Jumeirah, and Dubai Mall." },
@@ -744,7 +744,7 @@ const internationalItineraryData = {
       id: 8,
       name: "Adventure in bali",
       title: "4 Days - Diving, Snorkeling & Jet Skiing",
-      image: maldiveImg,
+      image: baliImg,
       details: [
         { title: "Arrival in Dubai", description: "Transfer to hotel and rest." },
         { title: "City Tour", description: "Explore Dubai Marina, Palm Jumeirah, and Dubai Mall." },
@@ -775,7 +775,7 @@ const internationalItineraryData = {
       id: 7,
       name: "bali Honeymoon",
       title: "5 Days - Overwater Villas & Private Beaches",
-      image: maldiveImg,
+      image: baliImg,
       details: [
         { title: "Arrival in Dubai", description: "Transfer to hotel and rest." },
         { title: "City Tour", description: "Explore Dubai Marina, Palm Jumeirah, and Dubai Mall." },
@@ -806,7 +806,7 @@ const internationalItineraryData = {
       id: 8,
       name: "Adventure in bali",
       title: "4 Days - Diving, Snorkeling & Jet Skiing",
-      image: maldiveImg,
+      image: baliImg,
       details: [
         { title: "Arrival in Dubai", description: "Transfer to hotel and rest." },
         { title: "City Tour", description: "Explore Dubai Marina, Palm Jumeirah, and Dubai Mall." },
@@ -839,7 +839,7 @@ const internationalItineraryData = {
       id: 7,
       name: "london Honeymoon",
       title: "5 Days - Overwater Villas & Private Beaches",
-      image: maldiveImg,
+      image: londonImg,
       details: [
         { title: "Arrival in Dubai", description: "Transfer to hotel and rest." },
         { title: "City Tour", description: "Explore Dubai Marina, Palm Jumeirah, and Dubai Mall." },
@@ -870,7 +870,7 @@ const internationalItineraryData = {
       id: 8,
       name: "Adventure in london",
       title: "4 Days - Diving, Snorkeling & Jet Skiing",
-      image: maldiveImg,
+      image: londonImg,
       details: [
         { title: "Arrival in Dubai", description: "Transfer to hotel and rest." },
         { title: "City Tour", description: "Explore Dubai Marina, Palm Jumeirah, and Dubai Mall." },
@@ -901,7 +901,7 @@ const internationalItineraryData = {
       id: 7,
       name: "london Honeymoon",
       title: "5 Days - Overwater Villas & Private Beaches",
-      image: maldiveImg,
+      image: londonImg,
       details: [
         { title: "Arrival in Dubai", description: "Transfer to hotel and rest." },
         { title: "City Tour", description: "Explore Dubai Marina, Palm Jumeirah, and Dubai Mall." },
@@ -932,7 +932,7 @@ const internationalItineraryData = {
       id: 8,
       name: "Adventure in london",
       title: "4 Days - Diving, Snorkeling & Jet Skiing",
-      image: maldiveImg,
+      image: londonImg,
       details: [
         { title: "Arrival in Dubai", description: "Transfer to hotel and rest." },
         { title: "City Tour", description: "Explore Dubai Marina, Palm Jumeirah, and Dubai Mall." },
@@ -965,7 +965,7 @@ const internationalItineraryData = {
       id: 7,
       name: "rome Honeymoon",
       title: "5 Days - Overwater Villas & Private Beaches",
-      image: maldiveImg,
+      image: romeImg,
       details: [
         { title: "Arrival in Dubai", description: "Transfer to hotel and rest." },
         { title: "City Tour", description: "Explore Dubai Marina, Palm Jumeirah, and Dubai Mall." },
@@ -996,7 +996,7 @@ const internationalItineraryData = {
       id: 8,
       name: "Adventure in rome",
       title: "4 Days - Diving, Snorkeling & Jet Skiing",
-      image: maldiveImg,
+      image: romeImg,
       details: [
         { title: "Arrival in Dubai", description: "Transfer to hotel and rest." },
         { title: "City Tour", description: "Explore Dubai Marina, Palm Jumeirah, and Dubai Mall." },
@@ -1027,7 +1027,7 @@ const internationalItineraryData = {
       id: 7,
       name: "rome Honeymoon",
       title: "5 Days - Overwater Villas & Private Beaches",
-      image: maldiveImg,
+      image: romeImg,
       details: [
         { title: "Arrival in Dubai", description: "Transfer to hotel and rest." },
         { title: "City Tour", description: "Explore Dubai Marina, Palm Jumeirah, and Dubai Mall." },
@@ -1058,7 +1058,7 @@ const internationalItineraryData = {
       id: 8,
       name: "Adventure in rome",
       title: "4 Days - Diving, Snorkeling & Jet Skiing",
-      image: maldiveImg,
+      image: romeImg,
       details: [
         { title: "Arrival in Dubai", description: "Transfer to hotel and rest." },
         { title: "City Tour", description: "Explore Dubai Marina, Palm Jumeirah, and Dubai Mall." },
@@ -1091,7 +1091,7 @@ const internationalItineraryData = {
       id: 7,
       name: "switzerland Honeymoon",
       title: "5 Days - Overwater Villas & Private Beaches",
-      image: maldiveImg,
+      image: switzerlandImg,
       details: [
         { title: "Arrival in Dubai", description: "Transfer to hotel and rest." },
         { title: "City Tour", description: "Explore Dubai Marina, Palm Jumeirah, and Dubai Mall." },
@@ -1122,7 +1122,7 @@ const internationalItineraryData = {
       id: 8,
       name: "Adventure in switzerland",
       title: "4 Days - Diving, Snorkeling & Jet Skiing",
-      image: maldiveImg,
+      image: switzerlandImg,
       details: [
         { title: "Arrival in Dubai", description: "Transfer to hotel and rest." },
         { title: "City Tour", description: "Explore Dubai Marina, Palm Jumeirah, and Dubai Mall." },
@@ -1153,7 +1153,7 @@ const internationalItineraryData = {
       id: 7,
       name: "Maldives Honeymoon",
       title: "5 Days - Overwater Villas & Private Beaches",
-      image: maldiveImg,
+      image: switzerlandImg,
       details: [
         { title: "Arrival in Dubai", description: "Transfer to hotel and rest." },
         { title: "City Tour", description: "Explore Dubai Marina, Palm Jumeirah, and Dubai Mall." },
@@ -1184,7 +1184,7 @@ const internationalItineraryData = {
       id: 8,
       name: "Adventure in Maldives",
       title: "4 Days - Diving, Snorkeling & Jet Skiing",
-      image: maldiveImg,
+      image: switzerlandImg,
       details: [
         { title: "Arrival in Dubai", description: "Transfer to hotel and rest." },
         { title: "City Tour", description: "Explore Dubai Marina, Palm Jumeirah, and Dubai Mall." },
@@ -1217,7 +1217,7 @@ const internationalItineraryData = {
       id: 7,
       name: "turkey Honeymoon",
       title: "5 Days - Overwater Villas & Private Beaches",
-      image: maldiveImg,
+      image: turkeyImg,
       details: [
         { title: "Arrival in Dubai", description: "Transfer to hotel and rest." },
         { title: "City Tour", description: "Explore Dubai Marina, Palm Jumeirah, and Dubai Mall." },
@@ -1248,7 +1248,7 @@ const internationalItineraryData = {
       id: 8,
       name: "Adventure in turkey",
       title: "4 Days - Diving, Snorkeling & Jet Skiing",
-      image: maldiveImg,
+      image: turkeyImg,
       details: [
         { title: "Arrival in Dubai", description: "Transfer to hotel and rest." },
         { title: "City Tour", description: "Explore Dubai Marina, Palm Jumeirah, and Dubai Mall." },
@@ -1279,7 +1279,7 @@ const internationalItineraryData = {
       id: 7,
       name: "turkey Honeymoon",
       title: "5 Days - Overwater Villas & Private Beaches",
-      image: maldiveImg,
+      image: turkeyImg,
       details: [
         { title: "Arrival in Dubai", description: "Transfer to hotel and rest." },
         { title: "City Tour", description: "Explore Dubai Marina, Palm Jumeirah, and Dubai Mall." },
@@ -1310,7 +1310,7 @@ const internationalItineraryData = {
       id: 8,
       name: "Adventure in turkey",
       title: "4 Days - Diving, Snorkeling & Jet Skiing",
-      image: maldiveImg,
+      image: turkeyImg,
       details: [
         { title: "Arrival in Dubai", description: "Transfer to hotel and rest." },
         { title: "City Tour", description: "Explore Dubai Marina, Palm Jumeirah, and Dubai Mall." },
@@ -1343,7 +1343,7 @@ const internationalItineraryData = {
       id: 7,
       name: "greece Honeymoon",
       title: "5 Days - Overwater Villas & Private Beaches",
-      image: maldiveImg,
+      image: greeceImg,
       details: [
         { title: "Arrival in Dubai", description: "Transfer to hotel and rest." },
         { title: "City Tour", description: "Explore Dubai Marina, Palm Jumeirah, and Dubai Mall." },
@@ -1374,7 +1374,7 @@ const internationalItineraryData = {
       id: 8,
       name: "Adventure in greece",
       title: "4 Days - Diving, Snorkeling & Jet Skiing",
-      image: maldiveImg,
+      image: greeceImg,
       details: [
         { title: "Arrival in Dubai", description: "Transfer to hotel and rest." },
         { title: "City Tour", description: "Explore Dubai Marina, Palm Jumeirah, and Dubai Mall." },
@@ -1405,7 +1405,7 @@ const internationalItineraryData = {
       id: 7,
       name: "greece Honeymoon",
       title: "5 Days - Overwater Villas & Private Beaches",
-      image: maldiveImg,
+      image: greeceImg,
       details: [
         { title: "Arrival in Dubai", description: "Transfer to hotel and rest." },
         { title: "City Tour", description: "Explore Dubai Marina, Palm Jumeirah, and Dubai Mall." },
@@ -1436,7 +1436,7 @@ const internationalItineraryData = {
       id: 8,
       name: "Adventure in greece",
       title: "4 Days - Diving, Snorkeling & Jet Skiing",
-      image: maldiveImg,
+      image: greeceImg,
       details: [
         { title: "Arrival in Dubai", description: "Transfer to hotel and rest." },
         { title: "City Tour", description: "Explore Dubai Marina, Palm Jumeirah, and Dubai Mall." },
@@ -1469,7 +1469,7 @@ const internationalItineraryData = {
       id: 7,
       name: "new-york Honeymoon",
       title: "5 Days - Overwater Villas & Private Beaches",
-      image: maldiveImg,
+      image: newyorkImg,
       details: [
         { title: "Arrival in Dubai", description: "Transfer to hotel and rest." },
         { title: "City Tour", description: "Explore Dubai Marina, Palm Jumeirah, and Dubai Mall." },
@@ -1500,7 +1500,7 @@ const internationalItineraryData = {
       id: 8,
       name: "Adventure in new-york",
       title: "4 Days - Diving, Snorkeling & Jet Skiing",
-      image: maldiveImg,
+      image: newyorkImg,
       details: [
         { title: "Arrival in Dubai", description: "Transfer to hotel and rest." },
         { title: "City Tour", description: "Explore Dubai Marina, Palm Jumeirah, and Dubai Mall." },
@@ -1531,7 +1531,7 @@ const internationalItineraryData = {
       id: 7,
       name: "new-york Honeymoon",
       title: "5 Days - Overwater Villas & Private Beaches",
-      image: maldiveImg,
+      image: newyorkImg,
       details: [
         { title: "Arrival in Dubai", description: "Transfer to hotel and rest." },
         { title: "City Tour", description: "Explore Dubai Marina, Palm Jumeirah, and Dubai Mall." },
@@ -1562,7 +1562,7 @@ const internationalItineraryData = {
       id: 8,
       name: "Adventure in new-york",
       title: "4 Days - Diving, Snorkeling & Jet Skiing",
-      image: maldiveImg,
+      image: newyorkImg,
       details: [
         { title: "Arrival in Dubai", description: "Transfer to hotel and rest." },
         { title: "City Tour", description: "Explore Dubai Marina, Palm Jumeirah, and Dubai Mall." },
@@ -1595,7 +1595,7 @@ const internationalItineraryData = {
       id: 7,
       name: "tokyo Honeymoon",
       title: "5 Days - Overwater Villas & Private Beaches",
-      image: maldiveImg,
+      image: tokyoImg,
       details: [
         { title: "Arrival in Dubai", description: "Transfer to hotel and rest." },
         { title: "City Tour", description: "Explore Dubai Marina, Palm Jumeirah, and Dubai Mall." },
@@ -1626,7 +1626,7 @@ const internationalItineraryData = {
       id: 8,
       name: "Adventure in tokyo",
       title: "4 Days - Diving, Snorkeling & Jet Skiing",
-      image: maldiveImg,
+      image: tokyoImg,
       details: [
         { title: "Arrival in Dubai", description: "Transfer to hotel and rest." },
         { title: "City Tour", description: "Explore Dubai Marina, Palm Jumeirah, and Dubai Mall." },
@@ -1657,7 +1657,7 @@ const internationalItineraryData = {
       id: 7,
       name: "tokyo Honeymoon",
       title: "5 Days - Overwater Villas & Private Beaches",
-      image: maldiveImg,
+      image: tokyoImg,
       details: [
         { title: "Arrival in Dubai", description: "Transfer to hotel and rest." },
         { title: "City Tour", description: "Explore Dubai Marina, Palm Jumeirah, and Dubai Mall." },
@@ -1688,7 +1688,7 @@ const internationalItineraryData = {
       id: 8,
       name: "Adventure in tokyo",
       title: "4 Days - Diving, Snorkeling & Jet Skiing",
-      image: maldiveImg,
+      image: tokyoImg,
       details: [
         { title: "Arrival in Dubai", description: "Transfer to hotel and rest." },
         { title: "City Tour", description: "Explore Dubai Marina, Palm Jumeirah, and Dubai Mall." },
@@ -1721,7 +1721,7 @@ const internationalItineraryData = {
       id: 7,
       name: "sydney Honeymoon",
       title: "5 Days - Overwater Villas & Private Beaches",
-      image: maldiveImg,
+      image: sydneyImg,
       details: [
         { title: "Arrival in Dubai", description: "Transfer to hotel and rest." },
         { title: "City Tour", description: "Explore Dubai Marina, Palm Jumeirah, and Dubai Mall." },
@@ -1752,7 +1752,7 @@ const internationalItineraryData = {
       id: 8,
       name: "Adventure in sydney",
       title: "4 Days - Diving, Snorkeling & Jet Skiing",
-      image: maldiveImg,
+      image: sydneyImg,
       details: [
         { title: "Arrival in Dubai", description: "Transfer to hotel and rest." },
         { title: "City Tour", description: "Explore Dubai Marina, Palm Jumeirah, and Dubai Mall." },
@@ -1783,7 +1783,7 @@ const internationalItineraryData = {
       id: 7,
       name: "sydney Honeymoon",
       title: "5 Days - Overwater Villas & Private Beaches",
-      image: maldiveImg,
+      image: sydneyImg,
       details: [
         { title: "Arrival in Dubai", description: "Transfer to hotel and rest." },
         { title: "City Tour", description: "Explore Dubai Marina, Palm Jumeirah, and Dubai Mall." },
@@ -1814,7 +1814,7 @@ const internationalItineraryData = {
       id: 8,
       name: "Adventure in sydney",
       title: "4 Days - Diving, Snorkeling & Jet Skiing",
-      image: maldiveImg,
+      image: sydneyImg,
       details: [
         { title: "Arrival in Dubai", description: "Transfer to hotel and rest." },
         { title: "City Tour", description: "Explore Dubai Marina, Palm Jumeirah, and Dubai Mall." },
@@ -1847,7 +1847,7 @@ const internationalItineraryData = {
       id: 7,
       name: "egypt Honeymoon",
       title: "5 Days - Overwater Villas & Private Beaches",
-      image: maldiveImg,
+      image: egyptImg,
       details: [
         { title: "Arrival in Dubai", description: "Transfer to hotel and rest." },
         { title: "City Tour", description: "Explore Dubai Marina, Palm Jumeirah, and Dubai Mall." },
@@ -1878,7 +1878,7 @@ const internationalItineraryData = {
       id: 8,
       name: "Adventure in egypt",
       title: "4 Days - Diving, Snorkeling & Jet Skiing",
-      image: maldiveImg,
+      image: egyptImg,
       details: [
         { title: "Arrival in Dubai", description: "Transfer to hotel and rest." },
         { title: "City Tour", description: "Explore Dubai Marina, Palm Jumeirah, and Dubai Mall." },
@@ -1909,7 +1909,7 @@ const internationalItineraryData = {
       id: 7,
       name: "egypt Honeymoon",
       title: "5 Days - Overwater Villas & Private Beaches",
-      image: maldiveImg,
+      image: egyptImg,
       details: [
         { title: "Arrival in Dubai", description: "Transfer to hotel and rest." },
         { title: "City Tour", description: "Explore Dubai Marina, Palm Jumeirah, and Dubai Mall." },
@@ -1940,7 +1940,7 @@ const internationalItineraryData = {
       id: 8,
       name: "Adventure in egypt",
       title: "4 Days - Diving, Snorkeling & Jet Skiing",
-      image: maldiveImg,
+      image: egyptImg,
       details: [
         { title: "Arrival in Dubai", description: "Transfer to hotel and rest." },
         { title: "City Tour", description: "Explore Dubai Marina, Palm Jumeirah, and Dubai Mall." },

@@ -98,6 +98,11 @@ const domesticDestinations = [
     description: "Queen of the Hills in Uttarakhand.",
     image: masuriImg,
   },
+  {
+    title: "Delhi",
+    description: "Queen of the Hills in Uttarakhand.",
+    image: masuriImg,
+  },
 ];
 
 export default domesticDestinations;
