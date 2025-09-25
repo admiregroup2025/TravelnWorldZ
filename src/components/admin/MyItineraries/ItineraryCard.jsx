@@ -17,6 +17,7 @@ const ItineraryCard = ({ destination }) => {
 
  const handleCardClick = () => {
   if (destination.slug) navigate(`/admin/destinations/${destination.slug}`,{ state: { destination } });
+  
 };
 
   // defensive: image might be an object (file preview) or string url

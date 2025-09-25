@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate, useOutletContext } from "react-router-dom";
 import ItineraryCard from "./ItineraryCard";
   import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -8,6 +9,10 @@ import "react-toastify/dist/ReactToastify.css";
 // Tailwind CSS classes are used for styling. Default export is the component.
 
 export default function ItineraryForm() {
+  const navigate = useNavigate();
+  const { upsertDestinationAndAddItinerary } = useOutletContext() || {};
+
+  const [destinationName, setDestinationName] = useState("");
   const [itineraryType, setItineraryType] = useState("domestic");
   const [title, setTitle] = useState("");
   const [numDays, setNumDays] = useState(1);
@@ -146,15 +151,39 @@ export default function ItineraryForm() {
       createdAt: new Date().toISOString(),
     };
 
-    // For demo: set submittedData so UI can show JSON output. In real app, send to backend here.
-    setSubmittedData(payload);
-    // reset form if desired
-    // ...
+    // Save into admin state: upsert destination and add nested itinerary
+    const newItinerary = {
+      title,
+      subtitle,
+      image: imagePreviews[0]?.url || "",
+      images: imagePreviews.map((p) => p.url),
+      price: Number(price),
+      discount: Number(discount),
+      destinations: destinations.filter((d) => d.trim()),
+      inclusions,
+      exclusions,
+      terms,
+      paymentPolicy,
+      days,
+      public: false,
+    };
+
+    const destSlug = upsertDestinationAndAddItinerary?.(
+      { name: destinationName || destinations[0] || title, type: itineraryType },
+      newItinerary
+    );
 
      toast.success("Itinerary saved successfully!", {
     position: "top-right",
     autoClose: 3000, // 3 seconds
   });
+
+    // Navigate to Manage, then optionally to that destination's list
+    if (destSlug) {
+      navigate(`/admin/destinations/${destSlug}`);
+    } else {
+      navigate(`/admin/Manage-Itianary`);
+    }
   };
 
   return (
@@ -162,6 +191,12 @@ export default function ItineraryForm() {
       <h1 className="text-2xl font-semibold mb-4">Itinerary Creation Form</h1>
 
       <form onSubmit={handleSubmit} className="space-y-6 bg-white p-6 rounded-2xl shadow">
+        <section className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="md:col-span-2">
+            <label className="block text-sm font-medium">Destination Name</label>
+            <input value={destinationName} onChange={(e) => setDestinationName(e.target.value)} className="mt-2 block w-full rounded-lg border p-2" placeholder="e.g. Dubai, UAE" />
+          </div>
+        </section>
         <section className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div>
             <label className="block text-sm font-medium">Itinerary Type</label>

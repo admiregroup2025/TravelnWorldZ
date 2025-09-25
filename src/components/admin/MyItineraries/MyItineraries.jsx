@@ -4,6 +4,7 @@ import { useOutletContext } from "react-router-dom";
 
 const MyItineraries = () => {
     const { destinations } = useOutletContext();
+    console.log(destinations,"nawlesh")
   return (
     <div className="p-6">
       <h2 className="text-xl font-semibold mb-6">My Itineraries</h2>

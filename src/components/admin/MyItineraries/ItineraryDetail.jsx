@@ -1,92 +1,26 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate, useOutletContext } from "react-router-dom";
-import { FaMapMarkerAlt, FaEdit, FaSave, FaTimes } from "react-icons/fa";
-import Modal from "./Modal";
-import axios from "axios";
-import EditItineraryModal from "./EditItineraryModal";
+import { FaMapMarkerAlt } from "react-icons/fa";
 
 export default function ItineraryDetail() {
-  const { slug } = useParams();
+  const { slug, itineraryId } = useParams();
   const navigate = useNavigate();
   const outlet = useOutletContext() || {};
   const { destinations = [], updateItinerary } = outlet;
 
-  // find original itinerary
-  const original = destinations.find((d) => d.slug === slug) || null;
-
-  // modal
-  const [isConfirmOpen, setIsConfirmOpen] = useState(false);
+  // find destination and nested itinerary
+  const destination = destinations.find((d) => d.slug === slug) || null;
+  const original = destination?.itineraries?.find((i) => `${i.id}` === `${itineraryId}`) || null;
 
   // local state
   const [itinerary, setItinerary] = useState(original);
-  const [isEditing, setIsEditing] = useState(false);
   const [errors, setErrors] = useState({});
   const [imagePreviews, setImagePreviews] = useState([]); 
   const [newImagesFiles, setNewImagesFiles] = useState([]); 
-  const [view, setView] = useState("private");
-
-  // Razorpay
-  const openRazorpay = async () => {
-    try {
-      const { data: order } = await axios.post(
-        `${import.meta.env.VITE_BACKEND_API}/api/payment/process`,
-        {
-          amount: 100, // in paise
-          email: "farhinbashira@gmail.com",
-          phone: "8448899181",
-        }
-      );
-
-      const options = {
-        key: import.meta.env.VITE_RAZORPAY_KEY_ID,
-        amount: order.amount,
-        currency: order.currency,
-        name: "Your App Name",
-        description: "Order Payment",
-        order_id: order.id,
-        handler: async function (response) {
-          console.log("Payment success", response);
-          const res = await axios.post(
-            `${import.meta.env.VITE_BACKEND_API}/api/payment/callback`,
-            response
-          );
-          console.log("Response", res);
-        },
-        prefill: {
-          name: "Bashira Farhin",
-          email: "farhinbashira@gmail.com",
-          phone: "8448899181",
-        },
-      };
-
-      const loadScript = (src) =>
-        new Promise((resolve, reject) => {
-          const script = document.createElement("script");
-          script.src = src;
-          script.onload = resolve;
-          script.onerror = reject;
-          document.body.appendChild(script);
-        });
-
-      await loadScript("https://checkout.razorpay.com/v1/checkout.js");
-
-      const rzp = new window.Razorpay(options);
-      rzp.open();
-    } catch (error) {
-      console.error("Payment failed", error);
-    }
-  };
 
 
-  const handleSaveItinerary = async (updated) => {
-  // optionally: call API to persist updated itinerary
-  // await axios.put(`/api/itineraries/${itinerary.id}`, updated);
-  // update local state:
-  setItinerary(updated);
 
-  // if your parent outlet has updateItinerary, call it
-  if (typeof updateItinerary === "function") updateItinerary(updated);
-};
+  
 
   // load initial previews
   useEffect(() => {
@@ -271,39 +205,19 @@ export default function ItineraryDetail() {
       {/* Header */}
       <div className="flex items-start justify-between mb-4">
         <div>
-          <h1 className="text-3xl font-bold">{itinerary.name}</h1>
+          <h1 className="text-3xl font-bold">{itinerary.name || itinerary.title}</h1>
           <div className="flex items-center text-gray-600 mt-2">
             <FaMapMarkerAlt className="mr-2 text-orange-400" />
             <span className="text-sm">
-              {itinerary.type === "international"
+              {(itinerary.type || destination?.type) === "international"
                 ? "International"
                 : "Domestic"}
             </span>
           </div>
         </div>
 
-        <div className="flex gap-3">
-          <button
-            onClick={() => setIsConfirmOpen(true)}
-            className="px-4 py-2 bg-blue-600 text-white rounded"
-          >
-            Make it {view === "public" ? "private" : "public"}
-          </button>
-           <button
-    type="button"
-    onClick={() => setIsEditing(true)}
-    className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded"
-  >
-    <FaEdit /> Edit
-  </button>
-        </div>
+        <div className="flex gap-3" />
 
-        <EditItineraryModal
-  isOpen={isEditing}
-  onClose={() => setIsEditing(false)}
-  itinerary={itinerary}
-  onSave={handleSaveItinerary}
-/>
       </div>
 
       {/* Hero */}
@@ -311,15 +225,115 @@ export default function ItineraryDetail() {
         <img
           src={
             imagePreviews?.[0]?.url ||
-            itinerary.images?.[0] ||
+            (Array.isArray(itinerary.images) && itinerary.images[0]) ||
+            itinerary.image ||
             "/path-to-default-image.jpg"
           }
-          alt={itinerary.name}
+          alt={itinerary.name || itinerary.title}
           className="w-full h-full object-cover"
         />
       </div>
 
-      {/* TODO: keep your rest of JSX (editing form & read-only mode) same as before */}
+      {/* Overview */}
+      <div className="mb-8">
+        {itinerary.subtitle && (
+          <p className="text-lg text-gray-700 mb-2">{itinerary.subtitle}</p>
+        )}
+        {Array.isArray(itinerary.destinations) && itinerary.destinations.length > 0 && (
+          <p className="text-sm text-gray-600">Destinations: {itinerary.destinations.join(", ")}</p>
+        )}
+        {(itinerary.price || itinerary.discount) && (
+          <div className="mt-3 flex items-center gap-3">
+            {itinerary.price && (
+              <span className="text-xl font-semibold text-gray-800">₹{Number(itinerary.price).toLocaleString()}</span>
+            )}
+            {itinerary.discount ? (
+              <span className="px-2 py-1 bg-green-100 text-green-700 text-xs rounded">{itinerary.discount}% Off</span>
+            ) : null}
+          </div>
+        )}
+      </div>
+
+      {/* Gallery */}
+      {Array.isArray(itinerary.images) && itinerary.images.length > 1 && (
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-10">
+          {itinerary.images.slice(0, 8).map((img, idx) => (
+            <img key={idx} src={img} alt={`img-${idx}`} className="w-full h-28 object-cover rounded" />
+          ))}
+        </div>
+      )}
+
+      {/* Day-wise itinerary */}
+      {Array.isArray(itinerary.days) && itinerary.days.length > 0 && (
+        <div className="mb-10">
+          <h2 className="text-2xl font-semibold mb-4">Itinerary</h2>
+          <div className="space-y-4">
+            {itinerary.days.map((d, i) => (
+              <div key={i} className="border rounded p-4 bg-white">
+                <div className="flex items-center justify-between mb-2">
+                  <strong>Day {d.dayNumber || i + 1}: {d.title}</strong>
+                  {d.meals && <span className="text-xs text-gray-500">Meals: {d.meals}</span>}
+                </div>
+                {d.details && <p className="text-gray-700">{d.details}</p>}
+                {d.activities && (
+                  <p className="text-gray-600 text-sm mt-1">Activities: {d.activities}</p>
+                )}
+                {d.stay && (
+                  <p className="text-gray-600 text-sm">Stay: {d.stay}</p>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Inclusions / Exclusions */}
+      <div className="grid md:grid-cols-2 gap-6 mb-10">
+        {itinerary.inclusions && (
+          <div className="bg-white border rounded p-4">
+            <h3 className="font-semibold mb-2">Inclusions</h3>
+            <ul className="list-disc list-inside text-gray-700">
+              {String(itinerary.inclusions)
+                .split(/\n|,/) 
+                .map((x) => x.trim())
+                .filter(Boolean)
+                .map((x, i) => (
+                  <li key={i}>{x}</li>
+                ))}
+            </ul>
+          </div>
+        )}
+        {itinerary.exclusions && (
+          <div className="bg-white border rounded p-4">
+            <h3 className="font-semibold mb-2">Exclusions</h3>
+            <ul className="list-disc list-inside text-gray-700">
+              {String(itinerary.exclusions)
+                .split(/\n|,/) 
+                .map((x) => x.trim())
+                .filter(Boolean)
+                .map((x, i) => (
+                  <li key={i}>{x}</li>
+                ))}
+            </ul>
+          </div>
+        )}
+      </div>
+
+      {/* Terms & Payment Policy */}
+      <div className="grid md:grid-cols-2 gap-6 mb-10">
+        {itinerary.terms && (
+          <div className="bg-white border rounded p-4">
+            <h3 className="font-semibold mb-2">Terms & Conditions</h3>
+            <p className="text-gray-700 whitespace-pre-line">{itinerary.terms}</p>
+          </div>
+        )}
+        {itinerary.paymentPolicy && (
+          <div className="bg-white border rounded p-4">
+            <h3 className="font-semibold mb-2">Payment Policy</h3>
+            <p className="text-gray-700 whitespace-pre-line">{itinerary.paymentPolicy}</p>
+          </div>
+        )}
+      </div>
 
       {/* Back button */}
       <div className="flex justify-end mt-4">
@@ -331,34 +345,7 @@ export default function ItineraryDetail() {
         </button>
       </div>
 
-      {/* Confirm Modal */}
-      <Modal isOpen={isConfirmOpen} onClose={() => setIsConfirmOpen(false)} maxWidth="max-w-sm">
-        <div className="p-6">
-          <h2 className="text-lg font-semibold mb-4">Are you sure?</h2>
-          <p className="text-gray-600 mb-6">
-            Do you really want to make this itinerary{" "}
-            <strong>{view === "public" ? "private" : "public"}</strong>?
-          </p>
-          <div className="flex justify-end gap-3">
-            <button
-              className="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300"
-              onClick={() => setIsConfirmOpen(false)}
-            >
-              No
-            </button>
-            <button
-              className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
-              onClick={() => {
-                setIsConfirmOpen(false);
-                setView(view === "public" ? "private" : "public");
-                openRazorpay();
-              }}
-            >
-              Yes
-            </button>
-          </div>
-        </div>
-      </Modal>
+      {/* No public/private controls on details page */}
     </div>
   );
 }

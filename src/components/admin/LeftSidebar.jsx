@@ -76,13 +76,13 @@ const LeftSidebar = () => {
   ]
 
   return (
-    <nav className="flex  overflow-y-hidden flex-col mt-6 ">
+    <nav className="flex flex-col mt-4 md:mt-6">
       {menuItems.map((item) => (
         <NavLink
           key={item.path}
           to={item.path}
           className={({ isActive }) =>
-            `flex items-center gap-3 px-6 py-2 text-sm font-medium rounded-md transition-colors duration-200
+            `flex items-center gap-3 px-4 md:px-6 py-2 text-sm font-medium rounded-md transition-colors duration-200
              ${
                isActive
                  ? "bg-indigo-500 text-indigo-900"
@@ -99,7 +99,7 @@ const LeftSidebar = () => {
       <div>
         <button
           onClick={() => setItinerariesOpen((prev) => !prev)}
-          className="flex items-center justify-between w-full px-6 py-2 text-sm font-medium rounded-md text-white hover:bg-indigo-700 transition-colors duration-200"
+          className="flex items-center justify-between w-full px-4 md:px-6 py-2 text-sm font-medium rounded-md text-white hover:bg-indigo-700 transition-colors duration-200"
         >
           <span className="flex items-center gap-3">
             <FileText size={18} />
@@ -114,13 +114,13 @@ const LeftSidebar = () => {
         </button>
 
         {itinerariesOpen && (
-          <div className="ml-10 mt-1 flex flex-col space-y-1">
+          <div className="ml-6 md:ml-10 mt-1 flex flex-col space-y-1">
             {myItianarySubItems .map((sub) => (
               <NavLink
                 key={sub.path}
                 to={sub.path}
                 className={({ isActive }) =>
-                  `px-4 py-1 text-sm rounded-md transition-colors duration-200
+                  `px-3 md:px-4 py-1 text-sm rounded-md transition-colors duration-200
                    ${
                      isActive
                        ? "bg-indigo-500 text-indigo-900"
@@ -139,7 +139,7 @@ const LeftSidebar = () => {
       <div>
         <button
           onClick={() => setAccountOpen((prev) => !prev)}
-          className="flex items-center justify-between w-full px-6 py-2 text-sm font-medium rounded-md text-white hover:bg-indigo-700 transition-colors duration-200"
+          className="flex items-center justify-between w-full px-4 md:px-6 py-2 text-sm font-medium rounded-md text-white hover:bg-indigo-700 transition-colors duration-200"
         >
           <span className="flex items-center gap-3">
             <User size={18} />
@@ -154,13 +154,13 @@ const LeftSidebar = () => {
         </button>
 
         {accountOpen && (
-          <div className="ml-10 mt-1 flex flex-col space-y-1">
+          <div className="ml-6 md:ml-10 mt-1 flex flex-col space-y-1">
             {accountSubItems.map((sub) => (
               <NavLink
                 key={sub.path}
                 to={sub.path}
                 className={({ isActive }) =>
-                  `px-4 py-1 text-sm rounded-md transition-colors duration-200
+                  `px-3 md:px-4 py-1 text-sm rounded-md transition-colors duration-200
                    ${
                      isActive
                        ? "bg-indigo-500 text-indigo-900"

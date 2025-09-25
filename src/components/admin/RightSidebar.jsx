@@ -107,7 +107,7 @@ export default function RightSidebar() {
   );
 
   return (
-    <div className="p-2 space-y-6">
+    <div className="p-3 sm:p-4 space-y-6">
       {/* Lead Type */}
       <fieldset aria-label="Lead Type">
         <legend className="font-semibold">Lead Type</legend>

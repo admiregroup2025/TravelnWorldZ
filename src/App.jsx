@@ -135,6 +135,11 @@ import MyItineraries from './components/admin/MyItineraries/MyItineraries';
 import ItineraryForm from './components/admin/MyItineraries/ItineraryForm';
 import ItineraryDetail from './components/admin/MyItineraries/ItineraryDetail';
 import ItineraryParticularCard from './components/admin/MyItineraries/ItineraryParticularCard.jsx';
+import ItineraryCard from './components/admin/MyItineraries/ItineraryCard.jsx';
+import BuyLeads from './components/admin/BuyLeads.jsx';
+import MyReports from './components/admin/MyReports.jsx';
+import MyReviews from './components/admin/MyReviews.jsx';
+import MyTeam from './components/admin/MyTeam.jsx';
 
 
 const App = () => {
@@ -175,11 +180,18 @@ const App = () => {
      <Route path="/admin" element={<AdminLayout />}>
   <Route index element={<AdminPannel />} />
   <Route path="my-leads" element={<MyLeads />} />
+  <Route path="buy-leads" element={<BuyLeads />} />
+  <Route path="report" element={<MyReports />} />
+  <Route path="reviews" element={<MyReviews />} />
+  <Route path="team" element={<MyTeam />} />
   <Route path="profile" element={<Profile />} />
   <Route path="reset-password" element={<ResetPassword />} />
   <Route path="Manage-Itianary" element={<MyItineraries />} />
   <Route path="Create-Itinary" element={<ItineraryForm />} />
-  <Route path="destinations/:slug" element={<ItineraryDetail />} />
+   {/* <Route path="Itinary-card" element={<ItineraryCard />} /> */}
+
+  <Route path="destinations/:slug" element={<ItineraryParticularCard />} />
+  <Route path ="destination/:slug/destinations/:itineraryId" element ={<ItineraryDetail/>}/>
 </Route>
 
     </Routes>

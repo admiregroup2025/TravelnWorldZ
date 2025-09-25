@@ -165,9 +165,9 @@ export default function EditItineraryModal({ isOpen, onClose, itinerary: initial
   return (
     <div>
       {/* Use your Modal component around this JSX. If you don't have one, wrap this in your own Modal */}
-      <div className="fixed inset-0 z-40 flex items-start justify-center pt-16 px-4">
-        <div className="fixed inset-0 bg-black/40" onClick={onClose} />
-        <div className="relative z-50 w-full max-w-4xl bg-white rounded-lg shadow-lg overflow-auto max-h-[85vh]">
+      <div className="fixed inset-0 z-[9999] flex items-start justify-center pt-16 px-4">
+        <div className="fixed inset-0 bg-black/40 z-[9998]" onClick={onClose} />
+        <div className="relative z-[10000] w-full max-w-4xl bg-white rounded-lg shadow-lg overflow-auto max-h-[85vh]">
           <div className="flex justify-between items-center px-6 py-4 border-b">
             <h3 className="text-lg font-semibold">Edit Itinerary</h3>
             <button onClick={onClose} className="p-2 text-gray-600 hover:text-black"><FaTimes /></button>
@@ -189,6 +189,12 @@ export default function EditItineraryModal({ isOpen, onClose, itinerary: initial
                   <label className="flex items-center gap-2"><input type="radio" name="type" checked={itinerary.type === "international"} onChange={() => handleField("type", "international")} /> International</label>
                 </div>
               </div>
+            </div>
+
+            {/* Subtitle */}
+            <div>
+              <label className="block text-sm font-medium">Subtitle</label>
+              <input value={itinerary.subtitle || ""} onChange={(e) => handleField("subtitle", e.target.value)} className="mt-1 w-full border rounded p-2" placeholder="e.g. 5 Days - Beaches, Spa & Culture" />
             </div>
 
             {/* Destinations + days */}
