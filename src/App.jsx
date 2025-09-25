@@ -124,6 +124,8 @@ import InternationalItinerary from './components/topMostTourPackages/Internation
 import InternationalItineraryDetailPage from './components/topMostTourPackages/InternationalItineraryDetailPage.jsx';
 import DomesticItineraryDetailPage from './components/topMostTourPackages/DomesticItineraryDetailPage.jsx';
 import TourPGetAQuote from './components/topMostTourPackages/tourPGetAQuote.jsx';
+import TransporterBlogPage from './components/verifiedTransportDetails/TransporterBlogPage.jsx';
+import TransporterBlogDetail from './components/verifiedTransportDetails/TransporterBlogDetail.jsx';
 // admin pages
 // import AdminDashboard from './pages/admin/AdminDashboard';
 // import AdminUsers from './pages/admin/AdminUsers';
@@ -140,6 +142,7 @@ import BuyLeads from './components/admin/BuyLeads.jsx';
 import MyReports from './components/admin/MyReports.jsx';
 import MyReviews from './components/admin/MyReviews.jsx';
 import MyTeam from './components/admin/MyTeam.jsx';
+
 
 
 const App = () => {
@@ -164,6 +167,8 @@ const App = () => {
         <Route path='/get-a-quote/:destinationId/:agencyId' element={<GetAQuote />} />
         <Route path='/verified-transporters-list' element={<TranspotersLists />} />
         <Route path='/verified-transport-details/:id' element={<VerifiedTransportDetails />} />
+        <Route path='/transporter/:transporterId/:slug/blogs' element={<TransporterBlogPage />} />
+        <Route path='/transporter/:transporterId/:slug/blogs/:blogId' element={<TransporterBlogDetail />} />
         <Route path="/verified-transport-details/:id/packages" element={<CustomerTourPackages />} />
         <Route path="/verified-transport-details/:id/reviews" element={<CustomerVerifiedReview />} />
         <Route path='/trending-destination-list' element={<TrendingDestinationLists />} />
