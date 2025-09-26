@@ -4,10 +4,10 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, EffectFade } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/effect-fade";
-
+ 
 const CARD_WIDTH = 320;
 const CARD_GAP = 24;
-
+ 
 const DestinationCard = ({
   id,
   title,
@@ -18,18 +18,18 @@ const DestinationCard = ({
   onHoverEnd,
 }) => {
   const navigate = useNavigate();
-
+ 
   const handleKnowMore = () => {
     navigate(`/trending/${id}`);
   };
-
+ 
   return (
     <div
       onMouseEnter={onHoverStart}
       onMouseLeave={onHoverEnd}
       className="cursor-pointer flex-shrink-0 w-[320px] flex flex-col md:flex-row bg-[#fffaf1] border border-gray-300 rounded-lg overflow-hidden shadow-md transition-opacity duration-300"
     >
-      <div className="flex flex-col justify-between p-4 w-full md:w-2/3">
+      <div className="flex flex-col text-center justify-between p-4 w-full md:w-2/3">
         <div>
           {/* FIX: wrapping applied to avoid overlap */}
           <h2 className="text-xl font-semibold text-gray-800 break-words whitespace-normal leading-snug">
@@ -54,7 +54,7 @@ const DestinationCard = ({
           </button>
         </div>
       </div>
-
+ 
       <div className="w-full md:w-1/3 h-40 md:h-auto">
         <Swiper
           modules={[Autoplay, EffectFade]}
@@ -85,7 +85,7 @@ const DestinationCard = ({
     </div>
   );
 };
-
+ 
 const TrendingDestination = () => {
   const [isPaused, setIsPaused] = useState(false);
   const scrollContainerRef = useRef(null);
@@ -93,22 +93,22 @@ const TrendingDestination = () => {
   const startX = useRef(0);
   const scrollLeft = useRef(0);
   const navigate = useNavigate();
-
+ 
   // Scroll handlers (dragging, touch)
   const handleMouseDown = (e) => {
     isDragging.current = true;
     startX.current = e.pageX - scrollContainerRef.current.offsetLeft;
     scrollLeft.current = scrollContainerRef.current.scrollLeft;
   };
-
+ 
   const handleMouseLeave = () => {
     isDragging.current = false;
   };
-
+ 
   const handleMouseUp = () => {
     isDragging.current = false;
   };
-
+ 
   const handleMouseMove = (e) => {
     if (!isDragging.current) return;
     e.preventDefault();
@@ -116,13 +116,13 @@ const TrendingDestination = () => {
     const walk = x - startX.current;
     scrollContainerRef.current.scrollLeft = scrollLeft.current - walk;
   };
-
+ 
   const handleTouchStart = (e) => {
     isDragging.current = true;
     startX.current = e.touches[0].pageX - scrollContainerRef.current.offsetLeft;
     scrollLeft.current = scrollContainerRef.current.scrollLeft;
   };
-
+ 
   const handleTouchMove = (e) => {
     if (!isDragging.current) return;
     e.preventDefault();
@@ -130,11 +130,11 @@ const TrendingDestination = () => {
     const walk = x - startX.current;
     scrollContainerRef.current.scrollLeft = scrollLeft.current - walk;
   };
-
+ 
   const handleTouchEnd = () => {
     isDragging.current = false;
   };
-
+ 
   const handleScroll = (direction) => {
     const container = scrollContainerRef.current;
     const scrollAmount =
@@ -143,7 +143,7 @@ const TrendingDestination = () => {
     setIsPaused(true);
     setTimeout(() => setIsPaused(false), 1000);
   };
-
+ 
   const destinations = [
     {
       id: "uttarakhand",
@@ -161,7 +161,7 @@ const TrendingDestination = () => {
       description: "Explore cultural and historical treasures",
       price: "From ₹12,500",
       images: [
-        "https://plus.unsplash.com/premium_photo-1697730277839-440df1a4415f?w=800&auto=format&fit=crop",
+        "https://plus.unsplash.com/premium_photo-1697730277839-440df1a4415f?w=800&auto=format&fit=cr…",
         "https://images.unsplash.com/photo-1564507592333-c60657eea523?w=800&auto=format&fit=crop",
       ],
     },
@@ -181,7 +181,7 @@ const TrendingDestination = () => {
       description: "Experience the capital's rich history and culture",
       price: "From ₹8,000",
       images: [
-        "https://plus.unsplash.com/premium_photo-1697730150003-26a1d469adb4?w=800&auto=format&fit=crop",
+        "https://plus.unsplash.com/premium_photo-1697730150003-26a1d469adb4?w=800&auto=format&fit=cr…",
         "https://images.unsplash.com/photo-1587334274527-ba54f0b5a357?w=800&auto=format&fit=crop",
       ],
     },
@@ -276,9 +276,9 @@ const TrendingDestination = () => {
       ],
     },
   ];
-
+ 
   const marqueeDestinations = [...destinations, ...destinations];
-
+ 
   return (
     <div className="flex flex-col items-center gap-6 p-4 bg-gray-100 min-h-fit md:px-8 lg:px-16 relative">
       {/* Heading + View All with fixed max width matching cards */}
@@ -293,7 +293,7 @@ const TrendingDestination = () => {
           View All
         </button>
       </div>
-
+ 
       {/* Prev Button */}
       <button
         onClick={() => handleScroll("prev")}
@@ -311,7 +311,7 @@ const TrendingDestination = () => {
           <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
         </svg>
       </button>
-
+ 
       {/* Next Button */}
       <button
         onClick={() => handleScroll("next")}
@@ -329,7 +329,7 @@ const TrendingDestination = () => {
           <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
         </svg>
       </button>
-
+ 
       {/* Cards container */}
       <div
         ref={scrollContainerRef}
@@ -373,5 +373,6 @@ const TrendingDestination = () => {
     </div>
   );
 };
-
+ 
 export default TrendingDestination;
+ 

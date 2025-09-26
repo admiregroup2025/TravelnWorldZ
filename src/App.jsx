@@ -134,7 +134,9 @@ import ResetPassword from './components/admin/MyAccount/ResetPassword';
 import MyItineraries from './components/admin/MyItineraries/MyItineraries';
 import ItineraryForm from './components/admin/MyItineraries/ItineraryForm';
 import ItineraryDetail from './components/admin/MyItineraries/ItineraryDetail';
-import ItineraryParticularCard from './components/admin/MyItineraries/ItineraryParticularCard.jsx';
+// import ItineraryParticularCard from './components/admin/MyItineraries/ItineraryParticularCard.jsx';
+import TransporterBlogPage from './components/verifiedTransportDetails/TransporterBlogPage.jsx';
+import TransporterBlogDetail from './components/verifiedTransportDetails/TransporterBlogDetail.jsx';
 
 
 const App = () => {
@@ -159,6 +161,8 @@ const App = () => {
         <Route path='/get-a-quote/:destinationId/:agencyId' element={<GetAQuote />} />
         <Route path='/verified-transporters-list' element={<TranspotersLists />} />
         <Route path='/verified-transport-details/:id' element={<VerifiedTransportDetails />} />
+        <Route path='/transporter/:transporterId/:slug/blogs' element={<TransporterBlogPage />} />
+        <Route path='/transporter/:transporterId/:slug/blogs/:blogId' element={<TransporterBlogDetail/>} />
         <Route path="/verified-transport-details/:id/packages" element={<CustomerTourPackages />} />
         <Route path="/verified-transport-details/:id/reviews" element={<CustomerVerifiedReview />} />
         <Route path='/trending-destination-list' element={<TrendingDestinationLists />} />
@@ -184,6 +188,6 @@ const App = () => {
 
     </Routes>
   );
-};
+};  
 
 export default App;

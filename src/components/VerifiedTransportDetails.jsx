@@ -10,6 +10,7 @@ import VerifiedReview from "./verifiedTransportDetails/VerifiedReview";
 import RightSide from "./verifiedTransportDetails/RightSide";
 // import HappyCustomerImages from "./verifiedTransportDetails/HappyCustomerImages";
 import HappyCustomerVideo from "./verifiedTransportDetails/HappyCustomerVideo";
+import CustomerBlogs from "../components/verifiedTransportDetails/CustomerBlogs";
 
 const VerifiedTransportDetails = () => {
   const { id } = useParams();
@@ -39,7 +40,10 @@ const VerifiedTransportDetails = () => {
 
           {/* Photos */}
            <Gallery  travelItem={travelItem}/>
-
+           {/* Blog Section (only for this transporter) */}
+            <section id="blog">
+              <CustomerBlogs transporterId={travelItem.id} transporterName={travelItem.title}  />
+            </section>
           {/* Tour Packages */}
         
             <VerifyTour travelItem={travelItem}/>

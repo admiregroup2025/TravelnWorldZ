@@ -24,22 +24,22 @@ const TourPackages = () => {
   };
 
   return (
-    <div className="px-0 py-0 space-y-20 pb-6">
+    <div className="px-3 sm:px-4 lg:px-6 py-4 sm:py-6 lg:py-8 space-y-12 sm:space-y-16 lg:space-y-20 pb-6">
       {/* Header */}
-      <div className="text-center mb-9">
-        <h2 className="text-2xl sm:text-3xl mt-10 font-bold text-black capitalize">
+      <div className="text-center mb-6 sm:mb-8 lg:mb-9">
+        <h2 className="text-xl sm:text-2xl lg:text-3xl xl:text-4xl mt-6 sm:mt-8 lg:mt-10 font-bold text-black capitalize px-4">
           Top most tour package
         </h2>
       </div>
 
       {/* International Section */}
-      <div className="flex flex-wrap gap-6 justify-center relative py-4">
+      <div className="flex flex-wrap gap-4 sm:gap-6 justify-center relative py-4">
         <div className="absolute -top-8 left-4 sm:left-[7%]">
-          <span className="text-red-600 font-semibold text-2xl ">International</span>
+          <span className="text-orange-600 font-semibold text-xl sm:text-2xl">International</span>
         </div>
         <div className="absolute -top-10 right-4 sm:right-[7%]">
           <button
-            className="bg-blue-600 text-white px-4 py-1 rounded-lg text-sm"
+            className="bg-blue-600 text-white px-3 sm:px-4 py-1 sm:py-1.5 rounded-lg text-xs sm:text-sm hover:bg-blue-700 transition duration-300"
             onClick={() => navigate('/international')}
           >
             Explore All
@@ -73,13 +73,13 @@ const TourPackages = () => {
       </div>
 
       {/* Domestic Section */}
-      <div className="flex flex-wrap gap-6 justify-center relative py-4">
+      <div className="flex flex-wrap gap-4 sm:gap-6 justify-center relative py-4">
         <div className="absolute -top-8 left-4 sm:left-[7%]">
-          <span className="text-red-600 font-semibold text-2xl">Domestic</span>
+          <span className="text-orange-600 font-semibold text-xl sm:text-2xl">Domestic</span>
         </div>
         <div className="absolute -top-10 right-4 sm:right-[7%]">
           <button
-            className="bg-blue-600 text-white px-4 py-1 rounded-lg text-sm"
+            className="bg-blue-600 text-white px-3 sm:px-4 py-1 sm:py-1.5 rounded-lg text-xs sm:text-sm hover:bg-blue-700 transition duration-300"
             onClick={() => navigate('/domestic')}
           >
             Explore All
@@ -89,7 +89,7 @@ const TourPackages = () => {
         <DestinationCard
           title="Goa"
           image={goaImg}
-          description="Sun, sand, and nightlife on India’s western coast."
+          description="Sun, sand, and nightlife on India's western coast."
           onClick={() => handleCardClick("Goa", "domestic")}
         />
         <DestinationCard

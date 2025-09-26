@@ -54,7 +54,7 @@ const Hero = () => {
       </div>
 
       {/* Form below video for small screens */}
-      <div className="block md:hidden px-4 py-6 flex justify-center">
+      <div className="md:hidden px-4 py-6 flex justify-center">
         <div
           className="w-full max-w-md bg-white/10 backdrop-blur-md rounded-xl"
           style={{

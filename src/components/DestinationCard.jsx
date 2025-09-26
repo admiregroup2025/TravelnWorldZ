@@ -1,6 +1,7 @@
 // src/components/DestinationCard.jsx
 
 import React from "react";
+import CustomerBlogs from "./verifiedTransportDetails/CustomerBlogs";
 
 const DestinationCard = ({ title, description, image, onClick }) => {
   return (
@@ -20,6 +21,8 @@ const DestinationCard = ({ title, description, image, onClick }) => {
       </div>
     </div>
   );
+
+  <CustomerBlogs />
 };
 
 export default DestinationCard;
