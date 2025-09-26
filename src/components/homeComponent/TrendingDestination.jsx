@@ -135,6 +135,10 @@ const TrendingDestination = () => {
     isDragging.current = false;
   };
 
+<<<<<<< HEAD
+=======
+  // Prev/Next button handlers
+>>>>>>> origin/neha
   const handleScroll = (direction) => {
     const container = scrollContainerRef.current;
     const scrollAmount =
@@ -283,12 +287,20 @@ const TrendingDestination = () => {
     <div className="flex flex-col items-center gap-6 p-4 bg-gray-100 min-h-fit md:px-8 lg:px-16 relative">
       {/* Heading + View All with fixed max width matching cards */}
       <div className="w-full max-w-[calc(100%-100px)] flex justify-between items-center relative px-4 md:px-0 mb-3">
+<<<<<<< HEAD
         <h1 className="text-3xl font-bold text-black mx-auto">
+=======
+        <h1 className="text-3xl font-bold text-blue-950 mx-auto">
+>>>>>>> origin/neha
           Trending Destinations
         </h1>
         <button
           onClick={() => navigate("/trending-destination-list")}
+<<<<<<< HEAD
           className="text-sm px-4 py-1.5 bg-blue-600 text-white rounded hover:bg-blue-600 transition absolute right-0"
+=======
+          className="text-sm px-4 py-1.5 bg-blue-950 text-white rounded hover:bg-blue-900 transition absolute right-0"
+>>>>>>> origin/neha
         >
           View All
         </button>

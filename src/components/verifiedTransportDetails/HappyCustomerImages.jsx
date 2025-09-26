@@ -1,37 +1,37 @@
 import React, { useRef } from "react";
 import { ChevronRight, ChevronLeft } from "lucide-react";
- 
+
 // Images (replace with your actual assets)
-import Img1 from "../../assets/images/verifiedCustomers/img1.jpeg";
-import Img2 from "../../assets/images/verifiedCustomers/img2.jpeg";
-import Img3 from "../../assets/images/verifiedCustomers/img3.jpeg";
- 
+import Img1 from "../../assets/images/verifiedCustomers/img1.jpg";
+import Img2 from "../../assets/images/verifiedCustomers/img2.jpg";
+import Img3 from "../../assets/images/verifiedCustomers/img3.jpg";
+
 const imageItems = [
   { type: "image", src: Img1 },
   { type: "image", src: Img2 },
   { type: "image", src: Img3 },
   { type: "image", src: Img1 }, // repeat for demo
 ];
- 
+
 const HappyCustomerImages = () => {
   const scrollRef = useRef(null);
- 
+
   const handleScrollRight = () => {
     if (scrollRef.current) {
       scrollRef.current.scrollBy({ left: 320, behavior: "smooth" });
     }
   };
- 
+
   const handleScrollLeft = () => {
     if (scrollRef.current) {
       scrollRef.current.scrollBy({ left: -320, behavior: "smooth" });
     }
   };
- 
+
   return (
     <div className="relative w-full">
       <h2 className="text-xl font-semibold mb-4"> Images</h2>
- 
+
       {/* Image Cards Wrapper */}
       <div
         ref={scrollRef}
@@ -50,7 +50,7 @@ const HappyCustomerImages = () => {
           </div>
         ))}
       </div>
- 
+
       {/* Left Scroll Button */}
       <button
         onClick={handleScrollLeft}
@@ -58,7 +58,7 @@ const HappyCustomerImages = () => {
       >
         <ChevronLeft size={20} />
       </button>
- 
+
       {/* Right Scroll Button */}
       <button
         onClick={handleScrollRight}
@@ -69,5 +69,5 @@ const HappyCustomerImages = () => {
     </div>
   );
 };
- 
+
 export default HappyCustomerImages;

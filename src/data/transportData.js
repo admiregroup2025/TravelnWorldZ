@@ -1,3 +1,4 @@
+
 import ayodhya from '../assets/images/verified/ayodhya.jpg';
 import ram from '../assets/images/verified/ram.JPG';
 import shivam from '../assets/images/verified/Shivam_travels.jpeg';
@@ -11,6 +12,7 @@ function generateSlug(text) {
     .replace(/\s+/g, '-')
     .replace(/-+/g, '-');
 }
+
 const transportData = [
   {
     id: 1,
@@ -105,6 +107,7 @@ const transportData = [
     phone: "08147943975",
     whatsapp: "918147943975",
     tags: ["Hotels", "Hotels Rs 501 To Rs 1000"],
+    website: "https://ayodhya.infinityfreeapp.com/?i=1",
      tourPackages: [
       {
         destination: "Ayodhya",
@@ -230,4 +233,8 @@ const transportData = [
 
 
 
+
+ 
 export default transportData;
+ 
+ 

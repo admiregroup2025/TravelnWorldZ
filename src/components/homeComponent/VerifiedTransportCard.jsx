@@ -1,15 +1,25 @@
 import React, { useEffect, useRef, useState } from "react";
 import transportData from "../../data/transportData";
+<<<<<<< HEAD
+=======
+import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/solid";
+>>>>>>> origin/neha
 import { useNavigate } from "react-router-dom";
  
 const CARD_WIDTH = 260;
 const CARD_GAP = 24;
+<<<<<<< HEAD
 const AUTO_SCROLL_SPEED = 1; // px per frame
 const PAUSE_DURATION = 1000; // ms
+=======
+const AUTO_SCROLL_SPEED = 1;
+const PAUSE_DURATION = 1000;
+>>>>>>> origin/neha
  
 const VerifiedTransportCard = () => {
   const data = transportData;
   const scrollRef = useRef(null);
+<<<<<<< HEAD
   const rafRef = useRef(null);
   const pauseTimeout = useRef(null);
   const [isPaused, setIsPaused] = useState(false);
@@ -97,11 +107,61 @@ const VerifiedTransportCard = () => {
       direction === "next" ? CARD_WIDTH + CARD_GAP : -(CARD_WIDTH + CARD_GAP);
  
     container.scrollBy({ left: scrollAmount, behavior: "smooth" });
+=======
+  const pauseTimeout = useRef(null);
+  const [isPaused, setIsPaused] = useState(false);
+  const touchStartX = useRef(0);
+  const touchEndX = useRef(0);
+ 
+  const navigate = useNavigate();
+  // Auto-scroll
+  useEffect(() => {
+    const container = scrollRef.current;
+    if (!container || isPaused) return;
+ 
+    let animationId;
+ 
+    const autoScroll = () => {
+      if (container.scrollLeft >= container.scrollWidth / 2) {
+        container.scrollLeft = 0;
+      } else {
+        container.scrollLeft += AUTO_SCROLL_SPEED;
+      }
+      animationId = requestAnimationFrame(autoScroll);
+    };
+ 
+    animationId = requestAnimationFrame(autoScroll);
+    return () => cancelAnimationFrame(animationId);
+  }, [isPaused]);
+ 
+  // Scroll manually
+  const handleScroll = (direction) => {
+    const container = scrollRef.current;
+    const scrollAmount = direction === "next" ? CARD_WIDTH + CARD_GAP : -(CARD_WIDTH + CARD_GAP);
+    container.scrollBy({ left: scrollAmount, behavior: "smooth" });
+    pauseTemporarily();
+  };
+ 
+  const pauseTemporarily = () => {
+>>>>>>> origin/neha
     setIsPaused(true);
     clearTimeout(pauseTimeout.current);
     pauseTimeout.current = setTimeout(() => setIsPaused(false), PAUSE_DURATION);
   };
  
+<<<<<<< HEAD
+=======
+  // Swipe events for mobile
+  const handleTouchStart = (e) => (touchStartX.current = e.touches[0].clientX);
+  const handleTouchEnd = (e) => {
+    touchEndX.current = e.changedTouches[0].clientX;
+    const deltaX = touchEndX.current - touchStartX.current;
+    if (Math.abs(deltaX) > 50) {
+      handleScroll(deltaX < 0 ? "next" : "prev");
+    }
+  };
+ 
+>>>>>>> origin/neha
   return (
     <div className="relative flex flex-col items-center gap-6 px-4 sm:px-6 md:px-8 lg:px-16 py-6 bg-gray-100 min-h-fit">
       {/* Header */}
@@ -120,6 +180,7 @@ const VerifiedTransportCard = () => {
       {/* Prev Button */}
       <button
         onClick={() => handleScroll("prev")}
+<<<<<<< HEAD
         className="hidden sm:flex absolute left-2 top-1/2 transform -translate-y-1/2 z-20 bg-blue-600 text-white p-2 rounded-full shadow hover:bg-blue-700 transition"
         aria-label="Previous"
       >
@@ -133,11 +194,18 @@ const VerifiedTransportCard = () => {
         >
           <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
         </svg>
+=======
+        className="hidden sm:flex absolute left-1 top-1/2 transform -translate-y-1/2 z-10 bg-blue-600 text-white p-2 rounded-full shadow hover:bg-blue-700 transition"
+        aria-label="Previous"
+      >
+        <ChevronLeftIcon className="h-6 w-6" />
+>>>>>>> origin/neha
       </button>
  
       {/* Next Button */}
       <button
         onClick={() => handleScroll("next")}
+<<<<<<< HEAD
         className="hidden sm:flex absolute right-2 top-1/2 transform -translate-y-1/2 z-20 bg-blue-600 text-white p-2 rounded-full shadow hover:bg-blue-700 transition"
         aria-label="Next"
       >
@@ -151,11 +219,18 @@ const VerifiedTransportCard = () => {
         >
           <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
         </svg>
+=======
+        className="hidden sm:flex absolute right-1 top-1/2 transform -translate-y-1/2 z-10 bg-blue-600 text-white p-2 rounded-full shadow hover:bg-blue-700 transition"
+        aria-label="Next"
+      >
+        <ChevronRightIcon className="h-6 w-6" />
+>>>>>>> origin/neha
       </button>
  
       {/* Cards Scroll Area */}
       <div
         ref={scrollRef}
+<<<<<<< HEAD
         onMouseDown={handleMouseDown}
         onMouseUp={handleMouseUp}
         onMouseLeave={handleMouseLeave}
@@ -164,6 +239,13 @@ const VerifiedTransportCard = () => {
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
         className="overflow-hidden no-scrollbar w-full px-1 sm:px-2 md:px-4"
+=======
+        onMouseEnter={() => setIsPaused(true)}
+        onMouseLeave={() => setIsPaused(false)}
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
+        className="overflow-x-auto no-scrollbar w-full scroll-smooth px-1 sm:px-2 md:px-4"
+>>>>>>> origin/neha
         style={{ whiteSpace: "nowrap" }}
       >
         {[...data, ...data].map((item, index) => (
@@ -171,6 +253,7 @@ const VerifiedTransportCard = () => {
             key={index}
             className="inline-block align-top w-[260px] mr-[24px] last:mr-0 bg-white rounded-lg shadow-md hover:shadow-lg transition-all duration-300 flex-shrink-0"
           >
+<<<<<<< HEAD
            
           <img
             src={item.image}
@@ -179,6 +262,16 @@ const VerifiedTransportCard = () => {
             onClick={() => navigate(`/verified-transport-details/${item.id}`)}
           />
            
+=======
+            <a href={item.website} target="_blank" rel="noopener noreferrer">
+              <img
+                src={item.image}
+                alt={item.title}
+                className="w-full h-28 object-cover rounded-t-lg p-1 cursor-pointer"
+                onClick={() => navigate(`/verified-transport-details/${item.id}`)}
+              />
+            </a>
+>>>>>>> origin/neha
             <div className="flex flex-col flex-grow p-2 text-sm h-full">
               {/* Title + Verified */}
               <div className="flex justify-between items-center mb-1">
@@ -220,6 +313,10 @@ const VerifiedTransportCard = () => {
               </div>
             </div>
           </div>
+<<<<<<< HEAD
+=======
+ 
+>>>>>>> origin/neha
         ))}
       </div>
     </div>
@@ -227,3 +324,5 @@ const VerifiedTransportCard = () => {
 };
  
 export default VerifiedTransportCard;
+ 
+ 
