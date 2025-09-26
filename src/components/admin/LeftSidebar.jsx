@@ -50,9 +50,12 @@ import {
   ChevronDown,
 } from "lucide-react";
 
+import { getUser } from "../../utils/auth";
+
 const LeftSidebar = () => {
   const [accountOpen, setAccountOpen] = useState(false);
   const [itinerariesOpen,setItinerariesOpen]=useState(false)
+  const role = getUser()?.role || 'user';
 
   const menuItems = [
     { path: "buy-leads", label: "Buy Leads", icon: <ShoppingCart size={18} /> },
@@ -77,6 +80,21 @@ const LeftSidebar = () => {
 
   return (
     <nav className="flex flex-col mt-4 md:mt-6">
+      { (role === 'superadmin') && (
+        <NavLink
+          to="/superadmin"
+          className={({ isActive }) =>
+            `flex items-center gap-3 px-4 md:px-6 py-2 text-sm font-medium rounded-md transition-colors duration-200
+             ${
+               isActive
+                 ? "bg-indigo-500 text-indigo-900"
+                 : "hover:bg-indigo-700 hover:bg-opacity-80 text-white"
+             }`
+          }
+        >
+          Super Admin
+        </NavLink>
+      )}
       {menuItems.map((item) => (
         <NavLink
           key={item.path}

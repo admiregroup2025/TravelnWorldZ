@@ -143,6 +143,7 @@ import BuyLeads from './components/admin/BuyLeads.jsx';
 import MyReports from './components/admin/MyReports.jsx';
 import MyReviews from './components/admin/MyReviews.jsx';
 import MyTeam from './components/admin/MyTeam.jsx';
+import SuperAdminDashboard from './pages/SuperAdminDashboard.jsx';
 
 
 
@@ -200,6 +201,11 @@ const App = () => {
   <Route path="destinations/:slug" element={<ItineraryParticularCard />} />
   <Route path ="destination/:slug/destinations/:itineraryId" element ={<ItineraryDetail/>}/>
       </Route>
+     </Route>
+
+     {/* Super Admin only routes */}
+     <Route element={<ProtectedRoute requireRole="superadmin" /> }>
+       <Route path="/superadmin" element={<SuperAdminDashboard />} />
      </Route>
 
     </Routes>
