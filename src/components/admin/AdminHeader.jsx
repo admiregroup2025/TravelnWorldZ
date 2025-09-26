@@ -1,5 +1,6 @@
 import React from "react";
-import { Home, Headphones, Menu as MenuIcon, ListFilterPlus, X } from "lucide-react"; 
+import { Home, Headphones, Menu as MenuIcon, ListFilterPlus, X, LogOut } from "lucide-react"; 
+import { logout } from "../../utils/auth";
 import { useNavigate } from "react-router-dom";
 import logo from "../../assets/images/logo/logo.jpeg";
 import profilImg from "../../assets/images/profile.png";
@@ -73,10 +74,12 @@ export default function AdminHeader({ onOpenLeft, onOpenRight }) {
             </div>
           </div>
           <button
-            onClick={handleLogout}
-            className="bg-indigo-600 hover:bg-indigo-700 text-white text-xs sm:text-sm px-3 sm:px-4 py-1 rounded"
+            onClick={() => { logout(); handleLogout(); }}
+            className="flex items-center gap-1 bg-indigo-600 hover:bg-indigo-700 text-white text-xs sm:text-sm px-3 sm:px-4 py-1 rounded"
+            title="Logout"
           >
-            Logout
+            <LogOut size={16} />
+            <span className="hidden sm:inline">Logout</span>
           </button>
         </div>
       </div>

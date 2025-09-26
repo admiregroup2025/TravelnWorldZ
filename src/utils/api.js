@@ -7,4 +7,19 @@ export async function getJson(path) {
 	return res.json();
 }
 
+export async function postJson(path, body, options = {}) {
+    const headers = { 'Content-Type': 'application/json', ...(options.headers || {}) };
+    const res = await fetch(`${API_BASE}${path}`, {
+        method: 'POST',
+        headers,
+        body: JSON.stringify(body || {}),
+    });
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok) {
+        const message = data?.message || `Request failed: ${res.status}`;
+        throw new Error(message);
+    }
+    return data;
+}
+
 

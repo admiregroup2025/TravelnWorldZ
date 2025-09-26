@@ -98,6 +98,7 @@ import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import MainLayout from './MainLayout';
 import AdminLayout from './components/admin/AdminLayout';
+import ProtectedRoute from './components/ProtectedRoute.jsx';
 import Home from './pages/Home';
 import AboutUs from './pages/AboutUs';
 import Packages from './pages/Packages';
@@ -182,7 +183,8 @@ const App = () => {
       </Route>
 
       {/* Admin routes without Navbar + Footer */}
-     <Route path="/admin" element={<AdminLayout />}>
+     <Route element={<ProtectedRoute />}>
+       <Route path="/admin" element={<AdminLayout />}>
   <Route index element={<AdminPannel />} />
   <Route path="my-leads" element={<MyLeads />} />
   <Route path="buy-leads" element={<BuyLeads />} />
@@ -197,7 +199,8 @@ const App = () => {
 
   <Route path="destinations/:slug" element={<ItineraryParticularCard />} />
   <Route path ="destination/:slug/destinations/:itineraryId" element ={<ItineraryDetail/>}/>
-</Route>
+      </Route>
+     </Route>
 
     </Routes>
   );

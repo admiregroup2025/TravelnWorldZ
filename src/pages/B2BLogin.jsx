@@ -2,7 +2,9 @@ import React, { useState, useCallback } from "react";
 import { FcGoogle } from "react-icons/fc";
 import { Check, AlertCircle } from "lucide-react";
 import agenlogin from "../assets/images/agentlogin.jpg";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import { login } from "../utils/auth";
+import { postJson } from "../utils/api";
 const B2BLogin = () => {
   const [formData, setFormData] = useState({
     email: "",
@@ -14,6 +16,7 @@ const B2BLogin = () => {
   const [submitSuccess, setSubmitSuccess] = useState(false);
 
   const navigate = useNavigate();
+  const location = useLocation();
 
   const validateForm = useCallback(() => {
     const newErrors = {};
@@ -45,19 +48,12 @@ const B2BLogin = () => {
     [errors]
   );
 
-const fakeLoginApi = (email, password) => {
-  return new Promise((resolve, reject) => {
-    const isValid = validateForm();
-
-    if (!isValid) {
-      reject(new Error("Form validation failed"));
-    } else {
-      setTimeout(() => {
-        // resolve({ success: true, redirectTo: "/admin" });
-        navigate("/admin");
-      }, 1000);
-    }
-  });
+const doLogin = async (email, password) => {
+  const data = await postJson('/api/auth/login', { email, password });
+  // backend returns: { token, role, name }
+  login(data.token, { email, role: data.role, name: data.name });
+  const redirectTo = location.state?.from || "/admin";
+  navigate(redirectTo, { replace: true });
 };
 
 
@@ -70,7 +66,7 @@ const fakeLoginApi = (email, password) => {
     setSubmitSuccess(false);
 
     try {
-      await fakeLoginApi(formData.email, formData.password);
+      await doLogin(formData.email, formData.password);
       setSubmitSuccess(true);
     } catch (err) {
       setErrors({ form: err.message });
