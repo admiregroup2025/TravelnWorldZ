@@ -1,4 +1,4 @@
-  import React, { useState } from "react";
+import React, { useState } from "react";
 import Swal from "sweetalert2";
 
 const countryCodes = [
@@ -72,21 +72,23 @@ const EnquiryForm = ({ variant = "transparent" }) => {
   return (
     <form
       onSubmit={handleSubmit}
-      className={`rounded-xl shadow-lg p-5 md:p-6 w-full ${
+      className={`rounded-lg shadow-md p-4 md:p-5 w-full max-w-md mx-auto ${
         variant === "transparent"
           ? "bg-gray-200/40 backdrop-blur-md text-white"
           : "bg-white text-gray-900"
       }`}
     >
+      {/* Heading */}
       <h2
-        className={`font-semibold text-lg mb-3 ${
+        className={`font-semibold text-base sm:text-lg mb-2 truncate ${
           variant === "transparent" ? "text-white" : "text-gray-900"
         }`}
       >
         Tell us what you're looking for!
       </h2>
 
-      <div className="flex flex-col gap-3">
+      {/* Fields */}
+      <div className="flex flex-col gap-2.5">
         <input
           type="text"
           name="name"
@@ -94,7 +96,7 @@ const EnquiryForm = ({ variant = "transparent" }) => {
           value={formData.name}
           onChange={handleChange}
           required
-          className={`w-full border rounded-md px-3 h-10 text-sm focus:outline-none focus:ring-1 ${
+          className={`w-full border rounded-md px-3 h-9 text-sm focus:outline-none focus:ring-1 ${
             variant === "transparent"
               ? "bg-transparent border-gray-300 text-white placeholder-gray-200 focus:ring-blue-300"
               : "bg-white border-gray-300 text-gray-800 placeholder-gray-500 focus:ring-blue-500"
@@ -108,7 +110,7 @@ const EnquiryForm = ({ variant = "transparent" }) => {
           value={formData.company_name}
           onChange={handleChange}
           required
-          className={`w-full border rounded-md px-3 h-10 text-sm focus:outline-none focus:ring-1 ${
+          className={`w-full border rounded-md px-3 h-9 text-sm focus:outline-none focus:ring-1 ${
             variant === "transparent"
               ? "bg-transparent border-gray-300 text-white placeholder-gray-200 focus:ring-blue-300"
               : "bg-white border-gray-300 text-gray-800 placeholder-gray-500 focus:ring-blue-500"
@@ -116,12 +118,12 @@ const EnquiryForm = ({ variant = "transparent" }) => {
         />
 
         {/* Phone + Country Code */}
-        <div className="flex gap-2 items-center">
+        <div className="flex gap-2">
           <select
             name="countryCode"
             value={formData.countryCode}
             onChange={handleChange}
-            className={`w-24 border rounded-md h-10 text-sm px-2 focus:outline-none ${
+            className={`w-20 border rounded-md h-9 text-sm px-2 focus:outline-none ${
               variant === "transparent"
                 ? "bg-transparent text-white border-gray-300 focus:ring-blue-300"
                 : "bg-white text-gray-800 border-gray-300 focus:ring-blue-500"
@@ -134,21 +136,21 @@ const EnquiryForm = ({ variant = "transparent" }) => {
             ))}
           </select>
 
-          <input
-            type="tel"
-            name="phone"
-            placeholder="Mobile Number"
-            value={formData.phone}
-            onChange={handlePhoneChange}
-            required
-            inputMode="numeric"
-            maxLength={12}
-            className={`flex-1 border rounded-md px-3 h-9 text-sm focus:outline-none focus:ring-1 ${
-              variant === "transparent"
-                ? "bg-transparent border-gray-300 text-white placeholder-gray-200 focus:ring-blue-300"
-                : "bg-white border-gray-300 text-gray-800 placeholder-gray-500 focus:ring-blue-500"
-            }`}
-          />
+<input
+    type="tel"
+    name="phone"
+    placeholder="Mobile Number"
+    value={formData.phone}
+    onChange={handlePhoneChange}
+    required
+    inputMode="numeric"
+    maxLength={12}
+    className={`flex-1 max-w-[calc(100%-5.5rem)] border rounded-md px-3 h-9 text-sm focus:outline-none focus:ring-1 ${
+      variant === "transparent"
+        ? "bg-transparent border-gray-300 text-white placeholder-gray-200 focus:ring-blue-300"
+        : "bg-white border-gray-300 text-gray-800 placeholder-gray-500 focus:ring-blue-500"
+    }`}
+  />
         </div>
 
         <input
@@ -158,7 +160,7 @@ const EnquiryForm = ({ variant = "transparent" }) => {
           value={formData.email}
           onChange={handleChange}
           required
-          className={`w-full border rounded-md px-3 h-10 text-sm focus:outline-none focus:ring-1 ${
+          className={`w-full border rounded-md px-3 h-9 text-sm focus:outline-none focus:ring-1 ${
             variant === "transparent"
               ? "bg-transparent border-gray-300 text-white placeholder-gray-200 focus:ring-blue-300"
               : "bg-white border-gray-300 text-gray-800 placeholder-gray-500 focus:ring-blue-500"
@@ -172,7 +174,7 @@ const EnquiryForm = ({ variant = "transparent" }) => {
           value={formData.location}
           onChange={handleChange}
           required
-          className={`w-full border rounded-md px-3 h-10 text-sm focus:outline-none focus:ring-1 ${
+          className={`w-full border rounded-md px-3 h-9 text-sm focus:outline-none focus:ring-1 ${
             variant === "transparent"
               ? "bg-transparent border-gray-300 text-white placeholder-gray-200 focus:ring-blue-300"
               : "bg-white border-gray-300 text-gray-800 placeholder-gray-500 focus:ring-blue-500"
@@ -184,8 +186,8 @@ const EnquiryForm = ({ variant = "transparent" }) => {
           placeholder="Your Requirements"
           value={formData.your_requirements}
           onChange={handleChange}
-          rows={3}
-          className={`w-full border rounded-md px-3 py-2 text-sm min-h-[70px] resize-none focus:outline-none focus:ring-1 ${
+          rows={2}
+          className={`w-full border rounded-md px-3 py-1.5 text-sm resize-none focus:outline-none focus:ring-1 ${
             variant === "transparent"
               ? "bg-transparent border-gray-300 text-white placeholder-gray-200 focus:ring-blue-300"
               : "bg-white border-gray-300 text-gray-800 placeholder-gray-500 focus:ring-blue-500"
@@ -193,7 +195,7 @@ const EnquiryForm = ({ variant = "transparent" }) => {
         />
 
         <label
-          className={`flex items-center text-sm gap-2 ${
+          className={`flex items-center text-xs gap-2 ${
             variant === "transparent" ? "text-gray-200" : "text-gray-700"
           }`}
         >
@@ -220,3 +222,5 @@ const EnquiryForm = ({ variant = "transparent" }) => {
 };
 
 export default EnquiryForm;
+
+

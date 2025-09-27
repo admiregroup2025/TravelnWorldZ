@@ -1,25 +1,16 @@
-import React from 'react';
-import { Navigate, Outlet, useLocation } from 'react-router-dom';
-import { isAuthenticated, getUser } from '../utils/auth';
+import React from "react";
+import { Navigate, Outlet } from "react-router-dom";
 
-export default function ProtectedRoute({ requireAdmin = false, requireRole }) {
-  const authed = isAuthenticated();
-  const location = useLocation();
-  if (!authed) {
-    return <Navigate to="/b2blogin" replace state={{ from: location.pathname }} />;
+const ProtectedRoute = () => {
+  const token = localStorage.getItem("token");
+
+  if (!token) {
+    // If no token, redirect to login
+    return <Navigate to="/b2blogin" replace />;
   }
-  if (requireAdmin || requireRole) {
-    const user = getUser();
-    const role = user?.role || 'user';
-    if (requireRole) {
-      if (role !== requireRole) {
-        return <Navigate to="/" replace />;
-      }
-    } else if (role !== 'admin' && role !== 'superadmin') {
-      return <Navigate to="/" replace />;
-    }
-  }
-  return <Outlet />;
-}
 
+  // If token exists, render the component
+  return <Outlet/>;
+};
 
+export default ProtectedRoute;

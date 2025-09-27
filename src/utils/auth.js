@@ -1,11 +1,10 @@
 // Simple client-side auth utilities using localStorage
 
-const TOKEN_KEY = "twz_auth_token";
-const USER_KEY = "twz_auth_user";
+
 
 export function login(token, user) {
   try {
-    localStorage.setItem(TOKEN_KEY, token);
+    localStorage.setItem("TOKEN_KEY", token);
     if (user) localStorage.setItem(USER_KEY, JSON.stringify(user));
   } catch (e) {
     // no-op for SSR or blocked storage

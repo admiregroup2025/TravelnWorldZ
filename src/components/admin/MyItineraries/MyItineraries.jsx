@@ -1,30 +1,96 @@
-import ItineraryCard from "./ItineraryCard"; // adjust path as needed
-// import destinations from "./data.json"; // import the JSON dataset
+import ItineraryCard from "./ItineraryCard";
 import { useOutletContext } from "react-router-dom";
 import { useSelector } from "react-redux";
 import RightSidebar from "../RightSidebar";
+import { getJsonWithAuth, deleteJson, putJson } from "../../../utils/api";
+import { useState, useEffect } from "react";
+import { toast } from "react-toastify";
 
 const MyItineraries = () => {
     const state = useSelector((state)=>state.filter);
     const { destinations } = useOutletContext();
-    const list = (state?.itineraries && state.itineraries.length) ? state.itineraries : destinations;
-  return (
-    
-    <div className="p-6">
-      <h2 className="text-xl font-semibold mb-6">My Itineraries</h2>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        {list.map((destination) => (
-          <ItineraryCard key={destination.id} destination={destination} />
-        ))}
-      </div>
+    const [itineraries, setItineraries] = useState([]);
+    const [loading, setLoading] = useState(true);
 
-       {/* Right Sidebar (fixed) */}
-         <aside className="w-72 fixed h-[91vh] right-0 bottom-0 bg-gray-100 border-l overflow-auto">
-           <RightSidebar />
-         </aside>
+    // Fetch itineraries from backend
+    useEffect(() => {
+        const fetchItineraries = async () => {
+            try {
+                const response = await getJsonWithAuth('/api/itineraries');
+                setItineraries(response.data || []);
+            } catch (error) {
+                console.error('Error fetching itineraries:', error);
+                toast.error('Failed to fetch itineraries');
+            } finally {
+                setLoading(false);
+            }
+        };
+        fetchItineraries();
+    }, []);
 
-    </div>
-  );
+    const handleDelete = async (id) => {
+        try {
+            await deleteJson(`/api/itineraries/${id}`);
+            setItineraries(prev => prev.filter(item => item._id !== id));
+            toast.success('Itinerary deleted successfully');
+        } catch (error) {
+            console.error('Error deleting itinerary:', error);
+            toast.error('Failed to delete itinerary');
+        }
+    };
+
+    const handleTogglePublic = async (id, published) => {
+        try {
+            await putJson(`/api/itineraries/${id}/toggle-public`, { published });
+            setItineraries(prev => prev.map(item => 
+                item._id === id ? { ...item, published } : item
+            ));
+            toast.success(`Itinerary ${published ? 'published' : 'unpublished'} successfully`);
+        } catch (error) {
+            console.error('Error toggling itinerary status:', error);
+            toast.error('Failed to update itinerary status');
+        }
+    };
+
+    const handleEdit = (itinerary) => {
+        // Navigate to edit form with pre-filled data
+        window.location.href = `/admin/Create-Itinary?edit=${itinerary._id}`;
+    };
+
+    const list = (state?.itineraries && state.itineraries.length) ? state.itineraries : itineraries;
+
+    if (loading) {
+        return (
+            <div className="p-6">
+                <h2 className="text-xl font-semibold mb-6">My Itineraries</h2>
+                <div className="flex justify-center items-center h-64">
+                    <div className="text-gray-500">Loading itineraries...</div>
+                </div>
+            </div>
+        );
+    }
+
+    return (
+        <div className="p-6">
+            <h2 className="text-xl font-semibold mb-6">My Itineraries</h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                {list.map((itinerary) => (
+                    <ItineraryCard 
+                        key={itinerary._id || itinerary.id} 
+                        destination={itinerary}
+                        onEdit={handleEdit}
+                        onDelete={handleDelete}
+                        onTogglePublic={handleTogglePublic}
+                    />
+                ))}
+            </div>
+
+            {/* Right Sidebar (fixed) */}
+            <aside className="w-72 fixed h-[91vh] right-0 bottom-0 bg-gray-100 border-l overflow-auto">
+                <RightSidebar />
+            </aside>
+        </div>
+    );
 };
 
 export default MyItineraries;

@@ -2,9 +2,10 @@ import React, { useState, useCallback } from "react";
 import { FcGoogle } from "react-icons/fc";
 import { Check, AlertCircle } from "lucide-react";
 import agenlogin from "../assets/images/agentlogin.jpg";
-import { useLocation,Link, useNavigate } from "react-router-dom";
-import { login } from "../utils/auth";
-import { postJson } from "../utils/api";
+import { useLocation, Link, useNavigate } from "react-router-dom";
+import { Eye, EyeOff } from "lucide-react"; // 👈 add this import
+
+
 const B2BLogin = () => {
   const [formData, setFormData] = useState({
     email: "",
@@ -14,6 +15,7 @@ const B2BLogin = () => {
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -48,15 +50,6 @@ const B2BLogin = () => {
     [errors]
   );
 
-const doLogin = async (email, password) => {
-  const data = await postJson('/api/auth/login', { email, password });
-  // backend returns: { token, role, name }
-  login(data.token, { email, role: data.role, name: data.name });
-  const redirectTo = location.state?.from || "/admin";
-  navigate(redirectTo, { replace: true });
-};
-
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -64,12 +57,47 @@ const doLogin = async (email, password) => {
 
     setIsSubmitting(true);
     setSubmitSuccess(false);
+    setErrors((prev) => ({ ...prev, form: undefined }));
 
     try {
-      await doLogin(formData.email, formData.password);
+      const res = await fetch(`${import.meta.env.VITE_BACKEND_API}/api/auth/login`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email: formData.email.trim(), password: formData.password }),
+      });
+
+      // try to parse JSON safely
+      const data = await res.json().catch(() => ({}));
+      console.log("login response:", data);
+
+      if (!res.ok) {
+        // backend may return useful message
+        const message = data?.message || `Login failed (${res.status})`;
+        throw new Error(message);
+      }
+
+      // accept several common token keys
+      const token = data?.accessToken || data?.token || data?.access_token || null;
+      if (!token) {
+        throw new Error("No token received from server");
+      }
+
+      // save token to localStorage
+      localStorage.setItem("accessToken", token);
+
+      // optional: set default auth header for fetch/axios in app (if you use axios elsewhere)
+      // axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+
       setSubmitSuccess(true);
+
+      // redirect (replace history so back won't return to login)
+     console.log("nffsd")
+      navigate("/admin");
     } catch (err) {
-      setErrors({ form: err.message });
+      console.error("Login error:", err);
+      setErrors((prev) => ({ ...prev, form: err.message || "Login failed" }));
     } finally {
       setIsSubmitting(false);
     }
@@ -90,12 +118,8 @@ const doLogin = async (email, password) => {
           aria-label="Login form"
           noValidate
         >
-          <h1 className="text-3xl font-bold text-center text-gray-900 mb-2">
-            Login
-          </h1>
-          <p className="text-center text-gray-600 mb-4">
-            Welcome to the HelloTravel family!
-          </p>
+          <h1 className="text-3xl font-bold text-center text-gray-900 mb-2">Login</h1>
+          <p className="text-center text-gray-600 mb-4">Welcome to the HelloTravel family!</p>
 
           {/* ✅ Success message */}
           {submitSuccess && (
@@ -113,27 +137,9 @@ const doLogin = async (email, password) => {
             </div>
           )}
 
-          {/* Google Sign In */}
-          <button
-            type="button"
-            aria-label="Sign in with Google"
-            className="w-full flex items-center justify-center bg-red-500 hover:bg-red-600 text-white py-2 rounded-md"
-          >
-            <FcGoogle className="mr-2 text-xl" /> Sign in with Google
-          </button>
-
-          <div className="flex items-center my-4">
-            <hr className="flex-grow border-gray-300" />
-            <span className="px-2 text-gray-500">or</span>
-            <hr className="flex-grow border-gray-300" />
-          </div>
-
           {/* Email */}
           <div>
-            <label
-              htmlFor="email"
-              className="block text-xs font-medium text-gray-700 mb-1"
-            >
+            <label htmlFor="email" className="block text-xs font-medium text-gray-700 mb-1">
               Email *
             </label>
             <input
@@ -144,30 +150,21 @@ const doLogin = async (email, password) => {
               placeholder="you@example.com"
               disabled={isSubmitting}
               className={`w-full px-3 py-2 border rounded-lg text-sm outline-none focus:ring-1 focus:ring-blue-500 ${
-                errors.email
-                  ? "border-red-300 bg-red-50"
-                  : "border-gray-300 hover:border-gray-400"
+                errors.email ? "border-red-300 bg-red-50" : "border-gray-300 hover:border-gray-400"
               }`}
               aria-invalid={!!errors.email}
               aria-describedby={errors.email ? "email-error" : undefined}
             />
             {errors.email && (
-              <p
-                id="email-error"
-                className="text-red-500 text-xs mt-1"
-                role="alert"
-              >
+              <p id="email-error" className="text-red-500 text-xs mt-1" role="alert">
                 {errors.email}
               </p>
             )}
           </div>
 
           {/* Password */}
-          <div>
-            <label
-              htmlFor="password"
-              className="block text-xs font-medium text-gray-700 mb-1"
-            >
+          {/* <div>
+            <label htmlFor="password" className="block text-xs font-medium text-gray-700 mb-1">
               Password *
             </label>
             <input
@@ -178,30 +175,56 @@ const doLogin = async (email, password) => {
               placeholder="••••••••"
               disabled={isSubmitting}
               className={`w-full px-3 py-2 border rounded-lg text-sm outline-none focus:ring-1 focus:ring-blue-500 ${
-                errors.password
-                  ? "border-red-300 bg-red-50"
-                  : "border-gray-300 hover:border-gray-400"
+                errors.password ? "border-red-300 bg-red-50" : "border-gray-300 hover:border-gray-400"
               }`}
               aria-invalid={!!errors.password}
               aria-describedby={errors.password ? "password-error" : undefined}
             />
             {errors.password && (
-              <p
-                id="password-error"
-                className="text-red-500 text-xs mt-1"
-                role="alert"
-              >
+              <p id="password-error" className="text-red-500 text-xs mt-1" role="alert">
                 {errors.password}
               </p>
             )}
-          </div>
+          </div> */}
+          
+{/* Password */}
+<div className="relative">
+  <label htmlFor="password" className="block text-xs font-medium text-gray-700 mb-1">
+    Password *
+  </label>
+  <input
+    id="password"
+    type={showPassword ? "text" : "password"} // 👈 toggle type
+    value={formData.password}
+    onChange={(e) => handleInputChange("password", e.target.value)}
+    placeholder="••••••••"
+    disabled={isSubmitting}
+    className={`w-full px-3 py-2 border rounded-lg text-sm outline-none focus:ring-1 focus:ring-blue-500 pr-10
+      ${errors.password ? "border-red-300 bg-red-50" : "border-gray-300 hover:border-gray-400"}`}
+    aria-invalid={!!errors.password}
+    aria-describedby={errors.password ? "password-error" : undefined}
+  />
+  
+  {/* 👁 Eye Icon */}
+  <button
+    type="button"
+    onClick={() => setShowPassword((prev) => !prev)}
+    className="absolute right-3 top-9 transform -translate-y-1/2 text-gray-500 hover:text-gray-700 focus:outline-none"
+    tabIndex={-1}
+  >
+    {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+  </button>
+
+  {errors.password && (
+    <p id="password-error" className="text-red-500 text-xs mt-1" role="alert">
+      {errors.password}
+    </p>
+  )}
+</div>
+
 
           <div className="text-right">
-            <a
-              href="#"
-              className="text-sm text-blue-600 hover:underline"
-              aria-label="Forgot Password"
-            >
+            <a href="#" className="text-sm text-blue-600 hover:underline" aria-label="Forgot Password">
               Forgot Password?
             </a>
           </div>
@@ -224,7 +247,7 @@ const doLogin = async (email, password) => {
 
           <p className="text-center text-sm text-gray-600">
             New User?{" "}
-            <Link  to ="/b2bSignup" className="text-blue-600 hover:underline">
+            <Link to="/b2bSignup" className="text-blue-600 hover:underline">
               Signup Here
             </Link>
           </p>

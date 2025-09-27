@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate, useOutletContext } from "react-router-dom";
 import ItineraryCard from "./ItineraryCard";
-  import { toast, ToastContainer } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { postJson, putJson } from "../../../utils/api";
 
 // ItineraryForm.jsx
 // Single-file React component for creating an itinerary form for agents.
@@ -51,6 +52,7 @@ export default function ItineraryForm() {
   // Basic validation / status
   const [errors, setErrors] = useState({});
   const [submittedData, setSubmittedData] = useState(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
 
 
@@ -193,61 +195,55 @@ export default function ItineraryForm() {
     return Object.keys(e).length === 0;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!validate()) return;
 
-    const payload = {
-      itineraryType,
-      title,
-      numDays: days.length,
-      destinations: destinations.filter((d) => d.trim()),
-      days,
-      inclusions,
-      additionalInclusions,
-      exclusions,
-      terms,
-      paymentPolicy,
-      price: Number(price),
-      discount: Number(discount),
-      finalPrice: Number(finalPrice()),
-      images: images.map((f) => f.name),
-      agentNotes,
-      createdAt: new Date().toISOString(),
-    };
+    setIsSubmitting(true);
 
-    // Save into admin state: upsert destination and add nested itinerary
-    const newItinerary = {
-      title,
-      subtitle,
-      image: imagePreviews[0]?.url || "",
-      images: imagePreviews.map((p) => p.url),
-      price: Number(price),
-      discount: Number(discount),
-      destinations: destinations.filter((d) => d.trim()),
-      inclusions,
-      exclusions,
-      terms,
-      paymentPolicy,
-      days,
-      public: false,
-    };
+    try {
+      const payload = {
+        title,
+        destinationName,
+        itineraryType,
+        destinations: destinations.filter((d) => d.trim()),
+        days,
+        inclusions,
+        additionalInclusions,
+        exclusions,
+        terms,
+        paymentPolicy,
+        price: Number(price),
+        discount: Number(discount),
+        images: imagePreviews.map((p) => p.url),
+        agentNotes,
+        published: false
+      };
 
-    const destSlug = upsertDestinationAndAddItinerary?.(
-      { name: destinationName || destinations[0] || title, type: itineraryType },
-      newItinerary
-    );
+      let response;
+      if (routeState.itineraryId) {
+        // Update existing itinerary
+        response = await putJson(`/api/itineraries/${routeState.itineraryId}`, payload);
+      } else {
+        // Create new itinerary
+        response = await postJson('/api/itineraries', payload);
+      }
 
-     toast.success("Itinerary saved successfully!", {
-    position: "top-right",
-    autoClose: 3000, // 3 seconds
-  });
+      toast.success(response.message || "Itinerary saved successfully!", {
+        position: "top-right",
+        autoClose: 3000,
+      });
 
-    // Navigate to Manage, then optionally to that destination's list
-    if (destSlug) {
-      navigate(`/admin/destinations/${destSlug}`);
-    } else {
-      navigate(`/admin/Manage-Itianary`);
+      // Navigate to Manage Itineraries
+      navigate('/admin/Manage-Itianary');
+    } catch (error) {
+      console.error('Error saving itinerary:', error);
+      toast.error(error.message || "Failed to save itinerary", {
+        position: "top-right",
+        autoClose: 3000,
+      });
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -478,8 +474,12 @@ export default function ItineraryForm() {
         </section>
 
         <div className="flex items-center gap-3">
-          <button type="submit" className="px-5 py-2 rounded bg-orange-500 text-white font-medium">
-            Save Itinerary
+          <button 
+            type="submit" 
+            disabled={isSubmitting}
+            className="px-5 py-2 rounded bg-orange-500 text-white font-medium disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            {isSubmitting ? 'Saving...' : 'Save Itinerary'}
           </button>
 
           <button
