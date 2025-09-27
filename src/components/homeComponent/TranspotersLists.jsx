@@ -122,8 +122,4 @@ const TransportersList = () => {
   );
 };
 
-<<<<<<< HEAD
 export default TransportersList;
-=======
-export default TransportersList;
->>>>>>> origin/neha
