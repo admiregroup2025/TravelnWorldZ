@@ -1,19 +1,25 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react"; // ✅ added useCallback
 import { FcGoogle } from "react-icons/fc";
 import { Check, AlertCircle } from "lucide-react";
 import agenlogin from "../assets/images/agentlogin.jpg";
 import { useLocation, Link, useNavigate } from "react-router-dom";
-import { Eye, EyeOff } from "lucide-react"; // 👈 add this import
-
+import { Eye, EyeOff } from "lucide-react";
 
 const B2BLogin = () => {
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [errors, setErrors] = useState({});
   const [status, setStatus] = useState("idle");
   const [showPassword, setShowPassword] = useState(false);
-  const navigate = useNavigate();
 
-  const validateForm = () => {
+  // ✅ added missing states
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitSuccess, setSubmitSuccess] = useState(false);
+
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  // ✅ fixed validateForm (was written wrong with `}, [formData])`)
+  const validateForm = useCallback(() => {
     const newErrors = {};
     if (!formData.email.trim()) {
       newErrors.email = "Email is required";
@@ -55,39 +61,35 @@ const B2BLogin = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ email: formData.email.trim(), password: formData.password }),
+        body: JSON.stringify({
+          email: formData.email.trim(),
+          password: formData.password,
+        }),
       });
 
-      // try to parse JSON safely
       const data = await res.json().catch(() => ({}));
       console.log("login response:", data);
 
       if (!res.ok) {
-        // backend may return useful message
         const message = data?.message || `Login failed (${res.status})`;
         throw new Error(message);
       }
 
-      // accept several common token keys
       const token = data?.accessToken || data?.token || data?.access_token || null;
       if (!token) {
         throw new Error("No token received from server");
       }
 
-      // save token to localStorage
       localStorage.setItem("accessToken", token);
 
-      // optional: set default auth header for fetch/axios in app (if you use axios elsewhere)
-      // axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-
       setSubmitSuccess(true);
+      setStatus("success");
 
-      // redirect (replace history so back won't return to login)
-     console.log("nffsd")
       navigate("/admin");
     } catch (err) {
       console.error("Login error:", err);
       setErrors((prev) => ({ ...prev, form: err.message || "Login failed" }));
+      setStatus("error");
     } finally {
       setIsSubmitting(false);
     }
@@ -130,7 +132,6 @@ const B2BLogin = () => {
           {/* Email */}
           <div>
             <label htmlFor="email" className="block text-xs font-medium text-gray-700 mb-1">
-            <label htmlFor="email" className="block text-xs font-medium text-gray-700 mb-1">
               Email *
             </label>
             <input
@@ -152,63 +153,36 @@ const B2BLogin = () => {
           </div>
 
           {/* Password */}
-          {/* <div>
+          <div className="relative">
             <label htmlFor="password" className="block text-xs font-medium text-gray-700 mb-1">
               Password *
             </label>
             <input
               id="password"
-              type="password"
+              type={showPassword ? "text" : "password"}
               value={formData.password}
               onChange={(e) => handleInputChange("password", e.target.value)}
-              placeholder="password"
+              placeholder="••••••••"
               disabled={isSubmitting}
-              className={`w-full px-3 py-2 border rounded-lg text-sm outline-none focus:ring-1 focus:ring-blue-500 ${
-                errors.password ? "border-red-300 bg-red-50" : "border-gray-300 hover:border-gray-400"
-              }`}
+              className={`w-full px-3 py-2 border rounded-lg text-sm outline-none focus:ring-1 focus:ring-blue-500 pr-10
+                ${errors.password ? "border-red-300 bg-red-50" : "border-gray-300 hover:border-gray-400"}`}
+              aria-invalid={!!errors.password}
+              aria-describedby={errors.password ? "password-error" : undefined}
             />
+            <button
+              type="button"
+              onClick={() => setShowPassword((prev) => !prev)}
+              className="absolute right-3 top-9 transform -translate-y-1/2 text-gray-500 hover:text-gray-700 focus:outline-none"
+              tabIndex={-1}
+            >
+              {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+            </button>
             {errors.password && (
               <p id="password-error" className="text-red-500 text-xs mt-1" role="alert">
                 {errors.password}
               </p>
             )}
-          </div> */}
-          
-{/* Password */}
-<div className="relative">
-  <label htmlFor="password" className="block text-xs font-medium text-gray-700 mb-1">
-    Password *
-  </label>
-  <input
-    id="password"
-    type={showPassword ? "text" : "password"} // 👈 toggle type
-    value={formData.password}
-    onChange={(e) => handleInputChange("password", e.target.value)}
-    placeholder="••••••••"
-    disabled={isSubmitting}
-    className={`w-full px-3 py-2 border rounded-lg text-sm outline-none focus:ring-1 focus:ring-blue-500 pr-10
-      ${errors.password ? "border-red-300 bg-red-50" : "border-gray-300 hover:border-gray-400"}`}
-    aria-invalid={!!errors.password}
-    aria-describedby={errors.password ? "password-error" : undefined}
-  />
-  
-  {/* 👁 Eye Icon */}
-  <button
-    type="button"
-    onClick={() => setShowPassword((prev) => !prev)}
-    className="absolute right-3 top-9 transform -translate-y-1/2 text-gray-500 hover:text-gray-700 focus:outline-none"
-    tabIndex={-1}
-  >
-    {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
-  </button>
-
-  {errors.password && (
-    <p id="password-error" className="text-red-500 text-xs mt-1" role="alert">
-      {errors.password}
-    </p>
-  )}
-</div>
-
+          </div>
 
           <div className="text-right">
             <a href="#" className="text-sm text-blue-600 hover:underline" aria-label="Forgot Password">
@@ -246,4 +220,3 @@ const B2BLogin = () => {
 };
 
 export default B2BLogin;
-
