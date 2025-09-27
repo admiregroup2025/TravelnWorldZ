@@ -40,7 +40,7 @@ export default function RightSidebar() {
   ]);
 
   return (
-    <div className="p-4 sm:p-4 space-y-6 min-w-[16rem]">
+    <div className="p-2 space-y-6">
       {/* Lead Type */}
       <fieldset>
         <legend className="font-semibold">Itinerary Type</legend>
@@ -65,8 +65,8 @@ export default function RightSidebar() {
           type="text"
           value={state.city}
           onChange={(e) => dispatch(filterActions.setCity(e.target.value))}
-          placeholder="Search cities..."
-          className="border border-[#979696] bg-white rounded p-2 w-full"
+          placeholder="Search 3 letters for cities..."
+          className="border border-[#979696] bg-transparent rounded p-2 w-full"
         />
       </div>
 
@@ -111,7 +111,6 @@ export default function RightSidebar() {
           onChange={(e) =>
             dispatch(filterActions.setDate({ field: "from", value: e.target.value }))
           }
-          className="block mt-1 border border-gray-200 rounded p-1 w-full"
         />
         <input
           type="date"
@@ -119,7 +118,6 @@ export default function RightSidebar() {
           onChange={(e) =>
             dispatch(filterActions.setDate({ field: "to", value: e.target.value }))
           }
-          className="block mt-1 border border-gray-200 rounded p-1 w-full"
         />
       </fieldset>
 
@@ -149,9 +147,8 @@ export default function RightSidebar() {
           onChange={(e) =>
             dispatch(filterActions.setBudget({ field: "max", value: Number(e.target.value) }))
           }
-          className="w-full"
         />
-        <div className="text-right text-sm text-gray-600">₹{state.budget.max.toLocaleString?.() || state.budget.max}</div>
+        <span className="text-[#979696]">₹{state.budget.max}</span>
       </fieldset>
     </div>
   );

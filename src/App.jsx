@@ -31,7 +31,6 @@ import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import MainLayout from './MainLayout';
 import AdminLayout from './components/admin/AdminLayout';
-import ProtectedRoute from './components/ProtectedRoute.jsx';
 import Home from './pages/Home';
 import AboutUs from './pages/AboutUs';
 import Packages from './pages/Packages';
@@ -87,7 +86,6 @@ import B2BSignup from './pages/B2BSignup.jsx';
 const App = () => {
   return (
     <Routes>
-      {/* Public routes with Navbar + Footer */}
       <Route element={<MainLayout />}>
         <Route path="/" element={<Home />} />
         <Route path="/aboutUs" element={<AboutUs />} />
@@ -123,10 +121,7 @@ const App = () => {
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/Terms-to-use" element={<TermsAndConditions />} />
       </Route>
-
-      {/* Admin routes without Navbar + Footer */}
-     <Route element={<ProtectedRoute />}>
-       <Route path="/admin" element={<AdminLayout />}>
+     <Route path="/admin" element={<AdminLayout />}>
   <Route index element={<AdminPannel />} />
   <Route path="my-leads" element={<MyLeads />} />
   <Route path="buy-leads" element={<BuyLeads />} />
@@ -137,17 +132,9 @@ const App = () => {
   <Route path="reset-password" element={<ResetPassword />} />
   <Route path="Manage-Itianary" element={<MyItineraries />} />
   <Route path="Create-Itinary" element={<ItineraryForm />} />
-   {/* <Route path="Itinary-card" element={<ItineraryCard />} /> */}
-
   <Route path="destinations/:slug" element={<ItineraryParticularCard />} />
   <Route path ="destination/:slug/destinations/:itineraryId" element ={<ItineraryDetail/>}/>
-      </Route>
-     </Route>
-
-     {/* Super Admin only routes */}
-     <Route element={<ProtectedRoute requireRole="superadmin" /> }>
-       <Route path="/superadmin" element={<SuperAdminDashboard />} />
-     </Route>
+</Route>
 
     </Routes>
   );

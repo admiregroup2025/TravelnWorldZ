@@ -1,35 +1,24 @@
 import React, { useEffect, useState } from 'react';
-import { Eye, Pencil, Trash2 } from 'lucide-react';
 
 import { useNavigate, useParams } from "react-router-dom";
 
 import { useOutletContext } from "react-router-dom";
 import EditItineraryModal from "./EditItineraryModal";
-import PublicToggleButton from './PublicToggleButton';
 
-// Tailwind-based React component converted from the provided HTML/CSS.
-// Drop this file into a React app that has Tailwind configured (e.g. create-react-app + Tailwind or Next.js + Tailwind).
 
 function encodeSVG(svg) {
   return `url("data:image/svg+xml,${encodeURIComponent(svg)}")`;
 }
 
 export default function ItineraryParticularCard() {
-  const { slug } = useParams();
-  // expect these from parent via useOutletContext()
-  const {
-    destinations,
-    updateDestinationItinerary,
-    removeDestinationItinerary,
-    toggleDestinationItineraryPublic,
-  } = useOutletContext() || {};
-
-  const destination = Array.isArray(destinations) ? destinations.find(d => d.slug === slug) : null;
-
-  const navigate = useNavigate();
-
+  const {slug} =useParams()
+   const { destinations, updateDestinationItinerary, removeDestinationItinerary, toggleDestinationItineraryPublic } = useOutletContext();
+   
+   const destination = destinations.find(d => d.slug === slug);
+   console.log(destination,"dataToaParticular")
+  const navigate = useNavigate()
   useEffect(() => {
-    // small mount animation using Tailwind classes - we add a tiny delay per card
+
     const cardsEl = document.querySelectorAll('.it-card');
     cardsEl.forEach((el, i) => {
       el.style.opacity = '0';
@@ -40,6 +29,7 @@ export default function ItineraryParticularCard() {
         el.style.transform = 'translateY(0)';
       }, i * 150);
     });
+
     // hover small scale handled in JSX with Tailwind
   }, []);
 
@@ -47,19 +37,9 @@ export default function ItineraryParticularCard() {
   const [isEditOpen, setIsEditOpen] = useState(false);
 
   function goBack() {
-    navigate("/admin/Manage-Itianary");
-  }
-
-  // wrapper: use provided toggle if available, otherwise update via updateDestinationItinerary
-  function toggleItineraryPublicWrapper(slugParam, itineraryId, newValue) {
-    if (typeof toggleDestinationItineraryPublic === 'function') {
-      toggleDestinationItineraryPublic(slugParam, itineraryId, newValue);
-    } else if (typeof updateDestinationItinerary === 'function') {
-      // fallback: use updateDestinationItinerary to set public field
-      updateDestinationItinerary(slugParam, itineraryId, { public: newValue });
-    } else {
-      console.warn('No toggle or update function available to change itinerary visibility.');
-    }
+    // In real app, use router navigation or window.history.back()
+    navigate("/admin/Manage-Itianary")
+    ;
   }
 
   // ripple effect helper
@@ -81,26 +61,9 @@ export default function ItineraryParticularCard() {
     action();
   }
 
-  if (!destination) {
-    return (
-      <div className="min-h-screen bg-gray-100 py-10 px-4">
-        <div className="max-w-6xl mx-auto">
-          <button
-            onClick={goBack}
-            className="inline-flex items-center gap-2 bg-gray-600 text-white px-4 py-2 rounded-full mb-6 hover:bg-gray-700 transition-all"
-          >
-            ← Back to Destinations
-          </button>
-
-          <p className="text-center text-gray-600">Loading destination...</p>
-        </div>
-      </div>
-    );
-  }
-
   return (
     <div className="min-h-screen bg-gray-100 py-10 px-4">
-      <div className="max-w-[1400px] mx-auto">
+      <div className="max-w-6xl mx-auto">
         <button
           onClick={goBack}
           className="inline-flex items-center gap-2 bg-gray-600 text-white px-4 py-2 rounded-full mb-6 hover:bg-gray-700 transition-all"
@@ -112,72 +75,54 @@ export default function ItineraryParticularCard() {
           {`Itineraries for ${destination.name}`}
         </h1>
 
-         <div className="grid gap-6 sm:gap-8 grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
-          {destination.itineraries?.map((c) => (
-            <div
-              key={c.id}
-              className="group it-card bg-white rounded-2xl shadow-sm ring-1 ring-gray-200 overflow-hidden cursor-pointer transition-all duration-300 hover:shadow-xl hover:-translate-y-1"
-              
-            >
-              <div className="relative">
-                <div
-                  className="w-full h-56 bg-center bg-cover"
-                  style={{ backgroundImage: `url(${c.image})` }}
-                  aria-hidden
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-transparent" />
-                {typeof c.days === 'number' && (
-                  <div className="absolute top-3 left-3 px-3 py-1 rounded-full text-xs font-medium bg-white/90 text-gray-800 shadow">
-                    {c.days} Days
-                  </div>
-                )}
-                {c.public && (
-                  <div className="absolute top-3 right-3 px-2.5 py-1 rounded-full text-xs font-semibold bg-green-600 text-white shadow">
-                    Public
-                  </div>
-                )}
-              </div>
+     <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+  {destination.itineraries.map((c) => (
+    <div
+      key={c.id}
+      className="bg-white rounded-xl shadow-md border border-gray-200 overflow-hidden transform transition-transform hover:-translate-y-2 hover:scale-[1.02] cursor-pointer"
+      onClick={() => { setEditingItinerary(c); setIsEditOpen(true); }}
+    >
+      <div
+        className="w-full h-60 bg-center bg-cover"
+        style={{ backgroundImage: `url(${c.image})` }}
+        aria-hidden
+      />
 
-              <div className="p-5 h-72">
-                <h3 className="text-lg font-semibold text-gray-900 mb-1 line-clamp-1">{c.title}</h3>
-                <p className="text-sm text-gray-500 mb-4 line-clamp-2">{c.subtitle}</p>
+      <div className="p-6 text-center">
+        <h3 className="text-xl font-semibold text-gray-800 mb-2">{c.title}</h3>
+        <p className="text-gray-500 mb-6">{c.subtitle}</p>
 
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-                  <button
-                    onClick={(e) => { e.stopPropagation(); navigate(`/admin/destination/${slug}/destinations/${c.id}`); }}
-                    className="inline-flex items-center justify-center gap-2 rounded-lg border border-blue-600 text-blue-600 px-3 py-2 text-sm font-medium hover:bg-blue-600 hover:text-white transition-colors"
-                    title="View itinerary"
-                  >
-                    <Eye size={20} />
-                  </button>
-
-                  <button
-                    onClick={(e) => { e.stopPropagation(); navigate(`/admin/Create-Itinary`, { state: { destinationSlug: slug, itineraryId: c.id } }); }}
-                    className="inline-flex items-center justify-center gap-2 rounded-lg bg-orange-600 text-white px-3 py-2 text-sm font-medium hover:bg-orange-700 transition-colors"
-                    title="Edit itinerary"
-                  >
-                    <Pencil size={20} />
-                  </button>
-
-                  <button
-                    onClick={(e) => { e.stopPropagation(); removeDestinationItinerary(slug, c.id); }}
-                    className="inline-flex items-center justify-center gap-2 rounded-lg bg-red-600 text-white px-3 py-2 text-sm font-medium hover:bg-red-700 transition-colors"
-                    title="Delete itinerary"
-                  >
-                    <Trash2 size={20} />
-                  </button>
-
-                  <PublicToggleButton
-                    c={c}
-                    slug={slug}
-                    // pass wrapper so button triggers state update even if context toggle missing
-                    toggleDestinationItineraryPublic={toggleItineraryPublicWrapper}
-                  />
-                </div>
-              </div>
-            </div>
-          ))}
+        <div className="flex flex-col sm:flex-row flex-wrap gap-3 justify-center">
+          <button
+            onClick={(e) => { e.stopPropagation(); navigate(`/admin/destination/${slug}/destinations/${c.id}`); }}
+            className="relative inline-block border-2 border-blue-600 text-blue-600 px-5 py-2 rounded-md font-semibold uppercase tracking-wide hover:bg-blue-600 hover:text-white transition-all"
+          >
+            View
+          </button>
+          <button
+            onClick={(e) => { e.stopPropagation(); setEditingItinerary(c); setIsEditOpen(true); }}
+            className="relative inline-block bg-orange-600 text-white px-5 py-2 rounded-md font-semibold uppercase tracking-wide hover:bg-orange-700 transition-all"
+          >
+            Edit
+          </button>
+          <button
+            onClick={(e) => { e.stopPropagation(); removeDestinationItinerary(slug, c.id); }}
+            className="relative inline-block bg-red-600 text-white px-5 py-2 rounded-md font-semibold uppercase tracking-wide hover:bg-red-700 transition-all"
+          >
+            Delete
+          </button>
+          <button
+            onClick={(e) => { e.stopPropagation(); toggleDestinationItineraryPublic(slug, c.id, !c.public); }}
+            className={`relative inline-block px-5 py-2 rounded-md font-semibold uppercase tracking-wide transition-all ${c.public ? 'bg-green-600 text-white hover:bg-green-700' : 'border-2 border-green-600 text-green-600 hover:bg-green-600 hover:text-white'}`}
+          >
+            {c.public ? 'Public' : 'Make Public'}
+          </button>
         </div>
+      </div>
+    </div>
+  ))}
+</div>
+
       </div>
 
       {/* ripple keyframes */}

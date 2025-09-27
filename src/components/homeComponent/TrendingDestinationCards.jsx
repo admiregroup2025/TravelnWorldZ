@@ -56,4 +56,4 @@ const TrendingDestinationCards = () => {
   );
 };
 
-export default TrendingDestinationCards; 
+export default TrendingDestinationCards;

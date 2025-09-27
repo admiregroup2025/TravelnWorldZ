@@ -5,21 +5,19 @@ import img3 from "../../assets/images/logo/bannerAdds/image3.png";
 import img4 from "../../assets/images/logo/bannerAdds/image4.png";
 import img5 from "../../assets/images/logo/bannerAdds/image5.png";
 
-
 const BannerAds = () => {
   const images = [img1, img2, img3, img4, img5];
 
-const Card = ({ src }) => (
-  <div className="flex-shrink-0 w-72 h-40 border border-dashed border-gray-500 rounded-md overflow-hidden bg-white flex items-center justify-center p-3">
-    <img
-      src={src}
-      alt="banner"  
-      className="w-full h-full object-contain"
-      loading="lazy"
-    />
-  </div>
-);
-
+  const Card = ({ src }) => (
+    <div className="flex-shrink-0 w-72 h-40 border border-dashed border-gray-500 rounded-md overflow-hidden bg-white flex items-center justify-center p-3">
+      <img
+        src={src}
+        alt="banner"
+        className="w-full h-full object-contain"
+        loading="lazy"
+      />
+    </div>
+  );
 
   return (
     <div className="py-12 bg-gray-100">

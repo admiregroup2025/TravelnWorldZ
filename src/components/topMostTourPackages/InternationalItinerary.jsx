@@ -3,7 +3,7 @@ import { useParams, useNavigate  } from "react-router-dom";
 import { getJson, USE_BACKEND } from "../../utils/api";
 import internationalItineraryData from "../../data/internationalItineraryData";
 
-const InternationalItineraryPage = () => {
+const InternationalItineraryPage = () => {  
   const { destinationId } = useParams();
   const navigate = useNavigate();
   const [itineraries, setItineraries] = useState(internationalItineraryData[destinationId] || []);

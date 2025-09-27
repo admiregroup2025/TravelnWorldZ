@@ -1,19 +1,13 @@
-import React, { useEffect, useState } from "react";
-import { useLocation, useNavigate, useOutletContext } from "react-router-dom";
+import React, { useState } from "react";
+import { useNavigate, useOutletContext } from "react-router-dom";
 import ItineraryCard from "./ItineraryCard";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { postJson, putJson } from "../../../utils/api";
 
-// ItineraryForm.jsx
-// Single-file React component for creating an itinerary form for agents.
-// Tailwind CSS classes are used for styling. Default export is the component.
-
 export default function ItineraryForm() {
   const navigate = useNavigate();
-  const location = useLocation();
-  const { destinations: filteredDestinations = [], rawDestinations = [], upsertDestinationAndAddItinerary } = useOutletContext() || {};
-  const routeState = location.state || {};
+  const { upsertDestinationAndAddItinerary } = useOutletContext() || {};
 
   const [destinationName, setDestinationName] = useState("");
   const [itineraryType, setItineraryType] = useState("domestic");
@@ -57,70 +51,7 @@ export default function ItineraryForm() {
 
 
 
-  const [itineraries, setItineraries] = useState([]); // store submitted itineraries
-  // Prefill when navigated with destinationSlug + itineraryId
-  useEffect(() => {
-    const { destinationSlug, itineraryId } = routeState || {};
-    if (!destinationSlug || !itineraryId) return;
-
-    const source = Array.isArray(rawDestinations) && rawDestinations.length ? rawDestinations : filteredDestinations;
-    const dest = Array.isArray(source) ? source.find((d) => d.slug === destinationSlug) : null;
-    const existing = dest?.itineraries?.find((i) => `${i.id}` === `${itineraryId}`);
-    if (!existing) return;
-
-    // Basic fields
-    setDestinationName(dest?.name || "");
-    setItineraryType(dest?.type || "domestic");
-    setTitle(existing.title || "");
-    // Destinations list
-    if (Array.isArray(existing.destinations) && existing.destinations.length) {
-      setDestinations(existing.destinations);
-    } else if (dest?.name) {
-      setDestinations([dest.name]);
-    }
-
-    // Days
-    if (Array.isArray(existing.days) && existing.days.length) {
-      // ensure dayNumber sequence
-      const normalized = existing.days.map((d, idx) => ({
-        dayNumber: d.dayNumber || idx + 1,
-        title: d.title || "",
-        details: d.details || "",
-        activities: d.activities || "",
-        meals: d.meals || "",
-        stay: d.stay || "",
-      }));
-      setDays(normalized);
-      setNumDays(normalized.length);
-    } else if (typeof existing.days === "number" && existing.days > 0) {
-      const gen = Array.from({ length: existing.days }).map((_, idx) => ({
-        dayNumber: idx + 1,
-        title: "",
-        details: "",
-        activities: "",
-        meals: "",
-        stay: "",
-      }));
-      setDays(gen);
-      setNumDays(existing.days);
-    }
-
-    // Pricing & policies
-    if (existing.price != null) setPrice(existing.price);
-    if (existing.discount != null) setDiscount(existing.discount);
-    setInclusions(existing.inclusions || "");
-    setAdditionalInclusions(existing.additionalInclusions || "");
-    setExclusions(existing.exclusions || "");
-    setTerms(existing.terms || "");
-    setPaymentPolicy(existing.paymentPolicy || "");
-
-    // Images
-    const imgs = Array.isArray(existing.images) ? existing.images : (existing.image ? [existing.image] : []);
-    if (imgs.length) {
-      setImagePreviews(imgs.map((url, i) => ({ name: `image-${i + 1}`, url })));
-    }
-  }, [routeState, rawDestinations, filteredDestinations]);
-
+  const [itineraries, setItineraries] = useState([]); 
 
 
 

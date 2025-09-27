@@ -17,12 +17,12 @@ const DomesticDestinationsList = () => {
 
   return (
     <div className="px-4 py-10">
-      {/* Page Heading */}
+      
       <h2 className="text-3xl font-bold text-center mb-10 text-black">
         Domestic Tour
       </h2>
 
-      {/* Destination Grid */}
+      
       <div className="flex flex-wrap gap-6 justify-center">
         {visibleDestinations.map((place, index) => (
           <DestinationCard
@@ -35,7 +35,6 @@ const DomesticDestinationsList = () => {
         ))}
       </div>
 
-      {/* View All Button */}
       {!showAll && (
         <div className="text-center mt-8">
           <button

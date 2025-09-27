@@ -130,7 +130,7 @@ export const trendingDestinations = [
       "Wallets (Paytm, Amazon Pay)",
       "Bank Transfer / NEFT",
     ],
-    contact: "+91-9876543210", // ← added contact number
+    contact: "+91-9876543210", 
   },
    {
     id: "agency3",

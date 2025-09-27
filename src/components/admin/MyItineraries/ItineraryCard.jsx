@@ -5,57 +5,28 @@ import { FaMapMarkerAlt, FaEdit, FaTrash, FaEye, FaEyeSlash, FaGlobe, FaLock } f
 
 const ItineraryCard = ({ destination, onEdit, onDelete, onTogglePublic }) => {
   const navigate = useNavigate();
-  const [showActions, setShowActions] = useState(false);
+
 
   if (!destination) {
     return (
-      <div className="bg-gray-200 rounded-xl shadow-md overflow-hidden h-48 animate-pulse">
-        {/* Loading skeleton */}
-      </div>
+      <div className="bg-gray-200 rounded-xl shadow-md overflow-hidden h-48 animate-pulse"></div>
     );
+
   }
 
-  const handleCardClick = () => {
-    if (destination.slug) {
-      navigate(`/admin/destinations/${destination.slug}`, { state: { destination } });
-    }
-  };
+ const handleCardClick = () => {
+  if (destination.slug) navigate(`/admin/destinations/${destination.slug}`,{ state: { destination } });
+  
+};
 
-  const handleEdit = (e) => {
-    e.stopPropagation();
-    if (onEdit) {
-      onEdit(destination);
-    } else {
-      // Navigate to edit form with pre-filled data
-      navigate('/admin/Create-Itinary', { 
-        state: { 
-          destinationSlug: destination.slug, 
-          itineraryId: destination.id,
-          destination 
-        } 
-      });
-    }
-  };
-
-  const handleDelete = (e) => {
-    e.stopPropagation();
-    if (window.confirm('Are you sure you want to delete this itinerary?')) {
-      if (onDelete) {
-        onDelete(destination.id);
-      }
-    }
-  };
-
-  const handleTogglePublic = (e) => {
-    e.stopPropagation();
-    if (onTogglePublic) {
-      onTogglePublic(destination.id, !destination.public);
-    }
-  };
-
-  // defensive: image might be an object (file preview) or string url
-  const firstImage = destination.images && destination.images.length ? destination.images[0] : null;
-  const imageUrl = typeof firstImage === "string" ? firstImage : firstImage?.url || "/path-to-default-image.jpg";
+  const firstImage =
+    destination.images && destination.images.length
+      ? destination.images[0]
+      : null;
+  const imageUrl =
+    typeof firstImage === "string"
+      ? firstImage
+      : firstImage?.url || "/path-to-default-image.jpg";
 
   return (
     <div
@@ -64,8 +35,6 @@ const ItineraryCard = ({ destination, onEdit, onDelete, onTogglePublic }) => {
       role="button"
       tabIndex={0}
       onKeyPress={(e) => { if (e.key === "Enter") handleCardClick(); }}
-      onMouseEnter={() => setShowActions(true)}
-      onMouseLeave={() => setShowActions(false)}
     >
       <div className="w-full h-48 relative overflow-hidden">
         <img
@@ -114,24 +83,9 @@ const ItineraryCard = ({ destination, onEdit, onDelete, onTogglePublic }) => {
         )}
 
         <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4">
-          <div className="flex items-center justify-between text-white">
-            <div className="flex items-center">
-              <FaMapMarkerAlt className="mr-2 text-orange-400" />
-              <span className="font-medium">{destination.name || "Untitled"}</span>
-            </div>
-            <div className="flex items-center gap-2">
-              {destination.public ? (
-                <span className="text-xs bg-green-500 px-2 py-1 rounded flex items-center gap-1">
-                  <FaGlobe size={10} />
-                  Public
-                </span>
-              ) : (
-                <span className="text-xs bg-gray-500 px-2 py-1 rounded flex items-center gap-1">
-                  <FaLock size={10} />
-                  Private
-                </span>
-              )}
-            </div>
+          <div className="flex items-center text-white">
+            <FaMapMarkerAlt className="mr-2 text-orange-400" />
+            <span className="font-medium">{destination.name || "Untitled"}</span>
           </div>
         </div>
 

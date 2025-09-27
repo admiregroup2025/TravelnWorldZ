@@ -26,7 +26,6 @@ function ImageGallery({ isOpen, setIsOpen }) {
  
   return (
     <>
-      {/* ▶️ Thumbnail Preview */}
       <div
         className="w-[200px] h-[150px] border rounded-md overflow-hidden shadow-sm cursor-pointer"
         onClick={() => setIsOpen(true)}
@@ -38,11 +37,9 @@ function ImageGallery({ isOpen, setIsOpen }) {
         />
       </div>
  
-      {/* 🔥 Gallery Modal (Grid view) */}
       {isOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 z-40 flex items-center justify-center px-2">
           <div className="bg-white rounded-lg p-4 w-full max-w-6xl relative shadow-lg">
-            {/* Close Button */}
             <button
               onClick={() => setIsOpen(false)}
               className="absolute top-2 right-2 w-10 h-10 flex items-center justify-center rounded-full bg-gray-200 hover:bg-gray-300 text-gray-800 text-2xl z-50"
@@ -67,7 +64,6 @@ function ImageGallery({ isOpen, setIsOpen }) {
         </div>
       )}
  
-      {/* 🖼️ Individual Image Popup (Card style, blurred background) */}
       {selectedIndex !== null && (
         <div className="fixed inset-0 z-50 flex items-center justify-center px-2">
           {/* Background blur */}

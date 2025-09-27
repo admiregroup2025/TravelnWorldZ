@@ -217,7 +217,7 @@
 
 
 
-import { Outlet, useLocation } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import AdminHeader from "./AdminHeader.jsx";
 import LeftSidebar from "./LeftSidebar";
 import RightSidebar from "./RightSidebar";
@@ -280,39 +280,19 @@ export default function AdminLayout() {
   // debug logging (optional)
   // console.log(filteredItineraries, "Filtered Itineraries");
 
-  const location = useLocation();
-  const showRightSidebar = location.pathname.includes("/admin/Manage-Itianary");
-  const [showLeft, setShowLeft] = useState(false);
-  const [showRight, setShowRight] = useState(false);
-  const mainClass = showRightSidebar
-    ? "flex-1 md:ml-64 lg:mr-72 pt-24 p-4 bg-gray-50 min-h-screen overflow-auto"
-    : "flex-1 md:ml-64 pt-24 p-4 bg-gray-50 min-h-screen overflow-auto";
-
   return (
     <div className="flex flex-col min-h-screen">
       {/* Header */}
-      <AdminHeader onOpenLeft={() => setShowLeft(true)} onOpenRight={() => setShowRight(true)} />
+      <AdminHeader />
 
       <div className="flex flex-1">
         {/* Left Sidebar (fixed) */}
-        <aside className="hidden md:block w-64 fixed h-[91vh] left-0 bottom-0 bg-indigo-900 text-white overflow-auto">
+        <aside className="w-64 fixed h-[91vh] left-0 bottom-0 bg-indigo-900 text-white overflow-auto">
           <LeftSidebar />
         </aside>
-        {/* Mobile Left Drawer */}
-        {showLeft && (
-          <div className="md:hidden fixed inset-0 z-40">
-            <div className="absolute inset-0 bg-black/40" onClick={() => setShowLeft(false)} />
-            <div className="absolute top-16 bottom-0 left-0 w-72 max-w-[85vw] bg-indigo-900 text-white overflow-auto shadow-xl">
-              <div className="p-2 flex justify-end">
-                <button className="px-2 py-1 rounded bg-white/10" onClick={() => setShowLeft(false)}>Close</button>
-              </div>
-              <LeftSidebar />
-            </div>
-          </div>
-        )}
 
         {/* Main Content */}
-        <main className={mainClass}>
+        <main className="flex-1 ml-64 py-24 mr-72 p-4 bg-gray-50 min-h-screen overflow-auto">
           {/* provide filtered items and helper functions to nested routes */}
           <Outlet
             context={{
@@ -325,25 +305,10 @@ export default function AdminLayout() {
           />
         </main>
 
-         {/* Right Sidebar only on MyItineraries */}
-         {showRightSidebar && (
-           <>
-             <aside className="hidden lg:block w-72 fixed h-[91vh] right-0 bottom-0 bg-gray-100 border-l overflow-auto">
-               <RightSidebar />
-             </aside>
-             {showRight && (
-               <div className="lg:hidden fixed inset-0 z-40">
-                 <div className="absolute inset-0 bg-black/40" onClick={() => setShowRight(false)} />
-                 <div className="absolute top-16 bottom-0 right-0 w-80 max-w-[90vw] bg-white overflow-auto shadow-xl">
-                   <div className="p-2 flex justify-end border-b">
-                     <button className="px-2 py-1 rounded bg-gray-100" onClick={() => setShowRight(false)}>Close</button>
-                   </div>
-                   <RightSidebar />
-                 </div>
-               </div>
-             )}
-           </>
-         )}
+         {/* Right Sidebar (fixed) */}
+         {/* <aside className="w-72 fixed h-[91vh] right-0 bottom-0 bg-gray-100 border-l overflow-auto">
+           <RightSidebar />
+         </aside> */}
       </div>
     </div>
   );

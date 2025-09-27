@@ -8,21 +8,14 @@ export default function ItineraryDetail() {
   const outlet = useOutletContext() || {};
   const { destinations = [], updateItinerary } = outlet;
 
-  // find destination and nested itinerary
   const destination = destinations.find((d) => d.slug === slug) || null;
   const original = destination?.itineraries?.find((i) => `${i.id}` === `${itineraryId}`) || null;
 
-  // local state
   const [itinerary, setItinerary] = useState(original);
   const [errors, setErrors] = useState({});
   const [imagePreviews, setImagePreviews] = useState([]); 
   const [newImagesFiles, setNewImagesFiles] = useState([]); 
 
-
-
-  
-
-  // load initial previews
   useEffect(() => {
     setItinerary(original);
     if (original?.images?.length) {
@@ -77,7 +70,6 @@ export default function ItineraryDetail() {
     });
   };
 
-  // Destination handlers
   const addDestination = () => {
     setItinerary((prev) => ({
       ...prev,
@@ -100,7 +92,6 @@ export default function ItineraryDetail() {
     });
   };
 
-  // Image upload
   const handleImageChange = (e) => {
     const files = Array.from(e.target.files || []);
     if (!files.length) return;
@@ -335,7 +326,6 @@ export default function ItineraryDetail() {
         )}
       </div>
 
-      {/* Back button */}
       <div className="flex justify-end mt-4">
         <button
           onClick={() => navigate(-1)}
@@ -345,7 +335,6 @@ export default function ItineraryDetail() {
         </button>
       </div>
 
-      {/* No public/private controls on details page */}
     </div>
   );
 }

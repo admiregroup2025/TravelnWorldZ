@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState } from "react";
 import { FcGoogle } from "react-icons/fc";
 import { Check, AlertCircle } from "lucide-react";
 import agenlogin from "../assets/images/agentlogin.jpg";
@@ -7,34 +7,24 @@ import { Eye, EyeOff } from "lucide-react"; // 👈 add this import
 
 
 const B2BLogin = () => {
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-  });
-
+  const [formData, setFormData] = useState({ email: "", password: "" });
   const [errors, setErrors] = useState({});
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitSuccess, setSubmitSuccess] = useState(false);
+  const [status, setStatus] = useState("idle");
   const [showPassword, setShowPassword] = useState(false);
-
   const navigate = useNavigate();
-  const location = useLocation();
 
-  const validateForm = useCallback(() => {
+  const validateForm = () => {
     const newErrors = {};
-
     if (!formData.email.trim()) {
       newErrors.email = "Email is required";
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
       newErrors.email = "Please enter a valid email address";
     }
-
     if (!formData.password.trim()) {
       newErrors.password = "Password is required";
     } else if (formData.password.length < 6) {
       newErrors.password = "Password must be at least 6 characters";
     }
-
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   }, [formData]);
@@ -105,9 +95,9 @@ const B2BLogin = () => {
 
   return (
     <div className="min-h-screen flex">
-      {/* Left side - Illustration / Marketing */}
-      <div className="hidden md:flex w-1/2 bg-gray-100 flex-col justify-center items-center p-10">
-        <img src={agenlogin} alt="Illustration" className="mb-6 rounded-md object-cover" />
+      {/* Left Image Section */}
+      <div className="hidden md:flex w-1/2 bg-gray-100 justify-center items-center p-10">
+        <img src={agenlogin} alt="Illustration" className="rounded-md object-cover" />
       </div>
 
       {/* Right side - Login Form */}
@@ -121,15 +111,15 @@ const B2BLogin = () => {
           <h1 className="text-3xl font-bold text-center text-gray-900 mb-2">Login</h1>
           <p className="text-center text-gray-600 mb-4">Welcome to the HelloTravel family!</p>
 
-          {/* ✅ Success message */}
-          {submitSuccess && (
+          {/* Success Message */}
+          {status === "success" && (
             <div className="p-3 bg-green-50 border border-green-200 rounded-lg flex items-center gap-2 text-sm text-green-700">
               <Check className="w-4 h-4" />
               Login successful! Redirecting...
             </div>
           )}
 
-          {/* ✅ Global form error */}
+          {/* Global Error */}
           {errors.form && (
             <div className="p-3 bg-red-50 border border-red-200 rounded-lg flex items-center gap-2 text-sm text-red-700">
               <AlertCircle className="w-4 h-4" />
@@ -139,6 +129,7 @@ const B2BLogin = () => {
 
           {/* Email */}
           <div>
+            <label htmlFor="email" className="block text-xs font-medium text-gray-700 mb-1">
             <label htmlFor="email" className="block text-xs font-medium text-gray-700 mb-1">
               Email *
             </label>
@@ -152,8 +143,6 @@ const B2BLogin = () => {
               className={`w-full px-3 py-2 border rounded-lg text-sm outline-none focus:ring-1 focus:ring-blue-500 ${
                 errors.email ? "border-red-300 bg-red-50" : "border-gray-300 hover:border-gray-400"
               }`}
-              aria-invalid={!!errors.email}
-              aria-describedby={errors.email ? "email-error" : undefined}
             />
             {errors.email && (
               <p id="email-error" className="text-red-500 text-xs mt-1" role="alert">
@@ -172,13 +161,11 @@ const B2BLogin = () => {
               type="password"
               value={formData.password}
               onChange={(e) => handleInputChange("password", e.target.value)}
-              placeholder="••••••••"
+              placeholder="password"
               disabled={isSubmitting}
               className={`w-full px-3 py-2 border rounded-lg text-sm outline-none focus:ring-1 focus:ring-blue-500 ${
                 errors.password ? "border-red-300 bg-red-50" : "border-gray-300 hover:border-gray-400"
               }`}
-              aria-invalid={!!errors.password}
-              aria-describedby={errors.password ? "password-error" : undefined}
             />
             {errors.password && (
               <p id="password-error" className="text-red-500 text-xs mt-1" role="alert">
@@ -232,8 +219,8 @@ const B2BLogin = () => {
           {/* Submit */}
           <button
             type="submit"
-            className="w-full bg-indigo-500 hover:bg-indigo-600 text-white py-2 rounded-md font-medium flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
             disabled={isSubmitting}
+            className="w-full bg-indigo-500 hover:bg-indigo-600 text-white py-2 rounded-md font-medium flex items-center justify-center gap-2 disabled:opacity-50"
           >
             {isSubmitting ? (
               <>
@@ -245,6 +232,7 @@ const B2BLogin = () => {
             )}
           </button>
 
+          {/* Signup */}
           <p className="text-center text-sm text-gray-600">
             New User?{" "}
             <Link to="/b2bSignup" className="text-blue-600 hover:underline">
@@ -258,3 +246,4 @@ const B2BLogin = () => {
 };
 
 export default B2BLogin;
+
