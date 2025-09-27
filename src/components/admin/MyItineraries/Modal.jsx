@@ -135,7 +135,6 @@ const Modal = ({
     </div>
   );
 
-  // Render modal in a portal to avoid z-index issues
   return createPortal(modalContent, document.body);
 };
 

@@ -4,12 +4,10 @@ import { Link } from "react-router-dom";
 const InternationandDomestic = () => {
   return (
     <li className="relative group list-none">
-      {/* Dropdown Trigger */}
       <span className="hover:text-[#eb6734] text-base font-semibold cursor-pointer">
         Destination
       </span>
 
-      {/* Dropdown Menu */}
       <ul className="absolute left-0 mt-2 w-48 bg-white shadow-lg rounded-md opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50">
         <li>
           <Link

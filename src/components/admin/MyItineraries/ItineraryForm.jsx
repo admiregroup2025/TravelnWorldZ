@@ -4,10 +4,6 @@ import ItineraryCard from "./ItineraryCard";
   import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-// ItineraryForm.jsx
-// Single-file React component for creating an itinerary form for agents.
-// Tailwind CSS classes are used for styling. Default export is the component.
-
 export default function ItineraryForm() {
   const navigate = useNavigate();
   const { upsertDestinationAndAddItinerary } = useOutletContext() || {};
@@ -53,7 +49,7 @@ export default function ItineraryForm() {
 
 
 
-  const [itineraries, setItineraries] = useState([]); // store submitted itineraries
+  const [itineraries, setItineraries] = useState([]); 
 
 
 

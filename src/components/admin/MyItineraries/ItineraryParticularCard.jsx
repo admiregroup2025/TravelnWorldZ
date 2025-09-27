@@ -5,10 +5,6 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useOutletContext } from "react-router-dom";
 import EditItineraryModal from "./EditItineraryModal";
 
-// Tailwind-based React component converted from the provided HTML/CSS.
-// Drop this file into a React app that has Tailwind configured (e.g. create-react-app + Tailwind or Next.js + Tailwind).
-
-
 
 function encodeSVG(svg) {
   return `url("data:image/svg+xml,${encodeURIComponent(svg)}")`;
@@ -22,7 +18,7 @@ export default function ItineraryParticularCard() {
    console.log(destination,"dataToaParticular")
   const navigate = useNavigate()
   useEffect(() => {
-    // small mount animation using Tailwind classes - we add a tiny delay per card
+
     const cardsEl = document.querySelectorAll('.it-card');
     cardsEl.forEach((el, i) => {
       el.style.opacity = '0';

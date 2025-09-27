@@ -1,4 +1,3 @@
-import React from "react";
 import { useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
 import { FaMapMarkerAlt } from "react-icons/fa";
@@ -6,23 +5,27 @@ import { FaMapMarkerAlt } from "react-icons/fa";
 const ItineraryCard = ({ destination }) => {
   const navigate = useNavigate();
 
-
   if (!destination) {
     return (
-      <div className="bg-gray-200 rounded-xl shadow-md overflow-hidden h-48 animate-pulse">
-        {/* Loading skeleton */}
-      </div>
+      <div className="bg-gray-200 rounded-xl shadow-md overflow-hidden h-48 animate-pulse"></div>
     );
+
   }
+  const handleCardClick = () => {
+    if (destination.slug)
+      navigate(`/admin/destinations/${destination.slug}`, {
+        state: { destination },
+      });
+  };
 
- const handleCardClick = () => {
-  if (destination.slug) navigate(`/admin/destinations/${destination.slug}`,{ state: { destination } });
-  
-};
-
-  // defensive: image might be an object (file preview) or string url
-  const firstImage = destination.images && destination.images.length ? destination.images[0] : null;
-  const imageUrl = typeof firstImage === "string" ? firstImage : firstImage?.url || "/path-to-default-image.jpg";
+  const firstImage =
+    destination.images && destination.images.length
+      ? destination.images[0]
+      : null;
+  const imageUrl =
+    typeof firstImage === "string"
+      ? firstImage
+      : firstImage?.url || "/path-to-default-image.jpg";
 
   return (
     <div
@@ -30,7 +33,9 @@ const ItineraryCard = ({ destination }) => {
       onClick={handleCardClick}
       role="button"
       tabIndex={0}
-      onKeyPress={(e) => { if (e.key === "Enter") handleCardClick(); }}
+      onKeyPress={(e) => {
+        if (e.key === "Enter") handleCardClick();
+      }}
     >
       <div className="w-full h-48 relative overflow-hidden">
         <img
@@ -45,7 +50,9 @@ const ItineraryCard = ({ destination }) => {
         <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4">
           <div className="flex items-center text-white">
             <FaMapMarkerAlt className="mr-2 text-orange-400" />
-            <span className="font-medium">{destination.name || "Untitled"}</span>
+            <span className="font-medium">
+              {destination.name || "Untitled"}
+            </span>
           </div>
         </div>
 

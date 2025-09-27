@@ -3,13 +3,7 @@ import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { FaPlus, FaTrash, FaTimes } from "react-icons/fa";
 
-/**
- * Props:
- * - isOpen: boolean
- * - onClose: () => void
- * - itinerary: object (initial values)
- * - onSave: (updatedItinerary) => Promise|void
- */
+
 export default function EditItineraryModal({ isOpen, onClose, itinerary: initial, onSave }) {
   const [itinerary, setItinerary] = useState(initial || {});
   const [errors, setErrors] = useState({});
