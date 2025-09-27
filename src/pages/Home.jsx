@@ -8,6 +8,7 @@ import Hero from "../components/homeComponent/Hero.jsx";
 import TopMostBanner from "../components/homeComponent/TopMostBanner.jsx";
 import VerifiedTransportCard from "../components/homeComponent/VerifiedTransportCard.jsx";
 import TourPackages from "../components/homeComponent/TourPackages.jsx";
+import HomeAboutUs from "../components/homeComponent/HomeAboutUs.jsx";
 
 
 
@@ -23,6 +24,7 @@ const Home = () => {
         </p>
       </section>
       <div> 
+        <HomeAboutUs/>
         <BannerAds/>
         <VerifiedTransportCard />
         <TrendingDestination />
