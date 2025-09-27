@@ -2,69 +2,156 @@ import React, { useRef, useEffect } from "react";
 import img1 from "../../assets/images/places/goa.jpg";
 import img2 from "../../assets/images/places/goa.jpg";
 import img3 from "../../assets/images/places/goa.jpg";
+import { useState } from "react";
  
 const places = [
   { id: 1, name: "Goa", desc: "Sun, sand, and nightlife on India's western coast.", img: img1 },
   { id: 2, name: "Darjeeling", desc: "A peaceful hill station with scenic beauty and tea gardens.", img: img2 },
   { id: 3, name: "Kashmir", desc: "Heaven on earth – valleys, lakes, and snowcapped peaks.", img: img3 },
 ];
- 
+
+const AUTO_SCROLL_SPEED = 1; // px per frame
+
 const PlaceToVisit = () => {
   const scrollRef = useRef(null);
- 
-  // Auto-scroll marquee
+  const rafRef = useRef(null);
+  const isPaused = useRef(false);
+  const scrollPos = useRef(0);
+  const [currentCardIndex, setCurrentCardIndex] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
+  const [cardWidth, setCardWidth] = useState(300);
+  const [cardGap, setCardGap] = useState(24);
+
+  // Check screen size and adjust card dimensions
   useEffect(() => {
+    const checkScreenSize = () => {
+      const mobile = window.innerWidth < 750;
+      setIsMobile(mobile);
+
+      if (mobile) {
+        setCardWidth(window.innerWidth * 0.80);
+        setCardGap(16);
+      } else {
+        setCardWidth(300);
+        setCardGap(24);
+      }
+    };
+
+    checkScreenSize();
+    window.addEventListener("resize", checkScreenSize);
+    return () => window.removeEventListener("resize", checkScreenSize);
+  }, []);
+
+  // Auto-scroll continuous marquee (desktop only)
+  useEffect(() => {
+    if (isMobile) return;
+
     const container = scrollRef.current;
-    let scrollPos = 0;
-    const speed = 1; // pixels per frame
-    let frameId;
- 
+    if (!container) return;
+
+    scrollPos.current = container.scrollLeft;
+
     const autoScroll = () => {
       if (!container) return;
-      scrollPos += speed;
-      if (scrollPos >= container.scrollWidth / 2) scrollPos = 0; // loop
-      container.scrollLeft = scrollPos;
-      frameId = requestAnimationFrame(autoScroll);
+
+      if (!isPaused.current) {
+        scrollPos.current += AUTO_SCROLL_SPEED;
+
+        if (scrollPos.current >= container.scrollWidth / 2) {
+          scrollPos.current = 0;
+          container.scrollLeft = 0;
+          setCurrentCardIndex(0);
+        } else {
+          container.scrollLeft = scrollPos.current;
+          const cardWidthWithGap = cardWidth + cardGap;
+          const newIndex = Math.floor(scrollPos.current / cardWidthWithGap) % places.length;
+          setCurrentCardIndex(newIndex);
+        }
+      } else {
+        scrollPos.current = container.scrollLeft;
+      }
+
+      rafRef.current = requestAnimationFrame(autoScroll);
     };
- 
-    frameId = requestAnimationFrame(autoScroll);
-    return () => cancelAnimationFrame(frameId);
-  }, []);
- 
-  const scroll = (direction) => {
-    const container = scrollRef.current;
-    if (container) {
-      const scrollDistance = 320; // width of a card
-      container.scrollBy({
-        left: direction === "left" ? -scrollDistance : scrollDistance,
-        behavior: "smooth",
-      });
-    }
+
+    rafRef.current = requestAnimationFrame(autoScroll);
+
+    return () => cancelAnimationFrame(rafRef.current);
+  }, [isMobile, cardWidth, cardGap]);
+
+  // Auto-advance for mobile
+  useEffect(() => {
+    if (!isMobile || isPaused.current) return;
+
+    const interval = setInterval(() => {
+      setCurrentCardIndex((prev) => (prev + 1) % places.length);
+    }, 3000);
+
+    return () => clearInterval(interval);
+  }, [isMobile]);
+
+  // Hover handlers (desktop only)
+  const handleMouseEnter = () => {
+    if (!isMobile) isPaused.current = true;
   };
- 
+  const handleMouseLeave = () => {
+    if (!isMobile) isPaused.current = false;
+  };
+
+  // Manual button scroll
+  const handleManualScroll = (direction) => {
+    isPaused.current = true;
+
+    let newIndex;
+    if (direction === "next") newIndex = (currentCardIndex + 1) % places.length;
+    else newIndex = (currentCardIndex - 1 + places.length) % places.length;
+
+    setCurrentCardIndex(newIndex);
+
+    if (!isMobile) {
+      const container = scrollRef.current;
+      if (container) {
+        const cardWidthWithGap = cardWidth + cardGap;
+        let targetScroll = newIndex * cardWidthWithGap;
+
+        if (direction === "next" && newIndex === 0) targetScroll = places.length * cardWidthWithGap;
+
+        container.scrollTo({
+          left: targetScroll,
+          behavior: "smooth",
+        });
+        scrollPos.current = targetScroll;
+      }
+    }
+
+    setTimeout(() => {
+      isPaused.current = false;
+    }, 1000);
+  };
+
   return (
-    <section className="w-full bg-white py-8 sm:py-12 relative">
+    <section className="w-full bg-white py-6 sm:py-12 relative">
       {/* HEADER */}
       <div className="flex flex-col sm:flex-row justify-between items-center max-w-6xl mx-auto px-4 sm:px-6 mb-6 sm:mb-8 gap-4">
-        <h2 className="text-2xl sm:text-3xl font-bold text-[#0f1b60] text-center sm:text-left">
+        <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-[#0f1b60] text-center sm:text-left">
           Places to visit
         </h2>
-        <button className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition duration-300">
+        <button className="hidden sm:block bg-blue-600 text-white px-4 py-1.5 rounded-lg text-sm hover:bg-blue-700 transition duration-300">
           Explore All
         </button>
       </div>
- 
+
       {/* SCROLLABLE CARDS */}
-      <div className="overflow-hidden relative max-w-7xl mx-auto px-4 sm:px-6">
+      <div className="relative flex flex-col items-center gap-4 sm:gap-6 px-2 sm:px-6 md:px-8 lg:px-14 py-4 sm:py-6 min-h-fit">
         {/* Left Button */}
         <button
-          onClick={() => scroll("left")}
-          className="hidden sm:flex absolute left-2 top-1/2 transform -translate-y-1/2 z-20 bg-blue-600 text-white p-3 rounded-full shadow hover:bg-orange-700 transition duration-300"
+          onClick={() => handleManualScroll("prev")}
+          className="absolute z-20 bg-blue-600 text-white p-2 sm:p-2 rounded-full shadow hover:bg-blue-700 transition transform left-0 sm:left-4 top-1/2 -translate-y-1/2"
           aria-label="Previous"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            className="h-5 w-5"
+            className="h-4 w-4 sm:h-6 sm:w-6"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
@@ -73,16 +160,16 @@ const PlaceToVisit = () => {
             <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
           </svg>
         </button>
- 
+
         {/* Right Button */}
         <button
-          onClick={() => scroll("right")}
-          className="hidden sm:flex absolute right-2 top-1/2 transform -translate-y-1/2 z-20 bg-blue-600 text-white p-3 rounded-full shadow hover:bg-orange-700 transition duration-300"
+          onClick={() => handleManualScroll("next")}
+          className="absolute z-20 bg-blue-600 text-white p-2 sm:p-2 rounded-full shadow hover:bg-blue-700 transition transform right-0 sm:right-4 top-1/2 -translate-y-1/2"
           aria-label="Next"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            className="h-5 w-5"
+            className="h-4 w-4 sm:h-6 sm:w-6"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
@@ -91,26 +178,77 @@ const PlaceToVisit = () => {
             <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
           </svg>
         </button>
- 
-        {/* Cards Container */}
-        <div ref={scrollRef} className="flex space-x-3 sm:space-x-4 overflow-x-auto scrollbar-hide">
-          {[...places, ...places].map((place, index) => (
+
+        {/* Cards */}
+        {isMobile ? (
+          <div className="w-full px-4">
             <div
-              key={index}
-              className="relative min-w-[260px] sm:min-w-[280px] md:min-w-[320px] h-72 sm:h-80 rounded-2xl overflow-hidden shadow-lg flex-shrink-0 transition-transform duration-300 hover:scale-105"
+              className="group relative w-full rounded-2xl overflow-hidden shadow-lg mx-auto"
+              style={{ maxWidth: `${cardWidth}px` }}
             >
-              <img src={place.img} alt={place.name} className="w-full h-full object-cover" />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
-              <div className="absolute bottom-4 left-4 text-white">
-                <h3 className="text-lg sm:text-xl font-semibold">{place.name}</h3>
-                <p className="text-sm text-gray-200 max-w-xs leading-relaxed">{place.desc}</p>
+              <div className="overflow-hidden">
+                <img
+                  src={places[currentCardIndex].img}
+                  alt={places[currentCardIndex].name}
+                  className="w-full h-[250px] sm:h-[350px] object-cover transform transition-transform duration-300 group-hover:scale-110"
+                />
+              </div>
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent flex flex-col justify-end p-4">
+                <h3 className="text-white text-lg sm:text-xl font-semibold">
+                  {places[currentCardIndex].name}
+                </h3>
+                <p className="text-gray-200 text-sm">{places[currentCardIndex].desc}</p>
               </div>
             </div>
-          ))}
-        </div>
+
+            {/* Mobile: Explore Button below cards */}
+            <div className="mt-4 flex justify-center">
+              <button className="bg-blue-600 text-white px-6 py-2 rounded-lg text-sm hover:bg-blue-700 transition duration-300">
+                Explore All
+              </button>
+            </div>
+          </div>
+        ) : (
+          <div
+            ref={scrollRef}
+            className="overflow-hidden no-scrollbar w-full px-1 sm:px-2 md:px-4"
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+            style={{ whiteSpace: "nowrap" }}
+          >
+            {[...places, ...places].map((place, index) => (
+              <div
+                key={index}
+                className="inline-block align-top flex-shrink-0"
+                style={{
+                  width: `${cardWidth}px`,
+                  marginRight: `${index === [...places, ...places].length - 1 ? 0 : cardGap}px`,
+                }}
+              >
+                <div
+                  className="group relative w-full rounded-2xl overflow-hidden shadow-lg"
+                  onMouseEnter={handleMouseEnter}
+                  onMouseLeave={handleMouseLeave}
+                >
+                  <div className="overflow-hidden">
+                    <img
+                      src={place.img}
+                      alt={place.name}
+                      className="w-full h-[300px] sm:h-[350px] object-cover transform transition-transform duration-300 group-hover:scale-110"
+                    />
+                  </div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent flex flex-col justify-end p-4">
+                    <h3 className="text-white text-lg font-semibold">{place.name}</h3>
+                    <p className="text-gray-200 text-sm">{place.desc}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
     </section>
   );
 };
- 
+
 export default PlaceToVisit;

@@ -149,7 +149,6 @@ const VerifiedTransportCard = () => {
             Verified Travel Partners
           </h1>
         </div>
-
         {/* Button - Centered on mobile, right-aligned on desktop */}
         <div className="mt-3 sm:mt-0 sm:ml-auto sm:static text-center sm:text-right">
           <button
@@ -272,10 +271,6 @@ const VerifiedTransportCard = () => {
               />
             ))}
           </div>
-          
-          <div className="text-center mt-3">
-            <p className="text-sm text-gray-500">{currentIndex + 1} of {data.length} transporters</p>
-          </div>
         </div>
       ) : (
         /* Desktop: Scroll Area with Multiple Cards */
@@ -295,8 +290,7 @@ const VerifiedTransportCard = () => {
             <div
               key={index}
               className="inline-block align-top w-[260px] mr-[24px] last:mr-0 bg-white rounded-lg shadow-md hover:shadow-lg transition-all duration-300 flex-shrink-0"
-            >
-             
+            >             
             <img
               src={item.image}
               alt={item.title}
@@ -353,3 +347,4 @@ const VerifiedTransportCard = () => {
 };
  
 export default VerifiedTransportCard;
+

@@ -2,7 +2,7 @@ import React, { useState, useCallback } from "react";
 import { FcGoogle } from "react-icons/fc";
 import { Check, AlertCircle } from "lucide-react";
 import agenlogin from "../assets/images/agentlogin.jpg";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation,Link, useNavigate } from "react-router-dom";
 import { login } from "../utils/auth";
 import { postJson } from "../utils/api";
 const B2BLogin = () => {
@@ -224,9 +224,9 @@ const doLogin = async (email, password) => {
 
           <p className="text-center text-sm text-gray-600">
             New User?{" "}
-            <a href="#" className="text-blue-600 hover:underline">
+            <Link  to ="/b2bSignup" className="text-blue-600 hover:underline">
               Signup Here
-            </a>
+            </Link>
           </p>
         </form>
       </div>
