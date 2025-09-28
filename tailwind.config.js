@@ -41,7 +41,6 @@ module.exports = {
   ],
   theme: {
     extend: {
-      // 👇 Custom animations (keep your original)
       keyframes: {
         'fade-in-up': {
           '0%': {
@@ -67,8 +66,6 @@ module.exports = {
         marquee: 'marquee 30s linear infinite',
         scroll: 'scroll 20s linear infinite',
       },
-
-      // 👇 Optional: Define reusable responsive card widths
       minWidth: {
         'card-sm': '220px',
         'card-md': '260px',
@@ -78,8 +75,6 @@ module.exports = {
       },
     },
   },
-
-  // 👇 Hide scrollbar globally via utility
   plugins: [
     function ({ addUtilities }) {
       addUtilities({
