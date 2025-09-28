@@ -54,19 +54,33 @@ const Footer = () => {
             </a>
           </div>
 
-          <h4 className="text-base font-semibold mb-2">Sign Up</h4>
-          <p className="text-sm mb-3 text-gray-200">
-            Corem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum.
-          </p>
-          <div className="flex">
-            <input
-              type="email"
-              placeholder="Email id"
-              className="w-full px-3 py-2 rounded-l-full text-black focus:outline-none"
-            />
-            <button className="bg-white text-blue-900 px-4 py-2 rounded-r-full font-medium hover:bg-gray-200 transition">
-              Send
-            </button>
+          {/* Login | Sign Up links */}
+          <div className="mb-2">
+            <Link to="/b2blogin" className="text-base font-semibold hover:underline">
+              Login
+            </Link>
+
+            <span className="text-white mx-4">|</span>
+
+            <Link to="/b2bSignup" className="text-base font-semibold hover:underline">
+              Sign Up
+            </Link>
+          </div>
+
+           <div>
+              <p className="text-sm mb-3 text-gray-200">
+                Subscribe to TravelInworld for the latest travel deals, tips, and exclusive offers.
+              </p>
+              <div className="flex">
+                <input
+                  type="email"
+                  placeholder="Email id"
+                  className="w-full px-3 py-2 rounded-l-full text-black focus:outline-none"
+                />
+                <button className="bg-white text-blue-900 px-4 py-2 rounded-r-full font-medium hover:bg-gray-200 transition">
+                  Send
+                </button>
+              </div>
           </div>
         </div>
       </div>
