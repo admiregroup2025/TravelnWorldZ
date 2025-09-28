@@ -41,8 +41,8 @@ module.exports = {
   ],
   theme: {
     extend: {
+      // 👇 Custom animations (keep your original)
       keyframes: {
-        // Fade In Up
         'fade-in-up': {
           '0%': {
             opacity: '0',
@@ -53,14 +53,10 @@ module.exports = {
             transform: 'translateY(0)',
           },
         },
-
-        // Marquee
         marquee: {
           '0%': { transform: 'translateX(0%)' },
           '100%': { transform: 'translateX(-50%)' },
         },
-
-        // Scroll (optional, same as marquee but different duration)
         scroll: {
           '0%': { transform: 'translateX(0)' },
           '100%': { transform: 'translateX(-50%)' },
@@ -71,21 +67,30 @@ module.exports = {
         marquee: 'marquee 30s linear infinite',
         scroll: 'scroll 20s linear infinite',
       },
+
+      // 👇 Optional: Define reusable responsive card widths
+      minWidth: {
+        'card-sm': '220px',
+        'card-md': '260px',
+        'card-lg': '280px',
+        'card-xl': '300px',
+        'card-2xl': '320px',
+      },
     },
   },
+
+  // 👇 Hide scrollbar globally via utility
   plugins: [
-  function ({ addUtilities }) {
-    addUtilities({
-      '.no-scrollbar': {
-        /* Chrome, Safari and Opera */
-        '&::-webkit-scrollbar': {
-          display: 'none',
+    function ({ addUtilities }) {
+      addUtilities({
+        '.no-scrollbar': {
+          '&::-webkit-scrollbar': {
+            display: 'none',
+          },
+          '-ms-overflow-style': 'none',
+          'scrollbar-width': 'none',
         },
-        /* Firefox */
-        '-ms-overflow-style': 'none',
-        'scrollbar-width': 'none',
-      },
-    });
-  },
-],
+      });
+    },
+  ],
 };
