@@ -28,6 +28,30 @@ const hotels = [
     title: 'Stay in the heart of the city',
     image: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=400&auto=format&fit=crop",
   },
+  {
+  id: 'h5',
+  name: 'Lakeside Paradise',
+  title: 'Tranquility by the Water',
+  image: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=400&auto=format&fit=crop',
+},
+{
+  id: 'h6',
+  name: 'Desert Dunes Resort',
+  title: 'Luxury Amidst the Sands',
+  image: 'https://images.unsplash.com/photo-1600488995319-37fc5c9b194a?w=400&auto=format&fit=crop',
+},
+{
+  id: 'h7',
+  name: 'Forest Hideaway',
+  title: 'Reconnect with Nature',
+  image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=400&auto=format&fit=crop',
+},
+{
+  id: 'h8',
+  name: 'Island Breeze Hotel',
+  title: 'Tropical Bliss Awaits',
+  image: 'https://images.unsplash.com/photo-1576671081837-c10f5f1b5b96?w=400&auto=format&fit=crop',
+}
 ];
 
 export default hotels;

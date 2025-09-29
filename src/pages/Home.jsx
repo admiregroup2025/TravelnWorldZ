@@ -10,7 +10,7 @@ import VerifiedTransportCard from "../components/homeComponent/VerifiedTransport
 import VerifiedHotels from "../components/homeComponent/VerifiedHotels.jsx";
 import TourPackages from "../components/homeComponent/TourPackages.jsx";
 import HomeAboutUs from "../components/homeComponent/HomeAboutUs.jsx";
-
+import PlaceToVisit from "../components/homeComponent/PlaceToVisit.jsx";
 
 
 const Home = () => {
@@ -31,6 +31,7 @@ const Home = () => {
         <TrendingDestination />
         <VerifiedHotels />
         <TourPackages />
+        <PlaceToVisit/>
         <HomeContactUs/>
         <Testimonials />
 

@@ -67,9 +67,9 @@ const GetAQuoteForm = ({ agencyName, onSubmit }) => {
   };
 
   return (
-    <div className="bg-white flex items-start justify-start p-6">
-      <form onSubmit={handleSubmit} className="w-full max-w-2xl space-y-5">
-        <h1 className="text-2xl font-semibold text-gray-800 mb-4">
+    <div className="bg-white flex items-start justify-start p-4 md:p-6">
+      <form onSubmit={handleSubmit} className="w-full max-w-2xl space-y-6 md:space-y-5">
+        <h1 className="text-2xl font-semibold text-gray-800 mb-4 text-center">
           Get a Quote {agencyName && `for ${agencyName}`}
         </h1>
 
@@ -318,7 +318,7 @@ const GetAQuoteForm = ({ agencyName, onSubmit }) => {
               </svg>
             }
           />
-          <div className="mb-4">
+          <div className="mb-4 min-w-0">
             <label className="block text-xs font-bold text-gray-700 mb-2">
               Budget Range (per person)
             </label>
@@ -326,7 +326,7 @@ const GetAQuoteForm = ({ agencyName, onSubmit }) => {
               name="budget"
               value={formData.budget}
               onChange={handleChange}
-              className="w-full text-sm rounded-md bg-gray-100 px-4 py-3 focus:outline-none border-b border-gray-300"
+              className="w-full text-sm rounded-md bg-gray-100 px-4 py-3 focus:outline-none border-b border-gray-300 "
             >
               <option value="">Select budget range</option>
               <option value="100-500">$100 - $500</option>
@@ -339,7 +339,7 @@ const GetAQuoteForm = ({ agencyName, onSubmit }) => {
             <div className="text-xs font-bold text-gray-700 mb-2">
               Additional Services Required
             </div>
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
               {[
                 "Hotel Accommodation",
                 "Transportation",
@@ -358,7 +358,7 @@ const GetAQuoteForm = ({ agencyName, onSubmit }) => {
                     checked={formData.services.includes(service)}
                     className="w-4 h-4 border border-gray-300 rounded-sm bg-white focus:ring-0"
                   />
-                  <span>{service}</span>
+                  <span className="break-words" >{service}</span>
                 </label>
               ))}
             </div>
@@ -422,7 +422,7 @@ const GetAQuoteForm = ({ agencyName, onSubmit }) => {
         <div className="flex justify-center">
           <button
             type="submit"
-            className="bg-orange-500 text-white font-semibold px-6 py-3 rounded-lg hover:bg-orange-600 transition text-sm"
+            className="w-full sm:w-auto bg-orange-500 text-white font-semibold px-6 py-3 rounded-lg hover:bg-orange-600 transition text-sm"
           >
             Request Quote
           </button>

@@ -61,6 +61,9 @@ import TransporterBlogPage from './components/verifiedTransportDetails/Transport
 import TransporterBlogDetail from './components/verifiedTransportDetails/TransporterBlogDetail.jsx';
 import PrivacyPolicy from './pages/PrivacyPolicy.jsx';
 import TermsAndConditions from './pages/TermsAndConditions.jsx';
+import VerifiedHotelsList from './components/verifiedHotel/VerifiedHotelsList.jsx';
+import BookHotelsPage from './components/verifiedHotel/BookHotelsPage.jsx';
+import HotelDetailsPage from './components/verifiedHotel/HotelDetailsPage.jsx';
 // admin pages
 // import AdminDashboard from './pages/admin/AdminDashboard';
 // import AdminUsers from './pages/admin/AdminUsers';
@@ -117,6 +120,9 @@ const App = () => {
         <Route path='/domestic-itinerary/:destinationId' element={<DomesticItinerary />} />
         <Route path='/domestic-itinerary/:destinationId/:itineraryId' element={<DomesticItineraryDetailPage />} />
         <Route path='/get-a-quote/:type/:destinationId/:id' element={<TourPGetAQuote />} />
+        <Route path='/all-hotels' element={<VerifiedHotelsList />} />
+        <Route path='/book-hotel/:id' element={<BookHotelsPage />} />
+        <Route path='/hotel-details/:id' element={<HotelDetailsPage />} />
         {/* Outer Pages */}
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/Terms-to-use" element={<TermsAndConditions />} />
