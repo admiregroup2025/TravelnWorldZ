@@ -15,9 +15,6 @@ export default function ItineraryForm() {
   const [numDays, setNumDays] = useState(1);
   const [destinations, setDestinations] = useState([""]);
 
-
-
-
   const [days, setDays] = useState([
     {
       dayNumber: 1,
@@ -42,21 +39,12 @@ export default function ItineraryForm() {
   const [imagePreviews, setImagePreviews] = useState([]);
 
   const [agentNotes, setAgentNotes] = useState("");
-
-  // Basic validation / status
   const [errors, setErrors] = useState({});
-  const [submittedData, setSubmittedData] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  const [itineraries, setItineraries] = useState([]);
 
-
-
-  const [itineraries, setItineraries] = useState([]); 
-
-
-
-
-  // Helpers
+  // ----- Handlers -----
   const updateDay = (index, key, value) => {
     setDays((prev) => {
       const next = [...prev];
@@ -68,14 +56,7 @@ export default function ItineraryForm() {
   const addDay = () => {
     setDays((prev) => [
       ...prev,
-      {
-        dayNumber: prev.length + 1,
-        title: "",
-        details: "",
-        activities: "",
-        meals: "",
-        stay: "",
-      },
+      { dayNumber: prev.length + 1, title: "", details: "", activities: "", meals: "", stay: "" },
     ]);
     setNumDays((n) => n + 1);
   };
@@ -102,19 +83,13 @@ export default function ItineraryForm() {
   const handleImageChange = (e) => {
     const files = Array.from(e.target.files || []);
     setImages(files);
-
-    const previews = files.map((f) => ({ name: f.name, url: URL.createObjectURL(f) }));
-    setImagePreviews(previews);
+    setImagePreviews(files.map((f) => ({ name: f.name, url: URL.createObjectURL(f) })));
   };
 
   const finalPrice = () => {
     const p = Number(price || 0);
     const d = Number(discount || 0);
-    // treat discount as percent if between 0 and 100, otherwise absolute
-    if (d > 0 && d <= 100) {
-      return Math.max(0, p - (p * d) / 100).toFixed(2);
-    }
-    return Math.max(0, p - d).toFixed(2);
+    return d > 0 && d <= 100 ? Math.max(0, p - (p * d) / 100).toFixed(2) : Math.max(0, p - d).toFixed(2);
   };
 
   const validate = () => {
@@ -129,7 +104,6 @@ export default function ItineraryForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!validate()) return;
-
     setIsSubmitting(true);
 
     try {
@@ -148,51 +122,46 @@ export default function ItineraryForm() {
         discount: Number(discount),
         images: imagePreviews.map((p) => p.url),
         agentNotes,
-        published: false
+        published: false,
       };
 
-      let response;
-      if (routeState.itineraryId) {
-        // Update existing itinerary
-        response = await putJson(`/api/itineraries/${routeState.itineraryId}`, payload);
-      } else {
-        // Create new itinerary
-        response = await postJson('/api/itineraries', payload);
-      }
+      await postJson("/api/itineraries", payload);
 
-      toast.success(response.message || "Itinerary saved successfully!", {
-        position: "top-right",
-        autoClose: 3000,
-      });
-
-      // Navigate to Manage Itineraries
-      navigate('/admin/Manage-Itianary');
+      toast.success("Itinerary saved successfully!", { position: "top-right", autoClose: 3000 });
+      navigate("/admin/Manage-Itianary");
     } catch (error) {
-      console.error('Error saving itinerary:', error);
-      toast.error(error.message || "Failed to save itinerary", {
-        position: "top-right",
-        autoClose: 3000,
-      });
+      console.error(error);
+      toast.error("Failed to save itinerary", { position: "top-right", autoClose: 3000 });
     } finally {
       setIsSubmitting(false);
     }
   };
 
   return (
-    <div className="max-w-5xl mx-auto p-6">
-      <h1 className="text-2xl font-semibold mb-4">Itinerary Creation Form</h1>
+    <div className="max-w-6xl mx-auto p-4 sm:p-6">
+      <h1 className="text-2xl sm:text-3xl font-semibold mb-6 text-center sm:text-left">
+        Itinerary Creation Form
+      </h1>
 
-      <form onSubmit={handleSubmit} className="space-y-6 bg-white p-6 rounded-2xl shadow">
-        <section className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <form onSubmit={handleSubmit} className="space-y-6 bg-white p-4 sm:p-6 rounded-2xl shadow">
+        {/* Destination Name */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div className="md:col-span-2">
             <label className="block text-sm font-medium">Destination Name</label>
-            <input value={destinationName} onChange={(e) => setDestinationName(e.target.value)} className="mt-2 block w-full rounded-lg border p-2" placeholder="e.g. Dubai, UAE" />
+            <input
+              value={destinationName}
+              onChange={(e) => setDestinationName(e.target.value)}
+              placeholder="e.g. Dubai, UAE"
+              className="mt-2 block w-full rounded-lg border p-2"
+            />
           </div>
-        </section>
-        <section className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        </div>
+
+        {/* Itinerary Type and Title */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div>
             <label className="block text-sm font-medium">Itinerary Type</label>
-            <div className="mt-2 flex gap-4 items-center">
+            <div className="mt-2 flex flex-wrap gap-4 items-center">
               <label className="inline-flex items-center">
                 <input
                   type="radio"
@@ -223,14 +192,15 @@ export default function ItineraryForm() {
             <input
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              className="mt-2 block w-full rounded-lg border p-2"
               placeholder="e.g. 7-Day Golden Triangle Tour"
+              className="mt-2 block w-full rounded-lg border p-2"
             />
             {errors.title && <p className="text-sm text-red-500 mt-1">{errors.title}</p>}
           </div>
-        </section>
+        </div>
 
-        <section className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        {/* Days & Destinations */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div>
             <label className="block text-sm font-medium">Number of Days</label>
             <input
@@ -240,15 +210,10 @@ export default function ItineraryForm() {
               onChange={(e) => {
                 const val = Math.max(1, Number(e.target.value || 1));
                 setNumDays(val);
-                // adjust days array length
                 setDays((prev) => {
                   const next = [...prev];
-                  while (next.length < val) {
-                    next.push({ dayNumber: next.length + 1, title: "", details: "", activities: "", meals: "", stay: "" });
-                  }
-                  while (next.length > val) {
-                    next.pop();
-                  }
+                  while (next.length < val) next.push({ dayNumber: next.length + 1, title: "", details: "", activities: "", meals: "", stay: "" });
+                  while (next.length > val) next.pop();
                   return next.map((d, i) => ({ ...d, dayNumber: i + 1 }));
                 });
               }}
@@ -257,60 +222,70 @@ export default function ItineraryForm() {
           </div>
 
           <div className="md:col-span-2">
-            <label className="block text-sm font-medium">Destinations (add multiple)</label>
+            <label className="block text-sm font-medium">Destinations</label>
             <div className="mt-2 space-y-2">
               {destinations.map((d, i) => (
-                <div key={i} className="flex gap-2">
+                <div key={i} className="flex flex-col sm:flex-row gap-2">
                   <input
                     value={d}
                     onChange={(e) => updateDestination(i, e.target.value)}
                     placeholder={`Destination ${i + 1}`}
                     className="flex-1 rounded-lg border p-2"
                   />
-                  <button type="button" onClick={() => removeDestination(i)} className="px-3 py-2 rounded bg-red-50 text-red-700">
+                  <button
+                    type="button"
+                    onClick={() => removeDestination(i)}
+                    className="px-3 py-2 rounded bg-red-50 text-red-700"
+                  >
                     Remove
                   </button>
                 </div>
               ))}
-              <div>
-                <button type="button" onClick={addDestination} className="px-4 py-2 rounded bg-orange-500 text-white">
-                  + Add Destination
-                </button>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section className="space-y-4">
-          <div className="flex items-center justify-between">
-            <h2 className="text-lg font-medium">Day-wise Itinerary</h2>
-            <div className="flex gap-2">
-              <button type="button" onClick={addDay} className="px-3 py-2 rounded bg-blue-700 text-white">
-                + Add Day
+              <button
+                type="button"
+                onClick={addDestination}
+                className="mt-2 px-4 py-2 rounded bg-orange-500 text-white"
+              >
+                + Add Destination
               </button>
             </div>
+          </div>
+        </div>
+
+        {/* Day-wise itinerary */}
+        <div className="space-y-4">
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center">
+            <h2 className="text-lg font-medium">Day-wise Itinerary</h2>
+            <button
+              type="button"
+              onClick={addDay}
+              className="mt-2 sm:mt-0 px-3 py-2 rounded bg-blue-700 text-white"
+            >
+              + Add Day
+            </button>
           </div>
 
           <div className="space-y-4">
             {days.map((day, idx) => (
-              <div key={idx} className="border rounded p-4">
-                <div className="flex justify-between items-start">
+              <div key={idx} className="border rounded p-4 space-y-2">
+                <div className="flex justify-between items-start flex-wrap gap-2">
                   <h3 className="font-semibold">Day {day.dayNumber}</h3>
-                  <div className="flex gap-2">
-                    <button type="button" onClick={() => removeDay(idx)} className="px-2 py-1 rounded bg-red-100 text-red-700">
-                      Remove
-                    </button>
-                  </div>
+                  <button
+                    type="button"
+                    onClick={() => removeDay(idx)}
+                    className="px-2 py-1 rounded bg-red-100 text-red-700"
+                  >
+                    Remove
+                  </button>
                 </div>
 
-                <div className="mt-3 grid grid-cols-1 md:grid-cols-2 gap-3">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                   <input
                     value={day.title}
                     onChange={(e) => updateDay(idx, "title", e.target.value)}
                     placeholder="Title (e.g. Arrival in City)"
                     className="rounded border p-2"
                   />
-
                   <input
                     value={day.stay}
                     onChange={(e) => updateDay(idx, "stay", e.target.value)}
@@ -323,73 +298,66 @@ export default function ItineraryForm() {
                   value={day.details}
                   onChange={(e) => updateDay(idx, "details", e.target.value)}
                   placeholder="Details / Overview"
-                  className="mt-3 block w-full rounded border p-2"
+                  className="block w-full rounded border p-2"
                 />
-
                 <input
                   value={day.activities}
                   onChange={(e) => updateDay(idx, "activities", e.target.value)}
                   placeholder="Activities (comma separated)"
-                  className="mt-3 block w-full rounded border p-2"
+                  className="block w-full rounded border p-2"
                 />
-
                 <input
                   value={day.meals}
                   onChange={(e) => updateDay(idx, "meals", e.target.value)}
                   placeholder="Meals info"
-                  className="mt-3 block w-full rounded border p-2"
+                  className="block w-full rounded border p-2"
                 />
               </div>
             ))}
           </div>
-
           {errors.days && <p className="text-sm text-red-500">{errors.days}</p>}
-        </section>
+        </div>
 
-        <section className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div>
+        {/* Inclusions/Exclusions & Terms */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="space-y-3">
             <label className="block text-sm font-medium">Inclusions</label>
-            <textarea value={inclusions} onChange={(e) => setInclusions(e.target.value)} className="mt-2 block w-full rounded border p-2" />
-
-            <label className="block text-sm font-medium mt-3">Additional Inclusions</label>
-            <textarea value={additionalInclusions} onChange={(e) => setAdditionalInclusions(e.target.value)} className="mt-2 block w-full rounded border p-2" />
+            <textarea value={inclusions} onChange={(e) => setInclusions(e.target.value)} className="block w-full rounded border p-2" />
+            <label className="block text-sm font-medium">Additional Inclusions</label>
+            <textarea value={additionalInclusions} onChange={(e) => setAdditionalInclusions(e.target.value)} className="block w-full rounded border p-2" />
           </div>
-
-          <div>
+          <div className="space-y-3">
             <label className="block text-sm font-medium">Exclusions</label>
-            <textarea value={exclusions} onChange={(e) => setExclusions(e.target.value)} className="mt-2 block w-full rounded border p-2" />
-
-            <label className="block text-sm font-medium mt-3">Terms & Conditions</label>
-            <textarea value={terms} onChange={(e) => setTerms(e.target.value)} className="mt-2 block w-full rounded border p-2" />
-
-            <label className="block text-sm font-medium mt-3">Payment Policy</label>
-            <textarea value={paymentPolicy} onChange={(e) => setPaymentPolicy(e.target.value)} className="mt-2 block w-full rounded border p-2" />
+            <textarea value={exclusions} onChange={(e) => setExclusions(e.target.value)} className="block w-full rounded border p-2" />
+            <label className="block text-sm font-medium">Terms & Conditions</label>
+            <textarea value={terms} onChange={(e) => setTerms(e.target.value)} className="block w-full rounded border p-2" />
+            <label className="block text-sm font-medium">Payment Policy</label>
+            <textarea value={paymentPolicy} onChange={(e) => setPaymentPolicy(e.target.value)} className="block w-full rounded border p-2" />
           </div>
-        </section>
+        </div>
 
-        <section className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        {/* Pricing */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div>
             <label className="block text-sm font-medium">Price</label>
             <input type="number" min={0} value={price} onChange={(e) => setPrice(e.target.value)} className="mt-2 block w-full rounded-lg border p-2" />
             {errors.price && <p className="text-sm text-red-500 mt-1">{errors.price}</p>}
           </div>
-
           <div>
-            <label className="block text-sm font-medium">Discount (percent 0-100 or absolute)</label>
+            <label className="block text-sm font-medium">Discount (0-100 or absolute)</label>
             <input type="number" min={0} value={discount} onChange={(e) => setDiscount(e.target.value)} className="mt-2 block w-full rounded-lg border p-2" />
           </div>
-
           <div>
             <label className="block text-sm font-medium">Final Price</label>
             <div className="mt-2 rounded-lg border p-2">{finalPrice()}</div>
           </div>
-        </section>
+        </div>
 
-        <section>
+        {/* Image Gallery */}
+        <div>
           <label className="block text-sm font-medium">Image Gallery (multiple)</label>
           <input type="file" multiple accept="image/*" onChange={handleImageChange} className="mt-2" />
-
-          <div className="mt-3 grid grid-cols-3 md:grid-cols-6 gap-3">
+          <div className="mt-3 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3">
             {imagePreviews.map((p, i) => (
               <div key={i} className="border rounded overflow-hidden">
                 <img src={p.url} alt={p.name} className="w-full h-24 object-cover" />
@@ -397,38 +365,23 @@ export default function ItineraryForm() {
               </div>
             ))}
           </div>
-        </section>
+        </div>
 
-        <section>
+        {/* Agent Notes */}
+        <div>
           <label className="block text-sm font-medium">Agent Notes (internal)</label>
           <textarea value={agentNotes} onChange={(e) => setAgentNotes(e.target.value)} className="mt-2 block w-full rounded border p-2" />
-        </section>
+        </div>
 
-        <div className="flex items-center gap-3">
-          <button 
-            type="submit" 
-            disabled={isSubmitting}
-            className="px-5 py-2 rounded bg-orange-500 text-white font-medium disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            {isSubmitting ? 'Saving...' : 'Save Itinerary'}
+        {/* Action Buttons */}
+        <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3">
+          <button type="submit" disabled={isSubmitting} className="px-5 py-2 rounded bg-orange-500 text-white font-medium disabled:opacity-50 disabled:cursor-not-allowed">
+            {isSubmitting ? "Saving..." : "Save Itinerary"}
           </button>
-
           <button
             type="button"
             onClick={() => {
-              // quick export to clipboard
-              const data = {
-                itineraryType,
-                title,
-                numDays: days.length,
-                destinations: destinations.filter((d) => d.trim()),
-                days,
-                inclusions,
-                exclusions,
-                price,
-                discount,
-                finalPrice: finalPrice(),
-              };
+              const data = { itineraryType, title, numDays: days.length, destinations: destinations.filter((d) => d.trim()), days, inclusions, exclusions, price, discount, finalPrice: finalPrice() };
               navigator.clipboard?.writeText(JSON.stringify(data, null, 2));
               alert("Itinerary JSON copied to clipboard (demo)");
             }}
@@ -438,25 +391,26 @@ export default function ItineraryForm() {
           </button>
         </div>
       </form>
+
       <ToastContainer />
 
+      {/* Itinerary Cards */}
       {itineraries.length > 0 && (
-  <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-    {itineraries.map((itinerary) => (
-      <ItineraryCard
-        key={itinerary.id}
-        destination={{
-          id: itinerary.id,
-          name: itinerary.name,
-          slug: itinerary.slug,
-          images: itinerary.images,
-          type: itinerary.type,
-        }}
-      />
-    ))}
-  </div>
-)}
-
+        <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {itineraries.map((itinerary) => (
+            <ItineraryCard
+              key={itinerary.id}
+              destination={{
+                id: itinerary.id,
+                name: itinerary.name,
+                slug: itinerary.slug,
+                images: itinerary.images,
+                type: itinerary.type,
+              }}
+            />
+          ))}
+        </div>
+      )}
     </div>
   );
 }
