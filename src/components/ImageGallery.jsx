@@ -38,7 +38,7 @@ function ImageGallery({ isOpen, setIsOpen }) {
       </div>
 
       {isOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 z-40 flex items-center justify-center px-2">
+        <div className="fixed inset-0 bg-black bg-opacity-50 z-40 flex items-center justify-center px-2 mt-16">
           <div className="bg-white rounded-lg p-4 w-full max-w-6xl relative shadow-lg max-h-[90vh] overflow-y-auto">
             <button
               onClick={() => setIsOpen(false)}

@@ -10,7 +10,7 @@ const places = [
   { id: 3, name: "Kashmir", desc: "Heaven on earth – valleys, lakes, and snowcapped peaks.", img: img3 },
 ];
 
-const AUTO_SCROLL_SPEED = 1; // px per frame
+const AUTO_SCROLL_SPEED = 1;
 
 const PlaceToVisit = () => {
   const scrollRef = useRef(null);
@@ -133,10 +133,10 @@ const PlaceToVisit = () => {
     <section className="w-full bg-white py-6 sm:py-12 relative">
       {/* HEADER */}
       <div className="flex flex-col sm:flex-row justify-between items-center max-w-6xl mx-auto px-4 sm:px-6 mb-6 sm:mb-8 gap-4">
-        <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-[#0f1b60] text-center sm:text-left">
+        <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-center flex-grow sm:flex-grow-0 sm:absolute sm:left-1/2 sm:transform sm:-translate-x-1/2">
           Places to visit
         </h2>
-        <button className="hidden sm:block bg-blue-600 text-white px-4 py-1.5 rounded-lg text-sm hover:bg-blue-700 transition duration-300">
+        <button className="hidden sm:block ml-auto bg-blue-600 text-white px-4 py-1.5 rounded-lg text-sm hover:bg-blue-700 transition duration-300">
           Explore All
         </button>
       </div>
