@@ -10,23 +10,23 @@ const Packages = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const navigate = useNavigate();
 
-  let destinations = [];
+  // 🔹 Prepare destinations based on active tab
+  const destinations =
+    activeTab === "domestic"
+      ? domesticDestinations.map((d) => ({ ...d, type: "domestic" }))
+      : activeTab === "international"
+      ? internationalDestinations.map((d) => ({ ...d, type: "international" }))
+      : [
+          ...domesticDestinations.map((d) => ({ ...d, type: "domestic" })),
+          ...internationalDestinations.map((d) => ({ ...d, type: "international" })),
+        ];
 
-  if (activeTab === "domestic") {
-    destinations = domesticDestinations.map((d) => ({ ...d, type: "domestic" }));
-  } else if (activeTab === "international") {
-    destinations = internationalDestinations.map((d) => ({ ...d, type: "international" }));
-  } else {
-    destinations = [
-      ...domesticDestinations.map((d) => ({ ...d, type: "domestic" })),
-      ...internationalDestinations.map((d) => ({ ...d, type: "international" })),
-    ];
-  }
-
+  // 🔹 Filtered by search
   const filteredDestinations = destinations.filter((destination) =>
     destination.title.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
+  // 🔹 Slice for "View All / Show Less"
   const visibleDestinations = showAll
     ? filteredDestinations
     : filteredDestinations.slice(0, 8);
@@ -37,11 +37,11 @@ const Packages = () => {
   };
 
   return (
-    <div className="p-6">
-      {/* Tabs & Search Bar */}
-      <div className="relative mb-6">
-        {/* Centered Tabs */}
-        <div className="flex justify-center gap-4">
+    <div className="px-4 sm:px-6 lg:px-12 py-6">
+      {/* Tabs + Search (Responsive) */}
+      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
+        {/* Tabs */}
+        <div className="flex justify-center md:justify-start gap-3 flex-wrap">
           {["domestic", "international", "all"].map((tab) => (
             <button
               key={tab}
@@ -50,10 +50,10 @@ const Packages = () => {
                 setShowAll(false);
                 setSearchQuery("");
               }}
-              className={`px-6 py-2 rounded-full transition duration-300 capitalize ${
+              className={`px-5 py-2 rounded-full capitalize text-sm sm:text-base transition duration-300 ${
                 activeTab === tab
-                  ? "bg-blue-600 text-white"
-                  : "bg-gray-200 text-gray-800"
+                  ? "bg-blue-600 text-white shadow-md"
+                  : "bg-gray-200 text-gray-800 hover:bg-gray-300"
               }`}
             >
               {tab}
@@ -61,8 +61,8 @@ const Packages = () => {
           ))}
         </div>
 
-        {/* Search bar aligned right */}
-        <div className="absolute right-0 top-1/2 transform -translate-y-1/2 w-full md:w-80 px-4 md:px-0">
+        {/* Search Bar */}
+        <div className="w-full md:w-80">
           <div className="relative">
             <input
               type="text"
@@ -74,7 +74,7 @@ const Packages = () => {
             {searchQuery && (
               <button
                 onClick={() => setSearchQuery("")}
-                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700 text-lg"
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 text-lg"
                 aria-label="Clear search"
               >
                 ✕
@@ -84,7 +84,7 @@ const Packages = () => {
         </div>
       </div>
 
-      {/* Destination Cards */}
+      {/* Destination Cards Grid */}
       <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
         {visibleDestinations.length > 0 ? (
           visibleDestinations.map((destination, index) => (
@@ -103,7 +103,7 @@ const Packages = () => {
         )}
       </div>
 
-      {/* View All / Show Less */}
+      {/* View All Button */}
       {filteredDestinations.length > 8 && (
         <div className="flex justify-center mt-8">
           <button
