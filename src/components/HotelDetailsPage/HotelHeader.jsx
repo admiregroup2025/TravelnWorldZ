@@ -160,12 +160,12 @@ const HotelHeader = ({ hotel }) => {
           <a href="#rooms" className="hover:text-blue-600">Rooms</a>
           <a href="#photos" className="hover:text-blue-600">Photos</a>
           <a href="#reviews" className="hover:text-blue-600">Reviews</a>
-          <Link
+          {/* <Link
             to={`/hotels/${hotel.id}/${hotel.slug}/blogs`}
             className="hover:text-blue-600"
           >
             Blog
-          </Link>
+          </Link> */}
         </nav>
       </div>
     </header>

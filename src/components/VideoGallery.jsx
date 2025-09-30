@@ -61,13 +61,17 @@ function VideoGallery({ isOpen, setIsOpen }) {
  
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
               {videos.map(({ id, src }, index) => (
-                <video
+                 <div
                   key={id}
-                  src={src}
-                  controls
-                  className="w-full h-40 rounded shadow object-cover cursor-pointer"
-                  onClick={() => setSelectedIndex(index)}
-                />
+                  className="w-full h-40 rounded shadow overflow-hidden cursor-pointer"
+                  onClick={() => setSelectedIndex(index)} 
+                >
+                  <video
+                    src={src}
+                    controls
+                    className="w-full h-full object-cover pointer-events-none"
+                  />
+                </div>
               ))}
             </div>
           </div>
@@ -99,18 +103,18 @@ function VideoGallery({ isOpen, setIsOpen }) {
             />
           </div>
  
-          {/* Prev Button (just outside card) */}
+          {/* Prev Button */}
           <button
             onClick={showPrev}
-            className="absolute left-[calc(50%-200px-40px)] top-1/2 transform -translate-y-1/2 w-10 h-10 rounded-full bg-white flex items-center justify-center text-black shadow hover:bg-gray-100 z-50"
+            className="absolute left-2 sm:left-[calc(50%-200px-40px)] top-1/2 transform -translate-y-1/2 w-10 h-10 rounded-full bg-white flex items-center justify-center text-black shadow hover:bg-gray-100 z-50"
           >
             <ChevronLeft size={20} />
           </button>
  
-          {/* Next Button (just outside card) */}
+          {/* Next Button */}
           <button
             onClick={showNext}
-            className="absolute right-[calc(50%-200px-40px)] top-1/2 transform -translate-y-1/2 w-10 h-10 rounded-full bg-white flex items-center justify-center text-black shadow hover:bg-gray-100 z-50"
+            className="absolute right-2 sm:right-[calc(50%-200px-40px)] top-1/2 transform -translate-y-1/2 w-10 h-10 rounded-full bg-white flex items-center justify-center text-black shadow hover:bg-gray-100 z-50"
           >
             <ChevronRight size={20} />
           </button>

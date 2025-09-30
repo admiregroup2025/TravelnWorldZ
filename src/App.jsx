@@ -64,6 +64,7 @@ import TermsAndConditions from './pages/TermsAndConditions.jsx';
 import VerifiedHotelsList from './components/verifiedHotel/VerifiedHotelsList.jsx';
 import BookHotelsPage from './components/verifiedHotel/BookHotelsPage.jsx';
 import HotelDetailsPage from './components/verifiedHotel/HotelDetailsPage.jsx';
+import HotelVerifiedReviewViewAll from './components/HotelDetailsPage/HotelVerifiedReviewViewAll.jsx';
 // admin pages
 // import AdminDashboard from './pages/admin/AdminDashboard';
 // import AdminUsers from './pages/admin/AdminUsers';
@@ -123,6 +124,7 @@ const App = () => {
         <Route path='/all-hotels' element={<VerifiedHotelsList />} />
         <Route path='/book-hotel/:id' element={<BookHotelsPage />} />
         <Route path='/hotel-details/:id' element={<HotelDetailsPage />} />
+        <Route path='/verified-hotel-reviews/:id' element={<HotelVerifiedReviewViewAll />} />
         {/* Outer Pages */}
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/Terms-to-use" element={<TermsAndConditions />} />
