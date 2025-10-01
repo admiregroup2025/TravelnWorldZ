@@ -8,18 +8,15 @@ import HotelHeader from './HotelHeader';
 const HotelVerifiedReviewViewAll = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-
-  // Find hotel by ID (string-based IDs like "h1")
   const selectedHotel = hotelData.find(item => item.id === id);
 
-  // Fake reviews — Replace this later with API data
   const reviews = Array(5).fill().map((_, i) => ({
     name: `Guest ${i + 1}`,
     date: '22 Sep 2025',
     rating: 4,
     tags: ['Clean rooms', 'Friendly staff'],
     text: 'Amazing stay, highly recommended!',
-    images: [], // or add images: [{ url: '...' }]
+    images: [], 
   }));
 
   if (!selectedHotel) {
@@ -29,7 +26,7 @@ const HotelVerifiedReviewViewAll = () => {
   return (
     <div className="w-full px-4 py-6 bg-white min-h-screen font-sans">
       {/* Header */}
-      <HotelHeader hotel={selectedHotel} />
+      <HotelHeader hotelItem={selectedHotel} />
 
       {/* Main Content */}
       <div className="flex flex-col lg:flex-row gap-6 mt-6">
@@ -119,7 +116,7 @@ const HotelVerifiedReviewViewAll = () => {
 
         {/* RIGHT SIDE - Sidebar */}
         <div className="w-full lg:w-[20%] flex flex-col gap-6">
-          <HotelRightSide hotel={selectedHotel} />
+          <HotelRightSide hotelItem={selectedHotel} />
         </div>
       </div>
     </div>

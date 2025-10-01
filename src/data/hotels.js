@@ -24,7 +24,24 @@ const hotels = [
       rating: 5,
       tags: ['Sea view', 'Quick check-in', 'Excellent food'],
       text: 'Absolutely loved the sea view and quick check-in. Great stay overall!',
-    }
+    },
+    tourPackages: [ 
+      {
+        destination: 'North Goa',
+        description: '2 nights, breakfast included, city tour',
+        price: '₹6,999',
+      },
+      {
+        destination: 'South Goa',
+        description: '3 nights, sea-facing room, airport pickup',
+        price: '₹8,499',
+      },
+      {
+        destination: 'Full Goa Tour',
+        description: '5 days, all-inclusive, beach activities',
+        price: '₹12,999',
+      }
+    ]
   },
   {
     id: 'h2',
@@ -46,7 +63,24 @@ const hotels = [
       rating: 5,
       tags: ['Sea view', 'Quick check-in', 'Excellent food'],
       text: 'Absolutely loved the sea view and quick check-in. Great stay overall!',
-    }
+    },
+    tourPackages: [
+      {
+        destination: 'North Goa',
+        description: '2 nights, breakfast included, city tour',
+        price: '₹6,999',
+      },
+      {
+        destination: 'South Goa',
+        description: '3 nights, sea-facing room, airport pickup',
+        price: '₹8,499',
+      },
+      {
+        destination: 'Full Goa Tour',
+        description: '5 days, all-inclusive, beach activities',
+        price: '₹12,999',
+      }
+    ]
   },
   {
     id: 'h3',
@@ -68,7 +102,24 @@ const hotels = [
       rating: 5,
       tags: ['Sea view', 'Quick check-in', 'Excellent food'],
       text: 'Absolutely loved the sea view and quick check-in. Great stay overall!',
-    }
+    },
+    tourPackages: [ 
+      {
+        destination: 'North Goa',
+        description: '2 nights, breakfast included, city tour',
+        price: '₹6,999',
+      },
+      {
+        destination: 'South Goa',
+        description: '3 nights, sea-facing room, airport pickup',
+        price: '₹8,499',
+      },
+      {
+        destination: 'Full Goa Tour',
+        description: '5 days, all-inclusive, beach activities',
+        price: '₹12,999',
+      }
+    ]
   },
   {
     id: 'h4',
@@ -90,13 +141,31 @@ const hotels = [
       rating: 5,
       tags: ['Sea view', 'Quick check-in', 'Excellent food'],
       text: 'Absolutely loved the sea view and quick check-in. Great stay overall!',
-    }
+    },
+    tourPackages: [
+      {
+        destination: 'North Goa',
+        description: '2 nights, breakfast included, city tour',
+        price: '₹6,999',
+      },
+      {
+        destination: 'South Goa',
+        description: '3 nights, sea-facing room, airport pickup',
+        price: '₹8,499',
+      },
+      {
+        destination: 'Full Goa Tour',
+        description: '5 days, all-inclusive, beach activities',
+        price: '₹12,999',
+      }
+    ]
   },
   {
   id: 'h5',
   name: 'Lakeside Paradise',
   title: 'Tranquility by the Water',
   image: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=400&auto=format&fit=crop',
+  
 },
 {
   id: 'h6',

@@ -3,14 +3,14 @@ import { Bookmark, Share2, Edit3 } from "lucide-react";
 import { Link } from "react-router-dom";
 import HotelEnquiryForm from "../../forms/EnquiryForm";
 
-const HotelHeader = ({ hotel }) => {
+const HotelHeader = ({ hotelItem }) => {
   const [saved, setSaved] = useState(false);
   const [showModal, setShowModal] = useState(false);
 
   const handleShare = async () => {
     const shareData = {
-      title: hotel.name,
-      text: `Check out this hotel: ${hotel.name}`,
+      title: hotelItem.name,
+      text: `Check out this hotel: ${hotelItem.name}`,
       url: window.location.href,
     };
 
@@ -35,7 +35,7 @@ const HotelHeader = ({ hotel }) => {
       <div className="flex flex-col gap-4">
         {/* Hotel Name + Right Side Tags */}
         <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
-          <h1 className="font-bold text-2xl sm:text-3xl">{hotel.name}</h1>
+          <h1 className="font-bold text-2xl sm:text-3xl">{hotelItem.name}</h1>
           <div className="flex flex-wrap items-center gap-2">
             <span className="bg-gray-100 text-gray-600 px-2 py-0.5 rounded-md text-xs">
               Hotel Partner
@@ -61,11 +61,11 @@ const HotelHeader = ({ hotel }) => {
 
         {/* Badges */}
         <div className="flex flex-wrap items-center gap-2 text-sm">
-          {hotel.rating && (
+          {hotelItem.rating && (
             <div className="bg-green-600 text-white rounded-md px-2 py-0.5 font-semibold flex items-center gap-1">
-              {hotel.rating} ★
+              {hotelItem.rating} ★
               <span className="text-white/80 font-normal">
-                ({hotel.reviews || "100+"} Reviews)
+                ({hotelItem.reviews || "100+"} Reviews)
               </span>
             </div>
           )}
@@ -90,11 +90,11 @@ const HotelHeader = ({ hotel }) => {
 
         {/* Address / Info */}
         <p className="relative group text-sm text-gray-700 font-semibold cursor-pointer">
-          {hotel.location || "Dwarka Mor"} ·{" "}
+          {hotelItem.location || "Dwarka Mor"} ·{" "}
           <span className="text-green-600">Available 24x7</span> ·{" "}
-          {hotel.yearsInService || "10 Years"} in Service
+          {hotelItem.yearsInService || "10 Years"} in Service
           <div className="absolute hidden group-hover:block bg-white text-black font-semibold text-xs rounded p-4 top-full left-0 mt-1 w-max max-w-lg shadow-lg border z-10">
-            {hotel.fullAddress}
+            {hotelItem.fullAddress}
           </div>
         </p>
 
@@ -109,10 +109,10 @@ const HotelHeader = ({ hotel }) => {
         {/* Buttons */}
         <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:justify-start">
           <a
-            href={`tel:${hotel.phone || "9999999999"}`}
+            href={`tel:${hotelItem.phone || "9999999999"}`}
             className="bg-green-600 text-white px-4 py-1.5 rounded font-semibold inline-flex items-center gap-1 text-sm"
           >
-            📞 {hotel.phone || "9999XXXXXX"}
+            📞 {hotelItem.phone || "9999XXXXXX"}
           </a>
 
           <button

@@ -12,7 +12,7 @@ import {
   Copy,
 } from "lucide-react";
 
-function HotelRightSide({ hotel }) {
+function HotelRightSide({ hotelItem }) {
   return (
     <div className="w-full lg:w-full flex flex-col gap-6">
       {/* Contact Card */}
@@ -25,16 +25,16 @@ function HotelRightSide({ hotel }) {
         <div className="p-4 border-b">
           <h3 className="font-semibold text-gray-800 text-2xl font-serif">Contact</h3>
           <a
-            href={`tel:${hotel.phone}`}
+            href={`tel:${hotelItem.phone}`}
             className="text-blue-600 font-medium text-sm hover:underline"
           >
-            📞 {hotel.phone}
+            📞 {hotelItem.phone}
           </a>
         </div>
 
         <div className="p-4 border-b">
           <h3 className="font-semibold text-gray-800 text-xl mb-1">Address</h3>
-          <p className="text-xl text-gray-600 leading-relaxed">{hotel.address}</p>
+          <p className="text-xl text-gray-600 leading-relaxed">{hotelItem.address}</p>
           <div className="flex gap-4 mt-2 text-md text-blue-600">
             <button className="flex items-center gap-1 hover:underline">
               <MapPin size={14} /> Get Directions
@@ -47,7 +47,7 @@ function HotelRightSide({ hotel }) {
 
         <div className="p-4 flex items-center justify-between border-b">
           <span className="flex items-center gap-2 text-green-600 font-medium text-md">
-            <Clock size={14} /> {hotel.timings || "Open 24 Hrs"}
+            <Clock size={14} /> {hotelItem.timings || "Open 24 Hrs"}
           </span>
         </div>
 
@@ -79,7 +79,7 @@ function HotelRightSide({ hotel }) {
         </div>
 
         <div className="p-4 border-t text-md text-gray-600">
-          GSTIN: <span className="font-medium">{hotel.gstin}</span>
+          GSTIN: <span className="font-medium">{hotelItem.gstin}</span>
         </div>
       </motion.div>
 
@@ -92,7 +92,7 @@ function HotelRightSide({ hotel }) {
       >
         <h3 className="font-semibold text-gray-800 text-xl mb-3">Also listed in</h3>
         <div className="flex flex-wrap gap-2">
-          {hotel.tags?.map((tag, i) => (
+          {hotelItem.tags?.map((tag, i) => (
             <span
               key={i}
               className="px-2 py-1 text-sm bg-gray-100 border rounded-full cursor-pointer hover:bg-gray-200 transition"
@@ -129,7 +129,7 @@ function HotelRightSide({ hotel }) {
       >
         <h3 className="font-semibold text-gray-800 text-xl mb-2">Nearby Listings</h3>
         <ul className="text-md text-blue-600 space-y-1">
-          <li><a href="#" className="hover:underline">Hotels in {hotel.city || "Rishikesh"}</a></li>
+          <li><a href="#" className="hover:underline">Hotels in {hotelItem.city || "Rishikesh"}</a></li>
           <li><a href="#" className="hover:underline">Taxi Services</a></li>
           <li><a href="#" className="hover:underline">Tour Guides</a></li>
         </ul>
