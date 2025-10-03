@@ -207,12 +207,14 @@ const VerifiedTransportCard = () => {
         /* Mobile: Single Card View */
         <div className="w-full px-12">
           <div className="bg-white rounded-lg shadow-md hover:shadow-lg transition-all duration-300 max-w-sm mx-auto">
-            <img
-              src={data[currentIndex].image}
-              alt={data[currentIndex].title}
-              className="w-full h-40 object-cover rounded-t-lg cursor-pointer"
-              onClick={() => navigate(`/verified-transport-details/${data[currentIndex].id}`)}
-            />
+            <div className="h-40 w-full p-1 flex items-center justify-center overflow-hidden bg-white rounded-t-lg">
+              <img
+                src={data[currentIndex].image}
+                alt={data[currentIndex].title}
+                className="max-h-full max-w-full object-contain"
+              />
+            </div>
+
             
             <div className="flex flex-col p-4">
               {/* Title + Verified */}
@@ -291,12 +293,16 @@ const VerifiedTransportCard = () => {
               key={index}
               className="inline-block align-top w-[260px] mr-[24px] last:mr-0 bg-white rounded-lg shadow-md hover:shadow-lg transition-all duration-300 flex-shrink-0"
             >             
-            <img
-              src={item.image}
-              alt={item.title}
-              className="w-full h-28 object-cover rounded-t-lg p-1 cursor-pointer"
+            <div
+              className="w-full h-28 overflow-hidden rounded-t-lg bg-white flex items-center justify-center cursor-pointer"
               onClick={() => navigate(`/verified-transport-details/${item.id}`)}
-            />
+            >
+              <img
+                src={item.image}
+                alt={item.title}
+                className="max-w-full max-h-full object-contain"
+              />
+            </div>
              
               <div className="flex flex-col flex-grow p-2 text-sm h-full">
                 {/* Title + Verified */}

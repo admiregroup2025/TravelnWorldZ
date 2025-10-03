@@ -2,6 +2,9 @@ import ayodhya from '../assets/images/verified/ayodhya.jpg';
 import ram from '../assets/images/verified/ram.JPG';
 import shivam from '../assets/images/verified/Shivam_travels.jpeg';
 import arora from '../assets/images/verified/arora.jpeg'
+import jasswant from '../assets/images/verified/jasswant.jpeg';
+import danish from '../assets/images/verified/danish.jpeg';
+import monika from '../assets/images/verified/monika.jpeg'
 function generateSlug(text) {
   return text
     .toLowerCase()
@@ -94,16 +97,19 @@ const transportData = [
   },
   {
     id: 3,
-    image: ram,
-    title: "RAM RATH TOUR AND TRAVELS",
-    slug: generateSlug("RAM RATH TOUR AND TRAVELS"),
+    image: jasswant,
+    name:"Jasswant singh",
+    title: "Trip And Ticket",
+    slug: generateSlug("Trip And Ticket"),
     location: "Beniganj Ayodhya",
     fullAddress:"12A/32G Beniganj Ayodhya,Up,India",
     rating: 4.9,
     reviews: 150,
     verified: true,
-    phone: "08147943975",
-    whatsapp: "918147943975",
+    Website: "www.tripandticket.in",
+    phone: "9896018936",
+    whatsapp: "9671399093",//Social media links =https://www.instagram.com/tripandticket?igsh=em9icHRldjhhenF0
+    email:"info@tripandticket.in",
     tags: ["Hotels", "Hotels Rs 501 To Rs 1000"],
      tourPackages: [
       {
@@ -152,7 +158,7 @@ const transportData = [
     phone: "08147943975",
     whatsapp: "918147943975",
     tags: ["Hotels", "Hotels Rs 501 To Rs 1000"],
-     tourPackages: [
+    tourPackages: [
       {
         destination: "Ayodhya",
         description: "Darshan & Sightseeing tour",
@@ -183,20 +189,22 @@ const transportData = [
         description: "Darshan & Sightseeing tour",
         price: "₹2999",
       },
-    ],// ✅ Add this
+    ],
   },
   {
     id: 5,
-    image: "https://via.placeholder.com/300x150",
-    title: "Shiv Tour & Travel",
-    slug: generateSlug("Shiv Tour & Travel"),
+    name:"Danish Aabid",
+    image: danish,
+    title: "Holiday Pump",
+    slug: generateSlug("Holiday Pump"),
     location: "Kanpur, India",
+    email: "holidaypumpddn@gmail.com",
     rating: 4.5,
     reviews: 80,
     verified: true,
     website: "https://example.com/shiv",
-    phone: "08147943975",
-    whatsapp: "918147943975",
+    phone: "7535838485",
+    whatsapp: "7302131527",
     tags: ["Hotels", "Hotels Rs 501 To Rs 1000"],
     tourPackages: [
       {
@@ -225,6 +233,49 @@ const transportData = [
         price: "₹2999",
       },
     ], // ✅ Add this
+  },
+  {
+    id: 6,
+    name:"Monika moters",
+    image: monika,
+    title: "Monika moters Tour & Travel",
+    slug: generateSlug("Monika moters"),
+    location: "Kanpur, India",
+    email: "bhavnishsharma093@gmail.com",
+    rating: 4.5,
+    reviews: 80,
+    verified: true,
+    website: "https://example.com/shiv",
+    phone: "9813285145",
+    whatsapp: "9813172656",
+    tags: ["Hotels", "Hotels Rs 501 To Rs 1000"],
+    tourPackages: [
+      {
+        destination: "Ayodhya",
+        description: "Darshan & Sightseeing tour",
+        price: "₹2999",
+      },
+      {
+        destination: "Nearby Pilgrimage",
+        description: "Half day trip to nearby temples",
+        price: "₹1499",
+      },
+      {
+        destination: "Rajashthan",
+        description: "Darshan & Sightseeing tour",
+        price: "₹2999",
+      },
+      {
+        destination: "Ayodhya",
+        description: "Darshan & Sightseeing tour",
+        price: "₹2999",
+      },
+      {
+        destination: "Ayodhya",
+        description: "Darshan & Sightseeing tour",
+        price: "₹2999",
+      },
+    ], 
   },
 ];
 
