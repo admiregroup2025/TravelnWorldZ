@@ -7,6 +7,8 @@ import HotelGallery from '../HotelDetailsPage/HotelGallery';
 import HotelVerifiedReview from '../HotelDetailsPage/HotelVerifiedReview';
 import HotelQuickSection from '../HotelDetailsPage/HotelQuickSection';
 import HotelTourPackages from '../HotelDetailsPage/HotelTourPackages';
+import HotelHappyCustomer from '../HotelDetailsPage/HotelHappyCustomer';
+import HotelHappyCustomerVideo from '../HotelDetailsPage/HotelHappyCustomerVideo';
 
 const HotelDetailsPage = () => {
     const { id } = useParams();
@@ -21,9 +23,9 @@ const HotelDetailsPage = () => {
           <HotelGallery hotelItem={selectedHotel} />
           <HotelTourPackages hotelItem={selectedHotel}/>
           <HotelQuickSection hotelItem={selectedHotel} />
-
+          <HotelHappyCustomer hotelItem={selectedHotel}/>
+          <HotelHappyCustomerVideo hotelItem={selectedHotel}/>
           <HotelVerifiedReview  hotelItem={selectedHotel}/>
-          
         </div>
         {/* RIGHT SIDE */}
         <div className="w-full lg:w-[20%] flex flex-col gap-6">

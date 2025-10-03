@@ -34,7 +34,7 @@ function HotelRightSide({ hotelItem }) {
 
         <div className="p-4 border-b">
           <h3 className="font-semibold text-gray-800 text-xl mb-1">Address</h3>
-          <p className="text-xl text-gray-600 leading-relaxed">{hotelItem.address}</p>
+          <p className="text-sm text-gray-600 leading-relaxed">{hotelItem.address}</p>
           <div className="flex gap-4 mt-2 text-md text-blue-600">
             <button className="flex items-center gap-1 hover:underline">
               <MapPin size={14} /> Get Directions

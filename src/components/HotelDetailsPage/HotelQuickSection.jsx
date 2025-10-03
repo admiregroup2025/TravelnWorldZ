@@ -19,7 +19,7 @@ const HotelQuickSection = ({ hotelItem }) => {
         <div className="grid grid-cols-2 sm:grid-cols-4 w-[70%] md:gap-2 text-center">
           <div className="flex flex-col gap-4">
             <BedDouble className="text-indigo-500" size={36} />
-            <p className="text-sm text-left font-medium mt-2 text-gray-800">Comfortable Rooms</p>
+            <p className="text-sm text-left font-medium mt-2 text-gray-800"> Rooms</p>
           </div>
           <div className="flex flex-col gap-4">
             <Star className="text-yellow-500" size={36} />

@@ -2,7 +2,10 @@
 import img1 from '../assets/images/verifiedHotels/hotel1.jpg';
 import img2 from '../assets/images/verifiedHotels/hotel2.jpg';
 import img3 from '../assets/images/verifiedHotels/hotel3.jpg';
-
+import per1 from '../assets/images/icons/icon1.jpeg';
+import per2 from '../assets/images/icons/icon2.jpeg';
+import per3 from '../assets/images/icons/icon3.jpeg';
+import per4 from '../assets/images/icons/icon4.jpeg';
 const hotels = [
   {
     id: 'h1',
@@ -41,7 +44,58 @@ const hotels = [
         description: '5 days, all-inclusive, beach activities',
         price: '₹12,999',
       }
-    ]
+    ],
+    happyCustomers: [
+    {
+      image: img1,
+      name: 'Rajat Sharma',
+      profile: per1,
+      text: 'Had a wonderful experience with my family. Beautiful location and excellent food.',
+      time: '10:15 AM',
+      date: '20 Sep, 2025',
+    },
+    {
+      image: img1,
+      name: 'Priya Singh',
+      profile: per2,
+      text: 'The staff was super friendly and the beach view room was a dream!',
+      time: '08:45 PM',
+      date: '18 Sep, 2025',
+    },
+    {
+      image: img1,
+      name: 'Aman Verma',
+      profile: per3,
+      text: 'Spa service was top notch. Definitely coming back next year.',
+      time: '01:30 PM',
+      date: '10 Sep, 2025',
+    },
+    {
+      image: img1,
+      name: 'Neha Kapoor',
+      profile: per4,
+      text: 'Loved the quick check-in process and the cleanliness of the rooms.',
+      time: '04:50 PM',
+      date: '05 Sep, 2025',
+    },
+  ],
+   videos: [
+    {
+      type: "youtube",
+      src: "https://img.youtube.com/vi/h3zk-cwS8hU/hqdefault.jpg",
+      link: "https://www.youtube.com/watch?v=h3zk-cwS8hU",
+    },
+    {
+      type: "video",
+      src: "/src/assets/videos/verifiedCustomers/video1.mp4",
+      link: "https://www.youtube.com/watch?v=abc1",
+    },
+    {
+      type: "video",
+      src: "/src/assets/videos/verifiedCustomers/video2.mp4",
+      link: "https://www.youtube.com/watch?v=abc2",
+    },
+  ]
   },
   {
     id: 'h2',
@@ -80,7 +134,58 @@ const hotels = [
         description: '5 days, all-inclusive, beach activities',
         price: '₹12,999',
       }
-    ]
+    ],
+    happyCustomers: [
+    {
+      image: img1,
+      name: 'Rajat Sharma',
+      profile: per1,
+      text: 'Had a wonderful experience with my family. Beautiful location and excellent food.',
+      time: '10:15 AM',
+      date: '20 Sep, 2025',
+    },
+    {
+      image: img1,
+      name: 'Priya Singh',
+      profile: per2,
+      text: 'The staff was super friendly and the beach view room was a dream!',
+      time: '08:45 PM',
+      date: '18 Sep, 2025',
+    },
+    {
+      image: img1,
+      name: 'Aman Verma',
+      profile: per3,
+      text: 'Spa service was top notch. Definitely coming back next year.',
+      time: '01:30 PM',
+      date: '10 Sep, 2025',
+    },
+    {
+      image: img1,
+      name: 'Neha Kapoor',
+      profile: per4,
+      text: 'Loved the quick check-in process and the cleanliness of the rooms.',
+      time: '04:50 PM',
+      date: '05 Sep, 2025',
+    },
+  ],
+   videos: [
+    {
+      type: "youtube",
+      src: "https://img.youtube.com/vi/h3zk-cwS8hU/hqdefault.jpg",
+      link: "https://www.youtube.com/watch?v=h3zk-cwS8hU",
+    },
+    {
+      type: "video",
+      src: "/src/assets/videos/verifiedCustomers/video1.mp4",
+      link: "https://www.youtube.com/watch?v=abc1",
+    },
+    {
+      type: "video",
+      src: "/src/assets/videos/verifiedCustomers/video2.mp4",
+      link: "https://www.youtube.com/watch?v=abc2",
+    },
+  ],
   },
   {
     id: 'h3',
@@ -119,7 +224,41 @@ const hotels = [
         description: '5 days, all-inclusive, beach activities',
         price: '₹12,999',
       }
-    ]
+    ],
+    happyCustomers: [
+    {
+      image: img1,
+      name: 'Rajat Sharma',
+      profile: per1,
+      text: 'Had a wonderful experience with my family. Beautiful location and excellent food.',
+      time: '10:15 AM',
+      date: '20 Sep, 2025',
+    },
+    {
+      image:img1,
+      name: 'Priya Singh',
+      profile: per1,
+      text: 'The staff was super friendly and the beach view room was a dream!',
+      time: '08:45 PM',
+      date: '18 Sep, 2025',
+    },
+    {
+      image: '/images/reviews/h3.jpg',
+      name: 'Aman Verma',
+      profile: per1,
+      text: 'Spa service was top notch. Definitely coming back next year.',
+      time: '01:30 PM',
+      date: '10 Sep, 2025',
+    },
+    {
+      image: '/images/reviews/h4.jpg',
+      name: 'Neha Kapoor',
+      profile: per1,
+      text: 'Loved the quick check-in process and the cleanliness of the rooms.',
+      time: '04:50 PM',
+      date: '05 Sep, 2025',
+    },
+  ]
   },
   {
     id: 'h4',
@@ -158,7 +297,41 @@ const hotels = [
         description: '5 days, all-inclusive, beach activities',
         price: '₹12,999',
       }
-    ]
+    ],
+    happyCustomers: [
+    {
+      image: '/images/reviews/h1.jpg',
+      name: 'Rajat Sharma',
+      profile: '/images/profiles/user1.jpg',
+      text: 'Had a wonderful experience with my family. Beautiful location and excellent food.',
+      time: '10:15 AM',
+      date: '20 Sep, 2025',
+    },
+    {
+      image: '/images/reviews/h2.jpg',
+      name: 'Priya Singh',
+      profile: '/images/profiles/user2.jpg',
+      text: 'The staff was super friendly and the beach view room was a dream!',
+      time: '08:45 PM',
+      date: '18 Sep, 2025',
+    },
+    {
+      image: '/images/reviews/h3.jpg',
+      name: 'Aman Verma',
+      profile: '/images/profiles/user3.jpg',
+      text: 'Spa service was top notch. Definitely coming back next year.',
+      time: '01:30 PM',
+      date: '10 Sep, 2025',
+    },
+    {
+      image: '/images/reviews/h4.jpg',
+      name: 'Neha Kapoor',
+      profile: '/images/profiles/user4.jpg',
+      text: 'Loved the quick check-in process and the cleanliness of the rooms.',
+      time: '04:50 PM',
+      date: '05 Sep, 2025',
+    },
+  ]
   },
   {
   id: 'h5',
