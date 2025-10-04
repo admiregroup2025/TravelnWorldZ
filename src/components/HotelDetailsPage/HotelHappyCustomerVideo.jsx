@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from "react";
 import { ChevronRight, ChevronLeft, X } from "lucide-react";
-
+import hotelItemPropType from '../../propTypes/hotelItemPropType.js';
 const HotelHappyCustomerVideo = ({ hotelItem }) => {
   const scrollRef = useRef(null);
   const [activeIndex, setActiveIndex] = useState(null);
@@ -183,6 +183,9 @@ const HotelHappyCustomerVideo = ({ hotelItem }) => {
       )}
     </div>
   );
+};
+HotelHappyCustomerVideo.propTypes = {
+  hotelItem: hotelItemPropType.isRequired,
 };
 
 export default HotelHappyCustomerVideo;

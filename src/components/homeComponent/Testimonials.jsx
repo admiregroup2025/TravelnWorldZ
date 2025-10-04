@@ -1,6 +1,7 @@
 import React from "react";
 import { Star } from "lucide-react";
 import { motion } from "framer-motion";
+import PropTypes from 'prop-types';
 
 const Testimonials = () => {
   const testimonials = [
@@ -84,6 +85,13 @@ const Testimonials = () => {
         </div>
       </motion.div>
     );
+  };
+  TestimonialCard.propTypes = {
+  image: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  role: PropTypes.string.isRequired,
+  text: PropTypes.string.isRequired,
+  stars: PropTypes.number,
   };
 
   return (

@@ -68,7 +68,7 @@ const CustomerVerifiedReview = () => {
               </div>
 
               <p className="text-sm text-gray-700 italic mb-4">
-                "{review.text}"
+                &ldquo;{review.text}&rdquo;
               </p>
 
               {review.images.length > 0 && (

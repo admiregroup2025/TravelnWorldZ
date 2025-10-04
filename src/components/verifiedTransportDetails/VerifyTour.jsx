@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import TourPackages from "../../assets/images/tourPackage.jpeg";
- 
+import travelItemPropType from '../../propTypes/travelItemPropType.js';
 function VerifyTour({ travelItem }) {
   const navigate = useNavigate();
   const { id } = useParams(); // Get dynamic ID from the URL
@@ -136,5 +136,7 @@ function VerifyTour({ travelItem }) {
     </section>
   );
 }
- 
+VerifyTour.propTypes = {
+  travelItem: travelItemPropType.isRequired,
+}; 
 export default VerifyTour;

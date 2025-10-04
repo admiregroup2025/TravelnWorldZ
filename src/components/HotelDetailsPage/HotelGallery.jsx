@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import ImageGallery from '../ImageGallery'; 
 import VideoGallery from '../VideoGallery';
+import hotelItemPropType from '../../propTypes/hotelItemPropType.js'
 
 const HotelGallery = ({ hotelItem }) => {
   const [isImageGalleryOpen, setIsImageGalleryOpen] = useState(false);
@@ -59,5 +60,7 @@ const HotelGallery = ({ hotelItem }) => {
     </section>
   );
 };
-
+HotelGallery.propTypes = {
+  hotelItem: hotelItemPropType.isRequired,
+};
 export default HotelGallery;

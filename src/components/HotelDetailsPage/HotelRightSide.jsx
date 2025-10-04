@@ -11,7 +11,7 @@ import {
   Edit,
   Copy,
 } from "lucide-react";
-
+import hotelItemPropType from '../../propTypes/hotelItemPropType.js';
 function HotelRightSide({ hotelItem }) {
   return (
     <div className="w-full lg:w-full flex flex-col gap-6">
@@ -137,5 +137,7 @@ function HotelRightSide({ hotelItem }) {
     </div>
   );
 }
-
+HotelRightSide.propTypes = {
+  hotelItem: hotelItemPropType.isRequired,
+};
 export default HotelRightSide;

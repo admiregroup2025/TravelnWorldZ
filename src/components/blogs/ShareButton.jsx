@@ -1,7 +1,7 @@
 import React from 'react';
 import { FiShare2 } from 'react-icons/fi';
 import { FaPrint } from 'react-icons/fa';
-
+import PropTypes from 'prop-types';
 function ShareButton({ title, text, url }) {
 
   const handleShare = async () => {
@@ -17,11 +17,11 @@ function ShareButton({ title, text, url }) {
         console.log("Sharing failed:", error);
       }
     } else {
-      // Fallback: Copy to clipboard
       try {
         await navigator.clipboard.writeText(url);
         alert("Share not supported on this device. Link copied to clipboard.");
       } catch (err) {
+        console.error("Clipboard copy failed:", err);
         alert("Unable to copy the link.");
       }
     }
@@ -55,5 +55,9 @@ function ShareButton({ title, text, url }) {
     </div>
   );
 }
-
+ShareButton.propTypes = {
+  title: PropTypes.string.isRequired,
+  text: PropTypes.string.isRequired,
+  url: PropTypes.string.isRequired,
+};
 export default ShareButton;

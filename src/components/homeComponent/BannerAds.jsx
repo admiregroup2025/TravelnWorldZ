@@ -4,7 +4,7 @@ import img2 from "../../assets/images/logo/bannerAdds/image2.png";
 import img3 from "../../assets/images/logo/bannerAdds/image3.png";
 import img4 from "../../assets/images/logo/bannerAdds/image4.png";
 import img5 from "../../assets/images/logo/bannerAdds/image5.png";
-
+import PropTypes from 'prop-types';
 const BannerAds = () => {
   const images = [img1, img2, img3, img4, img5];
 
@@ -55,5 +55,7 @@ const BannerAds = () => {
     </div>
   );
 };
-
+BannerAds.propTypes = {
+  src: PropTypes.string.isRequired,
+};
 export default BannerAds;

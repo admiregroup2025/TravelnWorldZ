@@ -23,7 +23,7 @@ const Hero = () => {
         <div className="relative z-10 flex flex-col md:flex-row items-center justify-between h-full px-6 md:px-12">
           <div className="text-white max-w-lg text-center md:text-left">
             <h1 className="text-3xl md:text-5xl font-bold mb-4">
-              Let's Explore Goa
+              Let&apos;s Explore Goa
             </h1>
             <p className="text-base md:text-lg text-gray-200">
               Enjoy the beaches, nightlife, and culture of Goa with our

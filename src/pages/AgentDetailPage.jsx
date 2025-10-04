@@ -51,7 +51,7 @@ const AgentDetailPage = () => {
             <FaMapMarkerAlt className="text-gray-400 text-2xl" />
           </div>
           <h2 className="text-2xl font-bold text-gray-800 mb-2">Agency Not Found</h2>
-          <p className="text-gray-600 mb-6">The travel agency you're looking for doesn't exist.</p>
+          <p className="text-gray-600 mb-6">The travel agency you are looking for does not exist.</p>
           <Link 
             to="/" 
             className="bg-[#E69233] text-white px-6 py-3 rounded-lg hover:bg-[#d77e27] transition-colors"
@@ -392,7 +392,7 @@ const AgentDetailPage = () => {
                       <div>
                         <h3 className="text-xl font-semibold mb-4 text-green-600 flex items-center">
                           <FaCheck className="mr-2" />
-                          What's Included
+                          What is Included
                         </h3>
                         <div className="space-y-3">
                           {agent.inclusions.map((item, i) => (
@@ -407,7 +407,7 @@ const AgentDetailPage = () => {
                       <div>
                         <h3 className="text-xl font-semibold mb-4 text-red-600 flex items-center">
                           <FaTimes className="mr-2" />
-                          What's Not Included
+                          What is Not Included
                         </h3>
                         <div className="space-y-3">
                           {agent.exclusions.map((item, i) => (

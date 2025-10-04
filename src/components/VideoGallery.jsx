@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import PropTypes from 'prop-types';
 import { ChevronRight, ChevronLeft, X } from "lucide-react";
  
 import vid1 from "../assets/videos/hero.mp4";
@@ -123,5 +124,9 @@ function VideoGallery({ isOpen, setIsOpen }) {
     </>
   );
 }
- 
+
+VideoGallery.propTypes = {
+  isOpen: PropTypes.bool.isRequired,
+  setIsOpen: PropTypes.func.isRequired,
+}; 
 export default VideoGallery;

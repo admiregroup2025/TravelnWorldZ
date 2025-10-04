@@ -35,7 +35,7 @@ export default function EditItineraryModal({ isOpen, onClose, itinerary: initial
         if (p.isNew && p.url) URL.revokeObjectURL(p.url);
       });
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+     
   }, []);
 
   const handleField = (key, val) => setItinerary((s) => ({ ...s, [key]: val }));

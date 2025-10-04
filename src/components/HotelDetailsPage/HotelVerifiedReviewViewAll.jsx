@@ -80,7 +80,7 @@ const HotelVerifiedReviewViewAll = () => {
 
               {/* Review Text */}
               <p className="text-sm text-gray-700 italic mb-4">
-                "{review.text}"
+                &rdquo;{review.text}&rdquo;
               </p>
 
               {/* Optional Images */}

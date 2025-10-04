@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
-
+import hotelItemPropType from '../../propTypes/hotelItemPropType.js';
 const PIXELS_PER_SECOND = 60;
 const PAUSE_DURATION = 1000;
 const CARD_WIDTH = 320;
@@ -258,5 +258,7 @@ const HotelHappyCustomer = ({ hotelItem }) => {
     </div>
   );
 };
-
+HotelHappyCustomer.propTypes = {
+  hotelItem: hotelItemPropType.isRequired,
+};
 export default HotelHappyCustomer;

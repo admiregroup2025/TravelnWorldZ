@@ -26,6 +26,7 @@ const NavBar = () => {
           <div className="hidden md:flex space-x-6 items-center justify-center flex-1 ml-10">
             <NavLink to="/" className={navLinkClass}>Home</NavLink>
             <NavLink to="/aboutUs" className={navLinkClass}>About us</NavLink>
+            <NavLink to="/agents" className={navLinkClass}>Agents</NavLink>
             <NavLink to="/packages" className={navLinkClass}>Packages</NavLink>
             <NavLink to="/destination" className={navLinkClass}>Destination</NavLink>
             <NavLink to="/b2blogin" className={navLinkClass}>B2B login</NavLink>

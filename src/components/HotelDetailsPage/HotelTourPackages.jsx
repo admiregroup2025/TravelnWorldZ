@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import TourPackages from "../../assets/images/hotel.jpg";
-
+import hotelItemPropType from '../../propTypes/hotelItemPropType.js';
 const HotelTourPackages = ({ hotelItem }) => {
   const navigate = useNavigate();
   const scrollRef = useRef(null);
@@ -158,5 +158,7 @@ const HotelTourPackages = ({ hotelItem }) => {
     </section>
   );
 };
-
+HotelTourPackages.propTypes = {
+  hotelItem: hotelItemPropType.isRequired,
+};
 export default HotelTourPackages;

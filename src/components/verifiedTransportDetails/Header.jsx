@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Bookmark, Share2, Edit3 } from "lucide-react";
 import CustomerEnquiryForm from "../../forms/CustomerEnquiryFrom";
+import travelItemPropType from '../../propTypes/travelItemPropType.js';
 
 const Header = ({ travelItem }) => {
   const [saved, setSaved] = useState(false);
@@ -179,5 +180,7 @@ const Header = ({ travelItem }) => {
     </header>
   );
 };
-
+Header.propTypes = {
+  travelItem: travelItemPropType.isRequired,
+};
 export default Header;

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import ImageGallery from '../ImageGallery'; 
 import VideoGallery from '../VideoGallery';
+import travelItemPropType from '../../propTypes/travelItemPropType.js';
 
 function Gallery({ travelItem }) {
   const [isImageGalleryOpen, setIsImageGalleryOpen] = useState(false);
@@ -59,5 +60,7 @@ function Gallery({ travelItem }) {
     </section>
   );
 }
-
+Gallery.propTypes = {
+  travelItem: travelItemPropType.isRequired,
+};
 export default Gallery;

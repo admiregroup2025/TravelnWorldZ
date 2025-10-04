@@ -42,7 +42,7 @@ const PrivacyPolicy = () => {
               providers. We do not store payment details on our servers.
             </li>
             <li>
-              We don't sell or share your information with third parties without
+              We do not sell or share your information with third parties without
               consent, except when legally required or to fulfill your service
               requests.
             </li>

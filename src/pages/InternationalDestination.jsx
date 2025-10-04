@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-import { FaPhoneAlt } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
 
 const internationalPackages = [
   {
@@ -45,7 +43,6 @@ const internationalPackages = [
 ];
 
 const InternationalDestination = () => {
-  const navigate = useNavigate();
   const [showForm, setShowForm] = useState(false);
   const [selectedPlace, setSelectedPlace] = useState("");
 

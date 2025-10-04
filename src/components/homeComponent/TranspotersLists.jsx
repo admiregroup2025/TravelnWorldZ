@@ -10,14 +10,14 @@ const TransportersList = () => {
     <div className="px-4 pb-10 bg-gray-50 min-h-screen">
        <TopMostBanner /> 
       {/* Back Button */}
-      {/* <div className="mb-6">
+      <div className="mb-6">
         <button
           onClick={() => navigate(-1)}
           className="text-blue-600 text-sm font-semibold flex items-center"
         >
           ← Back
         </button>
-      </div> */}
+      </div>
 
       {/* Title */}
       <h1 className="text-3xl mt-1 font-serif font-bold mb-10 text-black">

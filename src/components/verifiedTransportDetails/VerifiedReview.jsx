@@ -135,7 +135,7 @@ function VerifiedReview() {
         </div>
 
         <p className="text-sm text-gray-700 italic mb-4">
-          "Sitaaram Travels Pvt Ltd is an excellent choice for travel needs..."
+          &ldquo;Sitaaram Travels Pvt Ltd is an excellent choice for travel needs...&rdquo;
         </p>
 
         <div className="flex gap-6 text-sm text-gray-500">
@@ -173,7 +173,7 @@ function VerifiedReview() {
           </div>
 
           <p className="text-sm text-gray-700 italic mb-4">
-            "{review.text}"
+            &ldquo;{review.text}&rdquo;
           </p>
 
           {review.images.length > 0 && (

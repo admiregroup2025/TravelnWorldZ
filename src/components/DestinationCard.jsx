@@ -1,7 +1,7 @@
 // src/components/DestinationCard.jsx
 
 import React from "react";
-
+import PropTypes from "prop-types";
 const DestinationCard = ({ title, description, image, onClick }) => {
   return (
     <div 
@@ -20,6 +20,12 @@ const DestinationCard = ({ title, description, image, onClick }) => {
       </div>
     </div>
   );
+};
+DestinationCard.propTypes = {
+  title: PropTypes.string.isRequired,
+  description: PropTypes.string.isRequired,
+  image: PropTypes.string.isRequired,
+  onClick: PropTypes.func,
 };
 
 export default DestinationCard;

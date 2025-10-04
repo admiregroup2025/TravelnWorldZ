@@ -1,5 +1,4 @@
 import ayodhya from '../assets/images/verified/ayodhya.jpg';
-import ram from '../assets/images/verified/ram.JPG';
 import shivam from '../assets/images/verified/Shivam_travels.jpeg';
 import arora from '../assets/images/verified/arora.jpeg'
 import jasswant from '../assets/images/verified/jasswant.jpeg';

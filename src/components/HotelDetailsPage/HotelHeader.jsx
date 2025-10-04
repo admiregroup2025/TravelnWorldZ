@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Bookmark, Share2, Edit3 } from "lucide-react";
 import { Link } from "react-router-dom";
 import HotelEnquiryForm from "../../forms/EnquiryForm";
-
+import hotelItemPropType from '../../propTypes/hotelItemPropType.js';
 const HotelHeader = ({ hotelItem }) => {
   const [saved, setSaved] = useState(false);
   const [showModal, setShowModal] = useState(false);
@@ -25,6 +25,7 @@ const HotelHeader = ({ hotelItem }) => {
         await navigator.clipboard.writeText(shareData.url);
         alert("Link copied to clipboard.");
       } catch (err) {
+        console.error("Clipboard copy failed:", err);
         alert("Failed to copy the link.");
       }
     }
@@ -149,7 +150,7 @@ const HotelHeader = ({ hotelItem }) => {
         {/* Modal */}
         {showModal && (
           <HotelEnquiryForm
-            hotel={hotel}
+            hotel={hotelItem}
             onClose={() => setShowModal(false)}
           />
         )}
@@ -171,5 +172,7 @@ const HotelHeader = ({ hotelItem }) => {
     </header>
   );
 };
-
+HotelHeader.propTypes = {
+  hotelItem: hotelItemPropType.isRequired,
+};
 export default HotelHeader;

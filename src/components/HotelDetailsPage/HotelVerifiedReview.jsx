@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ReviewForm from '../../forms/ReviewForm.jsx';
 import ShareButton from '../blogs/ShareButton.jsx';
-
+import hotelItemPropType from '../../propTypes/hotelItemPropType.js';
 const HotelVerifiedReview = ({ hotelItem }) => {
   const navigate = useNavigate();
 
@@ -143,7 +143,8 @@ const HotelVerifiedReview = ({ hotelItem }) => {
           </div>
 
           <p className="text-sm text-gray-700 italic mb-4">
-            "{hotelItem.lastReview.text}"
+            &rdquo;{hotelItem.lastReview.text}&rdquo;
+
           </p>
 
           <div className="flex gap-6 text-sm text-gray-500">
@@ -189,7 +190,7 @@ const HotelVerifiedReview = ({ hotelItem }) => {
           </div>
 
           <p className="text-sm text-gray-700 italic mb-4">
-            "{review.text}"
+            &rdquo;{review.text}&rdquo;
           </p>
 
           {review.images.length > 0 && (
@@ -222,5 +223,7 @@ const HotelVerifiedReview = ({ hotelItem }) => {
     </section>
   );
 };
-
+HotelVerifiedReview.propTypes = {
+  hotelItem: hotelItemPropType.isRequired,
+};
 export default HotelVerifiedReview;

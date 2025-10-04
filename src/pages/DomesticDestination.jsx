@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { FaPhoneAlt } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 
 const tourPackages = [
   {
@@ -126,7 +126,7 @@ const tourPackages = [
 const DomesticDestination = () => {
   const [showForm, setShowForm] = useState(false);
   const [selectedPlace, setSelectedPlace] = useState("");
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   const openForm = (title) => {
     setSelectedPlace(title);

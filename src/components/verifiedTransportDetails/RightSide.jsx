@@ -12,6 +12,7 @@ import {
   Copy,
 
 } from "lucide-react";
+import travelItemPropType from '../../propTypes/travelItemPropType.js';
 function RightSide({travelItem}) {
   return (
     <div className="w-full lg:w-full flex flex-col gap-6">
@@ -146,5 +147,7 @@ function RightSide({travelItem}) {
     </div>
   )
 }
-
+RightSide.propTypes = {
+  travelItem: travelItemPropType.isRequired,
+};
 export default RightSide

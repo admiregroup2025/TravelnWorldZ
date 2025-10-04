@@ -1,6 +1,6 @@
 import React from 'react';
 import { BedDouble, Star, MapPin, Clock4 } from 'lucide-react';
-
+import hotelItemPropType from '../../propTypes/hotelItemPropType.js';
 const HotelQuickSection = ({ hotelItem }) => {
   if (!hotelItem) return null;
 
@@ -51,5 +51,7 @@ const HotelQuickSection = ({ hotelItem }) => {
     </section>
   );
 };
-
+HotelQuickSection.propTypes = {
+  hotelItem: hotelItemPropType.isRequired,
+};
 export default HotelQuickSection;

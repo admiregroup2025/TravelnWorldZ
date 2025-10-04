@@ -1,8 +1,10 @@
+import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import MainLayout from './MainLayout';
 import AdminLayout from './components/admin/AdminLayout';
 import Home from './pages/Home';
 import AboutUs from './pages/AboutUs';
+import FreeAgents from './pages/FreeAgents.jsx';
 import Packages from './pages/Packages';
 import Destination from './pages/Destination';
 import B2BLogin from './pages/B2BLogin';
@@ -65,6 +67,7 @@ const App = () => {
         <Route path="/" element={<Home />} />
         <Route path="/aboutUs" element={<AboutUs />} />
         <Route path="/packages" element={<Packages />} />
+        <Route path='/agents' element={<FreeAgents />} />
         <Route path="/destination" element={<Destination />} />
         <Route path="/b2blogin" element={<B2BLogin />} />
         <Route path="/b2bSignup" element={<B2BSignup />} />

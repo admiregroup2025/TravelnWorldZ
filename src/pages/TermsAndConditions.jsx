@@ -95,8 +95,8 @@ const TermsAndConditions = () => {
           </h2>
           <p className="leading-relaxed text-gray-700">
             We reserve the right to update or modify these terms at any time.
-            Any changes will be posted on this page along with a revised "Last
-            Updated" date. Continued use of our services after changes implies
+            Any changes will be posted on this page along with a revised Last
+            Updated date. Continued use of our services after changes implies
             your acceptance of the new terms.
           </p>
         </div>

@@ -66,10 +66,10 @@ const internationalCities = [
 
 const destinationTypeOptions = ["Domestic", "International"];
 
-const destinationOptions = [
-  "Kashmir", "Kerala", "Himachal Pradesh", "Goa",
-  "Andaman Islands", "Dubai", "Thailand", "Singapore",
-];
+// const destinationOptions = [
+//   "Kashmir", "Kerala", "Himachal Pradesh", "Goa",
+//   "Andaman Islands", "Dubai", "Thailand", "Singapore",
+// ];
 
 const budgetOptions = [
   { value: "below5000", label: "Under ₹5,000" },
@@ -231,6 +231,7 @@ const PlanMyTripForm = ({ onClose = () => {} }) => {
       }, 2000);
       
     } catch (error) {
+      console.error("Form submission failed:", error);
       alert("There was an error submitting your form. Please try again.");
     } finally {
       setIsSubmitting(false);

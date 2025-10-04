@@ -82,7 +82,7 @@ const VideoBackground = () => {
       <div className="relative z-10 flex items-center justify-between h-full px-10">
         {/* Left side text */}
         <div className="text-white max-w-lg">
-          <h1 className="text-5xl font-bold mb-4">Let's Explore Goa</h1>
+          <h1 className="text-5xl font-bold mb-4">Let&apos;s Explore Goa</h1>
           <p className="text-lg text-gray-200">
             Enjoy the beaches, nightlife, and culture of Goa with our exclusive
             travel packages.
@@ -95,7 +95,7 @@ const VideoBackground = () => {
           className="bg-white p-6 rounded-lg shadow-lg w-[25%] max-w-md"
         >
           <h2 className="text-lg font-semibold mb-4 text-blue-600">
-            Tell us what you're looking for!
+            Tell us what you&apos;re looking for!
           </h2>
 
           <div className="grid grid-cols-1 gap-4">

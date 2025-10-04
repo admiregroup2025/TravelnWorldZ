@@ -24,7 +24,7 @@ const WelcomeToTravelnWorld = () => {
         <p className="text-gray-700 leading-relaxed text-sm sm:text-base md:text-lg text-justify">
           TravelnWorld Pvt Ltd is built on a strong foundation aiming to provide
           exceptional customer satisfaction and unforgettable holiday
-          experiences. Whether it's a once-in-a-lifetime vacation or a corporate
+          experiences. Whether it&apos;s a once-in-a-lifetime vacation or a corporate
           retreat, TravelnWorld ensures you get what you want in the shortest
           time. With years of expertise in destination management, we handle
           customer needs seamlessly – from holiday bookings, tours, excursions,
