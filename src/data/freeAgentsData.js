@@ -23,8 +23,8 @@ const freeAgentsData = [
     reviews: 150,
     verified: true,
     website: "https://maps.app.goo.gl/fmPmsLKGizgnAnEd8",
-    phone: "8770087327",
-    whatsapp: "8770087327",
+    phone: "XXXXXXX27",
+    whatsapp: "XXXXX327",
     email: "aashishraikwar81@gmail.com",
     socialMediaLinks: {
       instagram: "https://www.instagram.com/tripandticket?igsh=em9icHRldjhhenF0",
@@ -67,8 +67,8 @@ const freeAgentsData = [
     reviews: 230,
     verified: false,
     website: "https://www.exploreindia.in",
-    phone: "9813194022",
-    whatsapp: "8930089306",
+    phone: "XXXXXXXXX22",//9813194022,8930089306
+    whatsapp: "XXXXXXX06",
     email: "beacon.pundri@gmail.com",
     socialMediaLinks: {
       instagram: "https://www.instagram.com/exploreindia",
