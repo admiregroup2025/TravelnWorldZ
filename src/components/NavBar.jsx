@@ -71,6 +71,7 @@ const NavBar = () => {
         <div className="md:hidden bg-white px-4 pt-4 pb-6 shadow flex flex-col space-y-4 transition-all duration-300 ease-in-out">
           <NavLink to="/" onClick={() => setOpen(false)} className={navLinkClass}>Home</NavLink>
           <NavLink to="/aboutUs" onClick={() => setOpen(false)} className={navLinkClass}>About us</NavLink>
+          <NavLink to="/agents" onClick={() => setOpen(false)} className={navLinkClass}>Agents</NavLink>
           <NavLink to="/packages" onClick={() => setOpen(false)} className={navLinkClass}>Packages</NavLink>
           <NavLink to="/destination" onClick={() => setOpen(false)} className={navLinkClass}>Destination</NavLink>
           <NavLink to="/b2blogin" onClick={() => setOpen(false)} className={navLinkClass}>B2B login</NavLink>

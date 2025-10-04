@@ -84,7 +84,7 @@ const EnquiryForm = ({ variant = "transparent" }) => {
           variant === "transparent" ? "text-white" : "text-gray-900"
         }`}
       >
-        Tell us what you're looking for!
+        Tell us what you&apos;re looking for!
       </h2>
 
       {/* Fields */}
