@@ -3,11 +3,11 @@ import beacon from '../assets/images/freeAgents/beacon.jpeg' ;
 const generateSlug = (text) => {
   return text
     .toLowerCase()
-    .replace(/\s+/g, '-')         // Replace spaces with -
-    .replace(/[^\w-]+/g, '')      // Remove all non-word chars (no need to escape - here)
-    .replace(/--+/g, '-')         // Replace multiple - with single -
-    .replace(/^-+/, '')           // Trim - from start
-    .replace(/-+$/, '');          // Trim - from end
+    .replace(/\s+/g, '-')        
+    .replace(/[^\w-]+/g, '') 
+    .replace(/--+/g, '-')       
+    .replace(/^-+/, '')         
+    .replace(/-+$/, '');         
 };
 
 const freeAgentsData = [
@@ -24,7 +24,7 @@ const freeAgentsData = [
     verified: true,
     website: "https://maps.app.goo.gl/fmPmsLKGizgnAnEd8",
     phone: "XXXXXXX27",
-    whatsapp: "XXXXX327",
+    whatsapp: "XXXXXXXX27",
     email: "aashishraikwar81@gmail.com",
     socialMediaLinks: {
       instagram: "https://www.instagram.com/tripandticket?igsh=em9icHRldjhhenF0",
