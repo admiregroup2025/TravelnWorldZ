@@ -2,7 +2,7 @@ import React from 'react';
 import HeroVideo from '../../assets/videos/contactUs.mp4';
 const HeroSection = () => {
   return (
-    <div className="relative w-full md:h-[80vh]">
+    <div className="relative w-full h-[60vh] md:h-[60vh] mt-1">
       <video
         autoPlay
         loop

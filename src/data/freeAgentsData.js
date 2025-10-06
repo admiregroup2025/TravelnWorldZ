@@ -98,8 +98,7 @@ const freeAgentsData = [
         price: "₹4999",
       }
     ]
-  },
- 
+  }, 
 ];
 
 export default freeAgentsData;

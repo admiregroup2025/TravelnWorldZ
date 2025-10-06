@@ -60,11 +60,24 @@ module.exports = {
           '0%': { transform: 'translateX(0)' },
           '100%': { transform: 'translateX(-50%)' },
         },
+        flip: {
+          '0%': { transform: 'rotateY(0deg)' },
+          '100%': { transform: 'rotateY(360deg)' },
+        },
+        flipbounce: {
+          '0%': { transform: 'rotateY(0deg) translateY(0)' },
+          '25%': { transform: 'rotateY(90deg) translateY(-5px)' },
+          '50%': { transform: 'rotateY(180deg) translateY(0)' },
+          '75%': { transform: 'rotateY(270deg) translateY(-5px)' },
+          '100%': { transform: 'rotateY(360deg) translateY(0)' },
+        },
       },
       animation: {
         'fade-in-up': 'fade-in-up 0.6s ease-out forwards',
         marquee: 'marquee 30s linear infinite',
         scroll: 'scroll 20s linear infinite',
+        flip: 'flip 1s ease-in-out',
+        'flip-bounce': 'flipbounce 1.5s ease-in-out',
       },
       minWidth: {
         'card-sm': '220px',
