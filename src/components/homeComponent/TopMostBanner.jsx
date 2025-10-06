@@ -46,7 +46,8 @@ const TopMostBanner = () => {
 
   return (
     <div
-      className="relative w-full overflow-hidden mt-1" // small margin-top added
+      className="relative w-full overflow-hidden mt-1" 
+      
       style={{ height: "100px", marginBottom: "5px" }}
     >
       {/* Slider Wrapper */}

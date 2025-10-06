@@ -55,18 +55,55 @@ const EnquiryForm = ({ variant = "transparent" }) => {
   };
 
   const handlePhoneChange = (e) => {
-    const value = e.target.value.replace(/\D/g, "").slice(0, 12); // allow only digits max 12
+    const value = e.target.value.replace(/\D/g, "").slice(0, 12);
     setFormData((prev) => ({ ...prev, phone: value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData);
-    Swal.fire({
-      icon: "success",
-      title: "Submitted!",
-      text: "Your request has been submitted.",
-    });
+
+    try {
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_API}/api/enquiries`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const result = await response.json();
+
+      if (response.ok) {
+        Swal.fire({
+          icon: "success",
+          title: "Submitted!",
+          text: "Your enquiry has been submitted successfully.",
+        });
+        setFormData({
+          name: "",
+          company_name: "",
+          phone: "",
+          countryCode: "+91",
+          email: "",
+          location: "",
+          your_requirements: "",
+          agree: false,
+        });
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "Error!",
+          text: result.message || "Something went wrong. Please try again.",
+        });
+      }
+    } catch (error) {
+      Swal.fire({
+        icon: "error",
+        title: "Network Error",
+        text: "Unable to connect to the server. Please try again later.",
+      });
+      console.error("Error submitting enquiry:", error);
+    }
   };
 
   return (
@@ -78,7 +115,6 @@ const EnquiryForm = ({ variant = "transparent" }) => {
           : "bg-white text-gray-900"
       }`}
     >
-      {/* Heading */}
       <h2
         className={`font-semibold text-base sm:text-lg mb-2 truncate ${
           variant === "transparent" ? "text-white" : "text-gray-900"
@@ -87,7 +123,6 @@ const EnquiryForm = ({ variant = "transparent" }) => {
         Tell us what you&apos;re looking for!
       </h2>
 
-      {/* Fields */}
       <div className="flex flex-col gap-2.5">
         <input
           type="text"
@@ -136,21 +171,21 @@ const EnquiryForm = ({ variant = "transparent" }) => {
             ))}
           </select>
 
-<input
-    type="tel"
-    name="phone"
-    placeholder="Mobile Number"
-    value={formData.phone}
-    onChange={handlePhoneChange}
-    required
-    inputMode="numeric"
-    maxLength={12}
-    className={`flex-1 max-w-[calc(100%-5.5rem)] border rounded-md px-3 h-9 text-sm focus:outline-none focus:ring-1 ${
-      variant === "transparent"
-        ? "bg-transparent border-gray-300 text-white placeholder-gray-200 focus:ring-blue-300"
-        : "bg-white border-gray-300 text-gray-800 placeholder-gray-500 focus:ring-blue-500"
-    }`}
-  />
+          <input
+            type="tel"
+            name="phone"
+            placeholder="Mobile Number"
+            value={formData.phone}
+            onChange={handlePhoneChange}
+            required
+            inputMode="numeric"
+            maxLength={12}
+            className={`flex-1 border rounded-md px-3 h-9 text-sm focus:outline-none focus:ring-1 ${
+              variant === "transparent"
+                ? "bg-transparent border-gray-300 text-white placeholder-gray-200 focus:ring-blue-300"
+                : "bg-white border-gray-300 text-gray-800 placeholder-gray-500 focus:ring-blue-500"
+            }`}
+          />
         </div>
 
         <input
@@ -222,4 +257,3 @@ const EnquiryForm = ({ variant = "transparent" }) => {
 };
 
 export default EnquiryForm;
-

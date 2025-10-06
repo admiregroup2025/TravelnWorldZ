@@ -121,7 +121,6 @@ const B2BLogin = () => {
             </div>
           )}
 
-          {/* Global Error */}
           {errors.form && (
             <div className="p-3 bg-red-50 border border-red-200 rounded-lg flex items-center gap-2 text-sm text-red-700">
               <AlertCircle className="w-4 h-4" />
@@ -129,7 +128,7 @@ const B2BLogin = () => {
             </div>
           )}
 
-          {/* Email */}
+
           <div>
             <label htmlFor="email" className="block text-xs font-medium text-gray-700 mb-1">
               Email *
