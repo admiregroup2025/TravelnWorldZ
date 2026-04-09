@@ -65,8 +65,9 @@ const B2BLogin = () => {
       );
 
       localStorage.setItem("accessToken", response.data.accessToken);
+      localStorage.setItem("token", response.data.accessToken);
+      localStorage.setItem("TOKEN_KEY", response.data.accessToken);
       setSubmitSuccess(true);
-      // You can redirect here, e.g. using react-router's navigate
       navigate("/admin");
     } catch (error) {
       console.error(error);

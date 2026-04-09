@@ -5,7 +5,16 @@ import userImage from "../../../assets/images/user.jpg";
 import { country_and_states } from "./country-states";
 
 const MAX_FILE_SIZE = 2 * 1024 * 1024;
-const token = localStorage.getItem("accessToken");
+
+const normalizeApiBase = (rawApiBase) => {
+  if (!rawApiBase || rawApiBase === "undefined" || rawApiBase === "null") {
+    return "http://localhost:3000";
+  }
+  if (rawApiBase.startsWith(":")) {
+    return `http://localhost${rawApiBase}`;
+  }
+  return rawApiBase;
+};
 
 const emptyAddress = {
   house: "",
@@ -15,6 +24,16 @@ const emptyAddress = {
   state: "",
   zip: "",
   country: "",
+};
+
+const normalizeBranchAddresses = (addresses, fallback) => {
+  if (Array.isArray(addresses) && addresses.length > 0) {
+    return addresses;
+  }
+  if (addresses && typeof addresses === "object") {
+    return [addresses];
+  }
+  return fallback;
 };
 
 // ✅ Reusable Input with Label & Error
@@ -156,14 +175,35 @@ const Profile = () => {
   useEffect(() => {
     (async () => {
       try {
-        const res = await fetch(
-          `${import.meta.env.VITE_BACKEND_API}/api/auth/profile`,
-          {
-            headers: { Authorization: `Bearer ${token}` },
-          }
-        );
+        const token = localStorage.getItem("accessToken");
+        const rawApiBase = import.meta.env.VITE_API_BASE;
+        const apiBase = normalizeApiBase(rawApiBase);
+        const res = await fetch(`${apiBase}/api/auth/profile`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
         const result = await res.json();
-        if (result?.user) setFormData((prev) => ({ ...prev, ...result.user }));
+        if (result?.user) {
+          const user = result.user;
+          setFormData((prev) => ({
+            ...prev,
+            first_name: user.firstName || user.first_name || "",
+            last_name: user.lastName || user.last_name || "",
+            phone: user.phone || user.phone_no || "",
+            email: user.email || user.registeredEmail || "",
+            company: user.company || "",
+            photo: user.photo || prev.photo,
+            secondaryEmails: Array.isArray(user.secondaryEmails)
+              ? user.secondaryEmails
+              : user.secondaryEmail
+              ? [user.secondaryEmail]
+              : prev.secondaryEmails,
+            companyAddress: user.companyAddress || prev.companyAddress,
+            branchAddresses: normalizeBranchAddresses(
+              user.branchAddresses || user.branchAddress,
+              prev.branchAddresses
+            ),
+          }));
+        }
       } catch (err) {
         console.error("Failed to fetch profile:", err);
       }
@@ -175,14 +215,16 @@ const Profile = () => {
 
   const handleAddressChange = (isBranch, idx, field, value) => {
     setFormData((prev) => {
-      const addresses = [
-        ...prev[isBranch ? "branchAddresses" : "companyAddress"],
-      ];
-      if (isBranch) addresses[idx][field] = value;
-      else addresses[field] = value;
+      if (isBranch) {
+        const addresses = prev.branchAddresses.map((address, index) =>
+          index === idx ? { ...address, [field]: value } : address
+        );
+        return { ...prev, branchAddresses: addresses };
+      }
+
       return {
         ...prev,
-        [isBranch ? "branchAddresses" : "companyAddress"]: addresses,
+        companyAddress: { ...prev.companyAddress, [field]: value },
       };
     });
   };
@@ -194,13 +236,12 @@ const Profile = () => {
     e.preventDefault();
     setIsSubmitting(true);
     try {
-      await axios.put(
-        `${import.meta.env.VITE_BACKEND_API}/api/auth/profile`,
-        formData,
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
+      const rawApiBase = import.meta.env.VITE_API_BASE;
+      const apiBase = normalizeApiBase(rawApiBase);
+      const token = localStorage.getItem("accessToken");
+      await axios.put(`${apiBase}/api/auth/profile`, formData, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
       setSubmitSuccess(true);
     } catch (err) {
       alert("Error saving profile");

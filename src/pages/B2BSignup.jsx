@@ -6,6 +6,16 @@ import agenlogin from "../assets/images/agentlogin.jpg";
 
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
+const normalizeApiBase = (rawApiBase) => {
+  if (!rawApiBase || rawApiBase === "undefined" || rawApiBase === "null") {
+    return "http://localhost:3000";
+  }
+  if (rawApiBase.startsWith(":")) {
+    return `http://localhost${rawApiBase}`;
+  }
+  return rawApiBase;
+};
+
 const B2BSignup = () => {
   const navigate = useNavigate();
 
@@ -54,29 +64,56 @@ const B2BSignup = () => {
   };
 
   const signup = async (data) => {
- const payload = {
-  first_Name: data.firstName,
-  last_Name: data.lastName,
-  email: data.email,
-  phone_no: data.phone_no,
-  password: data.password,
-};
+    const payload = {
+      first_Name: data.firstName.trim(),
+      last_Name: data.lastName.trim(),
+      email: data.email.trim().toLowerCase(),
+      phone_no: data.phone_no.trim(),
+      password: data.password,
+    };
 
+    const rawApiBase = import.meta.env.VITE_API_BASE;
+    const apiBase = normalizeApiBase(rawApiBase);
 
   try {
-    const res = await fetch("http://localhost:3000/api/auth/register", {
+    const res = await fetch(`${apiBase}/api/auth/register`, {
       method: "POST",
       headers: {
-        "Content-Type": "application/json", 
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify(payload), 
+      body: JSON.stringify(payload),
     });
 
     if (!res.ok) {
-      const errJson = await res.json().catch(() => ({}));
-      throw new Error(errJson.message || `Signup failed with status ${res.status}`);
+      const errJson = await res.json().catch(async () => {
+        const text = await res.text().catch(() => "");
+        return { message: text };
+      });
+      throw new Error(errJson.message || errJson.error || `Signup failed with status ${res.status}`);
     }
-    return await res.json();
+
+    const signupResult = await res.json();
+
+    const loginRes = await fetch(`${apiBase}/api/auth/login`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: payload.email,
+        password: payload.password,
+      }),
+    });
+
+    const loginJson = await loginRes.json();
+    if (!loginRes.ok) {
+      throw new Error(loginJson.message || `Login after signup failed with status ${loginRes.status}`);
+    }
+
+    localStorage.setItem("accessToken", loginJson.accessToken);
+    localStorage.setItem("token", loginJson.accessToken);
+    localStorage.setItem("TOKEN_KEY", loginJson.accessToken);
+    return signupResult;
   } catch (err) {
     console.error("Signup error:", err.message);
     throw err;
@@ -265,7 +302,7 @@ const B2BSignup = () => {
 
           <p className="text-center text-sm text-gray-600">
             Already have an account?{" "}
-            <Link to="/admin/profile" className="text-blue-600 hover:underline">
+            <Link to="/b2blogin" className="text-blue-600 hover:underline">
               Login here
             </Link>
           </p>

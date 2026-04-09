@@ -63,7 +63,7 @@ const EnquiryForm = ({ variant = "transparent" }) => {
     e.preventDefault();
 
     try {
-      const response = await fetch(`${import.meta.env.VITE_BACKEND_API}/api/enquiries`, {
+      const response = await fetch(`${import.meta.env.VITE_API_BASE || "http://localhost:5000"}/api/enquiries`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
