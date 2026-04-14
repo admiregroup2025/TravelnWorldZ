@@ -1,11 +1,12 @@
 import React from "react";
 import VideoBackground from "../components/VideoBackground";
-import BannerAds from "../components/homeComponent/BannerAds";
+import BannerAds from "../components/homeComponent/MiddleBanner.jsx";
 import HomeContactUs from "../components/homeComponent/HomeContactUs.jsx";
 import Testimonials from "../components/homeComponent/Testimonials.jsx";
 import TrendingDestination from "../components/homeComponent/TrendingDestination.jsx";
 import Hero from "../components/homeComponent/Hero.jsx";
 import TopMostBanner from "../components/homeComponent/TopMostBanner.jsx";
+import MiddleBanner from "../components/homeComponent/MiddleBanner.jsx";
 import VerifiedTransportCard from "../components/homeComponent/VerifiedTransportCard.jsx";
 import VerifiedHotels from "../components/homeComponent/VerifiedHotels.jsx";
 import TourPackages from "../components/homeComponent/TourPackages.jsx";
@@ -17,6 +18,7 @@ const Home = () => {
   return (
     <div>
        <TopMostBanner/>
+       
        <Hero/>
       <section className="p-10 text-center">
         <h2 className="text-2xl font-bold"></h2>
@@ -26,7 +28,7 @@ const Home = () => {
       </section>
       <div> 
         <HomeAboutUs/>
-        <BannerAds/>
+        <MiddleBanner />
         <VerifiedTransportCard />
         <TrendingDestination />
         <VerifiedHotels />

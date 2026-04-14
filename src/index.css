@@ -10,3 +10,24 @@
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
+.banner-img:hover {
+  transform: scale(1.08);
+}
+.scroll-track:hover {
+  animation-play-state: paused;
+}
+.scroll-track {
+  display: flex;
+  width: max-content;
+  animation: scrollRight 20s linear infinite;
+}
+
+@keyframes scrollLeft {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}

@@ -1,6 +1,6 @@
 import React from 'react';
 import freeAgentsData from '../data/freeAgentsData'; 
-import TopMostBanner from '../components/homeComponent/TopMostBanner';
+import TopMostBanner from '../components/homeComponent/TopMostBanner.jsx';
 
 const FreeAgents = () => {
 

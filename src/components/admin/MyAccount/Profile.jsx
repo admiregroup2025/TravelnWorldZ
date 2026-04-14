@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
+import { useLocation } from "react-router-dom";
 import { AlertCircle, Check, Camera, Plus, Minus } from "lucide-react";
 import axios from "axios";
 import userImage from "../../../assets/images/user.jpg";
@@ -8,7 +9,7 @@ const MAX_FILE_SIZE = 2 * 1024 * 1024;
 
 const normalizeApiBase = (rawApiBase) => {
   if (!rawApiBase || rawApiBase === "undefined" || rawApiBase === "null") {
-    return "http://localhost:3000";
+    return "http://localhost:5000";
   }
   if (rawApiBase.startsWith(":")) {
     return `http://localhost${rawApiBase}`;
@@ -36,7 +37,7 @@ const normalizeBranchAddresses = (addresses, fallback) => {
   return fallback;
 };
 
-// ✅ Reusable Input with Label & Error
+//  Reusable Input with Label & Error
 const InputField = ({
   label,
   type = "text",
@@ -69,6 +70,8 @@ const AddressField = ({
   isBranch,
 }) => {
   const handleChange = (field, value) => onChange(field, value);
+
+  
 
   const fields = [
     { key: "house", placeholder: "House / Flat Number" },
@@ -153,8 +156,11 @@ const AddressField = ({
   );
 };
 
-// ✅ Profile Component
+//  Profile Component
 const Profile = () => {
+  const location = useLocation();
+  const redirectMessage = location.state?.message;
+
   const [formData, setFormData] = useState({
     company: "",
     first_name: "",
@@ -171,44 +177,44 @@ const Profile = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
 
-  // Fetch profile
-  useEffect(() => {
-    (async () => {
-      try {
-        const token = localStorage.getItem("accessToken");
-        const rawApiBase = import.meta.env.VITE_API_BASE;
-        const apiBase = normalizeApiBase(rawApiBase);
-        const res = await fetch(`${apiBase}/api/auth/profile`, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-        const result = await res.json();
-        if (result?.user) {
-          const user = result.user;
-          setFormData((prev) => ({
-            ...prev,
-            first_name: user.firstName || user.first_name || "",
-            last_name: user.lastName || user.last_name || "",
-            phone: user.phone || user.phone_no || "",
-            email: user.email || user.registeredEmail || "",
-            company: user.company || "",
-            photo: user.photo || prev.photo,
-            secondaryEmails: Array.isArray(user.secondaryEmails)
-              ? user.secondaryEmails
-              : user.secondaryEmail
-              ? [user.secondaryEmail]
-              : prev.secondaryEmails,
-            companyAddress: user.companyAddress || prev.companyAddress,
-            branchAddresses: normalizeBranchAddresses(
-              user.branchAddresses || user.branchAddress,
-              prev.branchAddresses
-            ),
-          }));
-        }
-      } catch (err) {
-        console.error("Failed to fetch profile:", err);
+  //  profile
+
+useEffect(() => {
+  const fetchProfile = async () => {
+    // 1. Get the token from storage
+    const token = localStorage.getItem("token");
+
+    //  THE AUTH GUARD: Stop here if no token exists
+    if (!token || token === "undefined") {
+      alert("Session expired. Please login again.");
+  window.location.href = "/b2blogin";
+
+      return; 
+    }
+
+    try {
+      const apiBase = normalizeApiBase(import.meta.env.VITE_API_BASE);
+      
+      // 2. Only if token exists, make the API call
+      const res = await axios.get(`${apiBase}/api/auth/profile`, {
+        headers: { 
+          Authorization: `Bearer ${token}` 
+        },
+      });
+
+      if (res.data?.user) {
+        setFormData(res.data.user);
       }
-    })();
-  }, []);
+    } catch (err) {
+      if (err.response?.status === 401) {
+        // Optional: Redirect to login if token is invalid/expired
+        localStorage.removeItem("token");
+      }
+    }
+  };
+
+  fetchProfile();
+}, []);
 
   const handleChange = (field, value) =>
     setFormData((prev) => ({ ...prev, [field]: value }));
@@ -232,30 +238,64 @@ const Profile = () => {
   const handleFileChange = (e) =>
     handleChange("photo", e.target.files?.[0] || null);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    try {
-      const rawApiBase = import.meta.env.VITE_API_BASE;
-      const apiBase = normalizeApiBase(rawApiBase);
-      const token = localStorage.getItem("accessToken");
-      await axios.put(`${apiBase}/api/auth/profile`, formData, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      setSubmitSuccess(true);
-    } catch (err) {
-      alert("Error saving profile");
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  setIsSubmitting(true);
 
+  try {
+    const rawApiBase = import.meta.env.VITE_API_BASE;
+    const apiBase = normalizeApiBase(rawApiBase);
+
+    const token = localStorage.getItem("token"); //  FIXED KEY
+
+    await axios.put(`${apiBase}/api/auth/profile`, formData, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+
+    setSubmitSuccess(true);
+
+    //  MARK PROFILE COMPLETE HERE (CORRECT PLACE)
+    let user = null;
+    try {
+      const userString = localStorage.getItem("user");
+      if (userString && userString !== "undefined") {
+        user = JSON.parse(userString);
+      }
+    } catch (err) {
+      user = null;
+    }
+
+    localStorage.setItem(
+      "user",
+      JSON.stringify({
+        ...user,
+        isProfileComplete: true,
+      })
+    );
+
+    //  REDIRECT AFTER SAVE
+    setTimeout(() => {
+      window.location.href = "/admin";
+    }, 500);
+
+  } catch (err) {
+    alert("Error saving profile");
+  } finally {
+    setIsSubmitting(false);
+  }
+};
   return (
     <form
       onSubmit={handleSubmit}
       className="max-w-full mx-auto p-6 space-y-4 rounded-lg border bg-white shadow-sm"
     >
       <h2 className="text-lg font-semibold">Profile Information</h2>
+
+      {redirectMessage && (
+        <div className="p-3 bg-yellow-50 border border-yellow-200 rounded-lg flex items-center gap-2 text-sm text-yellow-900">
+          <AlertCircle size={16} /> {redirectMessage}
+        </div>
+      )}
 
       {submitSuccess && (
         <div className="p-3 bg-green-50 border border-green-200 rounded-lg flex items-center gap-2 text-sm text-green-700">

@@ -3,241 +3,193 @@ import { FcGoogle } from "react-icons/fc";
 import { Check, AlertCircle } from "lucide-react";
 import agenlogin from "../assets/images/agentlogin.jpeg";
 import axios from "axios";
-// import { Navigate } from "react-router-dom";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+const [rememberMe, setRememberMe] = useState(false);
+
 const B2BLogin = () => {
+  
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
+  const [otp, setOtp] = useState("");
+  const [isOtpSent, setIsOtpSent] = useState(false);
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
   
-  const navigate = useNavigate()
-  // Handle input changes and clear errors for the field
-  const handleInputChange = useCallback(
-    (field, value) => {
-      setFormData((prev) => ({ ...prev, [field]: value }));
+  const navigate = useNavigate();
 
-      if (errors[field]) {
-        setErrors((prev) => ({ ...prev, [field]: "" }));
-      }
-    },
-    [errors]
-  );
+  const handleInputChange = useCallback((field, value) => {
+    setFormData((prev) => ({ ...prev, [field]: value }));
+    if (errors[field]) {
+      setErrors((prev) => ({ ...prev, [field]: "" }));
+    }
+  }, [errors]);
 
-  // Simple client-side validation
   const validateForm = useCallback(() => {
     const newErrors = {};
-
     if (!formData.email.trim()) {
       newErrors.email = "Email is required";
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
       newErrors.email = "Please enter a valid email address";
     }
 
-    if (!formData.password.trim()) {
-      newErrors.password = "Password is required";
-    } else if (formData.password.length < 6) {
-      newErrors.password = "Password must be at least 6 characters";
+    if (!isOtpSent) {
+      if (!formData.password.trim()) {
+        newErrors.password = "Password is required";
+      }
+    } else {
+      if (!otp.trim() || otp.length < 6) {
+        newErrors.otp = "Valid 6-digit OTP is required";
+      }
     }
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
-  }, [formData]);
+  }, [formData, isOtpSent, otp]);
 
-  // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     if (!validateForm()) return;
 
     setIsSubmitting(true);
-    setSubmitSuccess(false);
-    setErrors({}); // clear errors
+    setErrors({});
 
     try {
-      const response = await axios.post(
-        "http://localhost:3000/api/auth/login", // Make sure this matches your backend login route
-        { email: formData.email, password: formData.password },
-        { withCredentials: true }
-      );
+      if (!isOtpSent) {
+        // --- STEP 1: Request OTP ---
+        const response = await axios.post("http://localhost:5000/api/auth/login", { 
+          email: formData.email, 
+          password: formData.password 
+        });
 
-      localStorage.setItem("accessToken", response.data.accessToken);
-      localStorage.setItem("token", response.data.accessToken);
-      localStorage.setItem("TOKEN_KEY", response.data.accessToken);
-      setSubmitSuccess(true);
-      navigate("/admin");
-    } catch (error) {
-      console.error(error);
+        if (response.data.otpSent) {
+          console.log("OTP Sent! Switching UI...");
+          console.log("Switching to OTP UI");
+          setIsOtpSent(true);
+          setIsSubmitting(false);
+          console.log("isOtpSent is now:", true);
+          return; // Stop here to let user enter OTP
+        }
+      } else {
+        // --- STEP 2: Verify OTP ---
+        const response = await axios.post("http://localhost:5000/api/auth/verify-otp", { 
+          email: formData.email, 
+          otp: otp 
+        });
 
-      setErrors({
-        form:
-          error.response?.data?.message ||
-          "An error occurred during login. Please try again.",
-      });
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
+        const token = response.data.accessToken;
+
+        const expiry = rememberMe
+          ? Date.now() + 7 * 24 * 60 * 60 * 1000 // 7 days
+          : Date.now() + 24 * 60 * 60 * 1000; // 1 day
+
+        localStorage.setItem("token", token);
+        localStorage.setItem("tokenExpiry", expiry);
+              }
+            } catch (error) {
+              setErrors({
+                form: error.response?.data?.message || "Authentication failed. Please try again.",
+              });
+            } finally {
+              setIsSubmitting(false);
+            }
+          };
 
   return (
     <div className="min-h-screen flex">
-      {/* Left side - Illustration / Marketing */}
+      {/* Left side - Illustration */}
       <div className="hidden md:flex w-1/2 bg-gray-100 flex-col justify-center items-center p-10">
-        <img
-          src={agenlogin}
-          alt="Illustration"
-          className="mb-6 rounded-md object-cover"
-        />
+        <img src={agenlogin} alt="Illustration" className="mb-6 rounded-md object-cover" />
       </div>
 
-      {/* Right side - Login Form */}
+      {/* Right side - Form */}
       <div className="flex-1 flex flex-col justify-center items-center bg-white shadow-lg">
-        <form
-          onSubmit={handleSubmit}
-          className="w-full max-w-md p-8 space-y-4"
-          aria-label="Login form"
-          noValidate
-        >
-          <h1 className="text-3xl font-bold text-center text-gray-900 mb-2">
-            Login
-          </h1>
-          <p className="text-center text-gray-600 mb-4">
-            Welcome to the HelloTravel family!
-          </p>
+        <form onSubmit={handleSubmit} className="w-full max-w-md p-8 space-y-4" noValidate>
+          <h1 className="text-3xl font-bold text-center text-gray-900 mb-2">Login</h1>
+          <p className="text-center text-gray-600 mb-4">Welcome to the HelloTravel family!</p>
 
-          {/* ✅ Success message */}
           {submitSuccess && (
             <div className="p-3 bg-green-50 border border-green-200 rounded-lg flex items-center gap-2 text-sm text-green-700">
-              <Check className="w-4 h-4" />
-              Login successful! Redirecting...
+              <Check className="w-4 h-4" /> Login successful! Redirecting...
             </div>
           )}
 
-          {/* ✅ Global form error */}
           {errors.form && (
             <div className="p-3 bg-red-50 border border-red-200 rounded-lg flex items-center gap-2 text-sm text-red-700">
-              <AlertCircle className="w-4 h-4" />
-              {errors.form}
+              <AlertCircle className="w-4 h-4" /> {errors.form}
             </div>
           )}
 
-          {/* Google Sign In */}
-          <button
-            type="button"
-            aria-label="Sign in with Google"
-            className="w-full flex items-center justify-center bg-red-500 hover:bg-red-600 text-white py-2 rounded-md"
-          >
+          <button type="button" className="w-full flex items-center justify-center bg-red-500 hover:bg-red-600 text-white py-2 rounded-md">
             <FcGoogle className="mr-2 text-xl" /> Sign in with Google
           </button>
 
           <div className="flex items-center my-4">
-            <hr className="flex-grow border-gray-300" />
-            <span className="px-2 text-gray-500">or</span>
-            <hr className="flex-grow border-gray-300" />
+            <hr className="flex-grow border-gray-300" /><span className="px-2 text-gray-500">or</span><hr className="flex-grow border-gray-300" />
           </div>
 
-          {/* Email */}
+          {/* Email Field (Locked when OTP sent) */}
           <div>
-            <label
-              htmlFor="email"
-              className="block text-xs font-medium text-gray-700 mb-1"
-            >
-              Email *
-            </label>
+            <label className="block text-xs font-medium text-gray-700 mb-1">Email *</label>
             <input
-              id="email"
               type="email"
               value={formData.email}
               onChange={(e) => handleInputChange("email", e.target.value)}
-              placeholder="you@example.com"
-              disabled={isSubmitting}
-              className={`w-full px-3 py-2 border rounded-lg text-sm outline-none focus:ring-1 focus:ring-blue-500 ${
-                errors.email
-                  ? "border-red-300 bg-red-50"
-                  : "border-gray-300 hover:border-gray-400"
-              }`}
-              aria-invalid={!!errors.email}
-              aria-describedby={errors.email ? "email-error" : undefined}
+              disabled={isSubmitting || isOtpSent}
+              className={`w-full px-3 py-2 border rounded-lg text-sm outline-none focus:ring-1 focus:ring-blue-500 ${errors.email ? "border-red-300 bg-red-50" : "border-gray-300"}`}
             />
-            {errors.email && (
-              <p
-                id="email-error"
-                className="text-red-500 text-xs mt-1"
-                role="alert"
-              >
-                {errors.email}
-              </p>
-            )}
+            {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
           </div>
 
-          {/* Password */}
-          <div>
-            <label
-              htmlFor="password"
-              className="block text-xs font-medium text-gray-700 mb-1"
-            >
-              Password *
-            </label>
-            <input
-              id="password"
-              type="password"
-              value={formData.password}
-              onChange={(e) => handleInputChange("password", e.target.value)}
-              placeholder="••••••••"
-              disabled={isSubmitting}
-              className={`w-full px-3 py-2 border rounded-lg text-sm outline-none focus:ring-1 focus:ring-blue-500 ${
-                errors.password
-                  ? "border-red-300 bg-red-50"
-                  : "border-gray-300 hover:border-gray-400"
-              }`}
-              aria-invalid={!!errors.password}
-              aria-describedby={errors.password ? "password-error" : undefined}
-            />
-            {errors.password && (
-              <p
-                id="password-error"
-                className="text-red-500 text-xs mt-1"
-                role="alert"
-              >
-                {errors.password}
-              </p>
-            )}
-          </div>
+          {!isOtpSent ? (
+            /* Password UI */
+            <div>
+              <label className="block text-xs font-medium text-gray-700 mb-1">Password *</label>
+              <input
+                type="password"
+                value={formData.password}
+                onChange={(e) => handleInputChange("password", e.target.value)}
+                disabled={isSubmitting}
+                className={`w-full px-3 py-2 border rounded-lg text-sm outline-none focus:ring-1 focus:ring-blue-500 ${errors.password ? "border-red-300 bg-red-50" : "border-gray-300"}`}
+              />
+              {errors.password && <p className="text-red-500 text-xs mt-1">{errors.password}</p>}
+            </div>
+          ) : (
+            /* OTP UI */
+            <div>
+              <label className="block text-xs font-bold text-indigo-600 mb-1 uppercase tracking-wider">Enter 6-Digit OTP *</label>
+              <input
+                type="text"
+                maxLength="6"
+                value={otp}
+                onChange={(e) => setOtp(e.target.value)}
+                className="w-full px-3 py-2 border border-indigo-300 bg-indigo-50 rounded-lg text-center tracking-[0.8em] font-bold"
+              />
+              {errors.otp && <p className="text-red-500 text-xs mt-1">{errors.otp}</p>}
+              <button type="button" onClick={() => setIsOtpSent(false)} className="text-xs text-gray-500 hover:text-indigo-600 underline mt-2">Back to Password</button>
+            </div>
+          )}
 
-          <div className="text-right">
-            <a
-              href="#"
-              className="text-sm text-blue-600 hover:underline"
-              aria-label="Forgot Password"
-            >
-              Forgot Password?
-            </a>
-          </div>
+                  <div className="flex items-center gap-2 mt-2">
+          <input
+            type="checkbox"
+            checked={rememberMe}
+            onChange={(e) => setRememberMe(e.target.checked)}
+          />
+          <label className="text-sm text-gray-600">
+            Remember me (7 days)
+          </label>
+        </div>
 
-          {/* Submit */}
-          <button
-            type="submit"
-            className="w-full bg-indigo-500 hover:bg-indigo-600 text-white py-2 rounded-md font-medium flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
-            disabled={isSubmitting}
-          >
-            {isSubmitting ? (
-              <>
-                <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                Logging in...
-              </>
-            ) : (
-              "Login with email"
-            )}
+          <button type="submit" disabled={isSubmitting} className="w-full bg-indigo-500 hover:bg-indigo-600 text-white py-2 rounded-md font-medium flex items-center justify-center gap-2">
+            {isSubmitting ? <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" /> : null}
+            {isSubmitting ? "Processing..." : isOtpSent ? "Verify & Login" : "Login with email"}
           </button>
 
           <p className="text-center text-sm text-gray-600">
-            New User?{" "}
-          <Link to="/b2bSignup" className="text-blue-600 hover:underline">
-              Signup Here
-            </Link>
+            New User? <Link to="/b2bSignup" className="text-blue-600 hover:underline">Signup Here</Link>
           </p>
         </form>
       </div>

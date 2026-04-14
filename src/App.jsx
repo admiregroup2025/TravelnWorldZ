@@ -56,7 +56,7 @@ import MyReviews from './components/admin/MyReviews.jsx';
 import MyTeam from './components/admin/MyTeam.jsx';
 import SuperAdminDashboard from './pages/SuperAdminDashboard.jsx';
 import B2BSignup from './pages/B2BSignup.jsx';
-
+import ProfileGuard from "./components/ProfileGuard";
 
 
 
@@ -104,20 +104,23 @@ const App = () => {
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/Terms-to-use" element={<TermsAndConditions />} />
       </Route>
-     <Route path="/admin" element={<AdminLayout />}>
-  <Route index element={<AdminPannel />} />
-  <Route path="my-leads" element={<MyLeads />} />
-  <Route path="buy-leads" element={<BuyLeads />} />
-  <Route path="report" element={<MyReports />} />
-  <Route path="reviews" element={<MyReviews />} />
-  <Route path="team" element={<MyTeam />} />
-  <Route path="profile" element={<Profile />} />
-  <Route path="reset-password" element={<ResetPassword />} />
-  <Route path="Manage-Itianary" element={<MyItineraries />} />
-  <Route path="Create-Itinary" element={<ItineraryForm />} />
-  <Route path="destinations/:slug" element={<ItineraryParticularCard />} />
-  <Route path ="destination/:slug/destinations/:itineraryId" element ={<ItineraryDetail/>}/>
-</Route>
+      <Route path="/admin" element={<AdminLayout />}>
+        <Route index element={<ProfileGuard><AdminPannel /></ProfileGuard>} />
+        <Route path="my-leads" element={<ProfileGuard><MyLeads /></ProfileGuard>} />
+        <Route path="buy-leads" element={<ProfileGuard><BuyLeads /></ProfileGuard>} />
+        <Route path="report" element={<ProfileGuard><MyReports /></ProfileGuard>} />
+        <Route path="reviews" element={<ProfileGuard><MyReviews /></ProfileGuard>} />
+        <Route path="team" element={<ProfileGuard><MyTeam /></ProfileGuard>} />
+        <Route path="profile" element={<Profile />} />
+        <Route path="reset-password" element={<ProfileGuard><ResetPassword /></ProfileGuard>} />
+        <Route path="Manage-Itianary" element={<ProfileGuard><MyItineraries /></ProfileGuard>} />
+        <Route path="Create-Itinary" element={<ProfileGuard><ItineraryForm /></ProfileGuard>} />
+        <Route path="destinations/:slug" element={<ProfileGuard><ItineraryParticularCard /></ProfileGuard>} />
+        <Route
+          path="destination/:slug/destinations/:itineraryId"
+          element={<ProfileGuard><ItineraryDetail /></ProfileGuard>}
+        />
+      </Route>
 
     </Routes>
   );
