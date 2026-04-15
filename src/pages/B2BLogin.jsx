@@ -4,7 +4,7 @@ import { Check, AlertCircle } from "lucide-react";
 import agenlogin from "../assets/images/agentlogin.jpeg";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
-const [rememberMe, setRememberMe] = useState(false);
+
 
 const B2BLogin = () => {
   
@@ -17,6 +17,7 @@ const B2BLogin = () => {
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
+  const [rememberMe, setRememberMe] = useState(false);
   
   const navigate = useNavigate();
 
