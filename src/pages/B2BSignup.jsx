@@ -166,7 +166,7 @@ return signupResult;
       if (data.accessToken) {
         localStorage.setItem("token", data.accessToken);
 
-        navigate("/admin"); // ✅ SUCCESS
+        navigate("/admin"); //  SUCCESS
       } else {
         throw new Error("Invalid OTP");
       }

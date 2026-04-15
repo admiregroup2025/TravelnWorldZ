@@ -4,6 +4,8 @@ const ProfileGuard = ({ children }) => {
   const location = useLocation();
   const token = localStorage.getItem("token");
   const expiry = localStorage.getItem("tokenExpiry");
+  const isProfileComplete = localStorage.getItem("isProfileComplete");
+
 
   let user = null;
 
@@ -21,18 +23,15 @@ const ProfileGuard = ({ children }) => {
 
   //  Not logged in
   if (!token) {
-    return <Navigate to="/admin/profile" state={{ from: location }} replace />;
+    return <Navigate to="/b2blogin" state={{ from: location }} replace />;
   }
 
   // Block access if profile incomplete
-  if (user && user.role === "agent" && !user.isProfileComplete) {
+   if (isProfileComplete !== "true") {
     return (
       <Navigate
         to="/admin/profile"
-        state={{
-          from: location,
-          message: "Complete the profile section first before using admin features.",
-        }}
+        state={{ from: location }}
         replace
       />
     );

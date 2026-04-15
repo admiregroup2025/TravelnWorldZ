@@ -4,9 +4,25 @@ import { Check, AlertCircle } from "lucide-react";
 import agenlogin from "../assets/images/agentlogin.jpeg";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 
 const B2BLogin = () => {
+
+  useEffect(() => {
+  const token = localStorage.getItem("token");
+  const expiry = localStorage.getItem("tokenExpiry");
+  const isProfileComplete = localStorage.getItem("isProfileComplete");
+
+
+    if (token && expiry && Date.now() < parseInt(expiry)) {
+    if (isProfileComplete === "true") {
+      navigate("/admin/");
+    } else {
+      navigate("/admin/profile");
+    }
+  }
+}, []);
   
   const [formData, setFormData] = useState({
     email: "",
@@ -50,8 +66,11 @@ const B2BLogin = () => {
     return Object.keys(newErrors).length === 0;
   }, [formData, isOtpSent, otp]);
 
+  if (isSubmitting) return;
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (isSubmitting) return;
     if (!validateForm()) return;
 
     setIsSubmitting(true);
@@ -62,32 +81,41 @@ const B2BLogin = () => {
         // --- STEP 1: Request OTP ---
         const response = await axios.post("http://localhost:5000/api/auth/login", { 
           email: formData.email, 
-          password: formData.password 
+          password: formData.password ,
+           rememberMe: rememberMe 
         });
 
         if (response.data.otpSent) {
-          console.log("OTP Sent! Switching UI...");
-          console.log("Switching to OTP UI");
+          //console.log("OTP Sent! Switching UI...");
+          //console.log("Switching to OTP UI");
           setIsOtpSent(true);
           setIsSubmitting(false);
-          console.log("isOtpSent is now:", true);
+         // console.log("isOtpSent is now:", true);
           return; // Stop here to let user enter OTP
         }
       } else {
         // --- STEP 2: Verify OTP ---
         const response = await axios.post("http://localhost:5000/api/auth/verify-otp", { 
           email: formData.email, 
-          otp: otp 
+          otp: otp ,
+          rememberMe: rememberMe
         });
-
+          
         const token = response.data.accessToken;
-
+       
         const expiry = rememberMe
           ? Date.now() + 7 * 24 * 60 * 60 * 1000 // 7 days
           : Date.now() + 24 * 60 * 60 * 1000; // 1 day
 
         localStorage.setItem("token", token);
         localStorage.setItem("tokenExpiry", expiry);
+         //console.log(localStorage.getItem("token"));
+        localStorage.setItem("isProfileComplete", response.data.user.isProfileComplete);
+        if (!response.data.user.isProfileComplete) {
+            navigate("/admin/profile"); // go complete profile
+          } else {
+            navigate("/admin/"); // go dashboard
+          }
               }
             } catch (error) {
               setErrors({

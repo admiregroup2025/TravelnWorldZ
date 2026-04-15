@@ -4,6 +4,7 @@ import { AlertCircle, Check, Camera, Plus, Minus } from "lucide-react";
 import axios from "axios";
 import userImage from "../../../assets/images/user.jpg";
 import { country_and_states } from "./country-states";
+import { useNavigate } from "react-router-dom";
 
 const MAX_FILE_SIZE = 2 * 1024 * 1024;
 
@@ -18,12 +19,12 @@ const normalizeApiBase = (rawApiBase) => {
 };
 
 const emptyAddress = {
-  house: "",
+  houseNo: "",
   street: "",
   area: "",
   city: "",
   state: "",
-  zip: "",
+  postalCode: "",
   country: "",
 };
 
@@ -70,16 +71,15 @@ const AddressField = ({
   isBranch,
 }) => {
   const handleChange = (field, value) => onChange(field, value);
-
   
 
   const fields = [
-    { key: "house", placeholder: "House / Flat Number" },
+    { key: "houseNo", placeholder: "House / Flat Number" },
     { key: "street", placeholder: "Street / Locality" },
     { key: "area", placeholder: "Area / Colony" },
     { key: "city", placeholder: "City / Town" },
     { key: "state", type: "select" },
-    { key: "zip", placeholder: "ZIP / Postal Code" },
+    { key: "postalCode", placeholder: "ZIP / Postal Code" },
     { key: "country", type: "select" },
   ];
 
@@ -104,7 +104,7 @@ const AddressField = ({
             return (
               <select
                 key={key}
-                value={address.country}
+                value={address?.country}
                 onChange={(e) => {
                   handleChange("country", e.target.value);
                   handleChange("state", "");
@@ -125,13 +125,13 @@ const AddressField = ({
             return (
               <select
                 key={key}
-                value={address.state}
+                value={address?.state}
                 onChange={(e) => handleChange("state", e.target.value)}
-                disabled={!address.country}
+                disabled={!address?.country}
                 className="w-full px-3 py-1.5 border rounded-lg text-sm"
               >
                 <option value="">Select State</option>
-                {address.country &&
+                {address?.country &&
                   country_and_states.states[address.country]?.map((s) => (
                     <option key={s.code} value={s.name}>
                       {s.name}
@@ -144,7 +144,7 @@ const AddressField = ({
           return (
             <InputField
               key={key}
-              value={address[key]}
+              value={address?.[key]}
               placeholder={placeholder}
               onChange={(e) => handleChange(key, e.target.value)}
               error={errors?.[key]}
@@ -159,12 +159,13 @@ const AddressField = ({
 //  Profile Component
 const Profile = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const redirectMessage = location.state?.message;
 
   const [formData, setFormData] = useState({
     company: "",
-    first_name: "",
-    last_name: "",
+    firstName: "",
+    lastName: "",
     email: "",
     phone: "",
     photo: null,
@@ -183,11 +184,12 @@ useEffect(() => {
   const fetchProfile = async () => {
     // 1. Get the token from storage
     const token = localStorage.getItem("token");
+    //console.log("Fetched token:", token);
 
     //  THE AUTH GUARD: Stop here if no token exists
     if (!token || token === "undefined") {
       alert("Session expired. Please login again.");
-  window.location.href = "/b2blogin";
+     navigate("/b2blogin");
 
       return; 
     }
@@ -196,6 +198,7 @@ useEffect(() => {
       const apiBase = normalizeApiBase(import.meta.env.VITE_API_BASE);
       
       // 2. Only if token exists, make the API call
+  
       const res = await axios.get(`${apiBase}/api/auth/profile`, {
         headers: { 
           Authorization: `Bearer ${token}` 
@@ -208,7 +211,7 @@ useEffect(() => {
     } catch (err) {
       if (err.response?.status === 401) {
         // Optional: Redirect to login if token is invalid/expired
-        localStorage.removeItem("token");
+        //localStorage.removeItem("token");
       }
     }
   };
@@ -245,6 +248,7 @@ const handleSubmit = async (e) => {
   try {
     const rawApiBase = import.meta.env.VITE_API_BASE;
     const apiBase = normalizeApiBase(rawApiBase);
+    
 
     const token = localStorage.getItem("token"); //  FIXED KEY
 
@@ -253,33 +257,18 @@ const handleSubmit = async (e) => {
     });
 
     setSubmitSuccess(true);
+    localStorage.setItem("isProfileComplete", true);
 
-    //  MARK PROFILE COMPLETE HERE (CORRECT PLACE)
-    let user = null;
-    try {
-      const userString = localStorage.getItem("user");
-      if (userString && userString !== "undefined") {
-        user = JSON.parse(userString);
-      }
-    } catch (err) {
-      user = null;
-    }
+// Redirect to dashboard after completing profile
+   // navigate("/admin/panel");
 
-    localStorage.setItem(
-      "user",
-      JSON.stringify({
-        ...user,
-        isProfileComplete: true,
-      })
-    );
 
-    //  REDIRECT AFTER SAVE
-    setTimeout(() => {
-      window.location.href = "/admin";
-    }, 500);
+ 
 
   } catch (err) {
     alert("Error saving profile");
+    console.error(err);
+
   } finally {
     setIsSubmitting(false);
   }
@@ -333,13 +322,13 @@ const handleSubmit = async (e) => {
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
         <InputField
           label="First Name *"
-          value={formData.first_name}
-          onChange={(e) => handleChange("first_name", e.target.value)}
+          value={formData.firstName}
+          onChange={(e) => handleChange("firstName", e.target.value)}
         />
         <InputField
           label="Last Name *"
-          value={formData.last_name}
-          onChange={(e) => handleChange("last_name", e.target.value)}
+          value={formData.lastName}
+          onChange={(e) => handleChange("lastName", e.target.value)}
         />
         <InputField
           label="Phone *"
@@ -360,7 +349,8 @@ const handleSubmit = async (e) => {
         value={formData.email}
         disabled
       />
-      {formData.secondaryEmails.map((email, idx) => (
+      {formData.secondaryEmails?.map((email, idx) => (
+
         <InputField
           key={idx}
           label={`Secondary Email ${idx + 1}`}
@@ -393,24 +383,7 @@ const handleSubmit = async (e) => {
         errors={errors.companyAddress || {}}
       />
 
-      {formData.branchAddresses.map((branch, idx) => (
-        <AddressField
-          key={idx}
-          address={branch}
-          onChange={(field, value) =>
-            handleAddressChange(true, idx, field, value)
-          }
-          onRemove={() =>
-            setFormData((prev) => ({
-              ...prev,
-              branchAddresses: prev.branchAddresses.filter((_, i) => i !== idx),
-            }))
-          }
-          label={`Branch Address ${idx + 1}`}
-          errors={errors[`branch_${idx}`] || {}}
-          isBranch
-        />
-      ))}
+
 
       <button
         type="button"

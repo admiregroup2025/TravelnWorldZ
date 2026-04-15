@@ -8,7 +8,11 @@ export default function AdminHeader({ onOpenLeft, onOpenRight }) {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    navigate("/b2blogin");
+
+  localStorage.removeItem("token");
+  localStorage.removeItem("tokenExpiry");
+  navigate("/b2bLogin");
+
   };
 
   return (

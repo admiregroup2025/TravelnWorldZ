@@ -6,8 +6,9 @@ const ProtectedRoute = () => {
     localStorage.getItem("token") ||
     localStorage.getItem("accessToken") ||
     localStorage.getItem("TOKEN_KEY");
+    const expiry = localStorage.getItem("tokenExpiry");
 
-  if (!token) {
+  if (!token || !expiry || Date.now() >= parseInt(expiry)) {
     return <Navigate to="/b2blogin" replace />;
   }
 
