@@ -252,12 +252,15 @@ const handleSubmit = async (e) => {
 
     const token = localStorage.getItem("token"); //  FIXED KEY
 
-    await axios.put(`${apiBase}/api/auth/profile`, formData, {
+    const res = await axios.put(`${apiBase}/api/auth/profile`, formData, {
       headers: { Authorization: `Bearer ${token}` },
     });
 
     setSubmitSuccess(true);
-    localStorage.setItem("isProfileComplete", true);
+    localStorage.setItem("isProfileComplete", "true");
+    if (res.data?.user) {
+      localStorage.setItem("user", JSON.stringify(res.data.user));
+    }
 
 // Redirect to dashboard after completing profile
    // navigate("/admin/panel");

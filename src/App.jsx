@@ -1,5 +1,5 @@
 import React from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Outlet } from 'react-router-dom';
 import MainLayout from './MainLayout';
 import AdminLayout from './components/admin/AdminLayout';
 import Home from './pages/Home';
@@ -54,9 +54,9 @@ import BuyLeads from './components/admin/BuyLeads.jsx';
 import MyReports from './components/admin/MyReports.jsx';
 import MyReviews from './components/admin/MyReviews.jsx';
 import MyTeam from './components/admin/MyTeam.jsx';
-import SuperAdminDashboard from './pages/SuperAdminDashboard.jsx';
 import B2BSignup from './pages/B2BSignup.jsx';
 import ProfileGuard from "./components/ProfileGuard";
+import ProtectedRoute from './components/ProtectedRoute';
 
 
 
@@ -105,21 +105,23 @@ const App = () => {
           <Route path="/Terms-to-use" element={<TermsAndConditions />} />
       </Route>
       <Route path="/admin" element={<AdminLayout />}>
-        <Route index element={<ProfileGuard><AdminPannel /></ProfileGuard>} />
-        <Route path="my-leads" element={<ProfileGuard><MyLeads /></ProfileGuard>} />
-        <Route path="buy-leads" element={<ProfileGuard><BuyLeads /></ProfileGuard>} />
-        <Route path="report" element={<ProfileGuard><MyReports /></ProfileGuard>} />
-        <Route path="reviews" element={<ProfileGuard><MyReviews /></ProfileGuard>} />
-        <Route path="team" element={<ProfileGuard><MyTeam /></ProfileGuard>} />
+        <Route element={<ProfileGuard><Outlet /></ProfileGuard>}>
+          <Route index element={<AdminPannel />} />
+          <Route path="my-leads" element={<MyLeads />} />
+          <Route path="buy-leads" element={<BuyLeads />} />
+          <Route path="report" element={<MyReports />} />
+          <Route path="reviews" element={<MyReviews />} />
+          <Route path="team" element={<MyTeam />} />
+          <Route path="reset-password" element={<ResetPassword />} />
+          <Route path="Manage-Itianary" element={<MyItineraries />} />
+          <Route path="Create-Itinary" element={<ItineraryForm />} />
+          <Route path="destinations/:slug" element={<ItineraryParticularCard />} />
+          <Route
+            path="destination/:slug/destinations/:itineraryId"
+            element={<ItineraryDetail />}
+          />
+        </Route>
         <Route path="profile" element={<Profile />} />
-        <Route path="reset-password" element={<ProfileGuard><ResetPassword /></ProfileGuard>} />
-        <Route path="Manage-Itianary" element={<ProfileGuard><MyItineraries /></ProfileGuard>} />
-        <Route path="Create-Itinary" element={<ProfileGuard><ItineraryForm /></ProfileGuard>} />
-        <Route path="destinations/:slug" element={<ProfileGuard><ItineraryParticularCard /></ProfileGuard>} />
-        <Route
-          path="destination/:slug/destinations/:itineraryId"
-          element={<ProfileGuard><ItineraryDetail /></ProfileGuard>}
-        />
       </Route>
 
     </Routes>

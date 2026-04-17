@@ -1,41 +1,53 @@
 import React, { useState, useCallback } from "react";
 import { FcGoogle } from "react-icons/fc";
-import { Check, AlertCircle } from "lucide-react";
+import { Check, AlertCircle, Eye, EyeOff } from "lucide-react";
 import agenlogin from "../assets/images/agentlogin.jpeg";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 
 
+
 const B2BLogin = () => {
+   
 
-  useEffect(() => {
-  const token = localStorage.getItem("token");
-  const expiry = localStorage.getItem("tokenExpiry");
-  const isProfileComplete = localStorage.getItem("isProfileComplete");
-
-
-    if (token && expiry && Date.now() < parseInt(expiry)) {
-    if (isProfileComplete === "true") {
-      navigate("/admin/");
-    } else {
-      navigate("/admin/profile");
-    }
-  }
-}, []);
-  
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-  });
   const [otp, setOtp] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [isOtpSent, setIsOtpSent] = useState(false);
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
+  const [loginMode, setLoginMode] = useState("agent");
+   const navigate = useNavigate();
+  useEffect(() => {
+  const token = localStorage.getItem("token");
+  const expiry = parseInt(localStorage.getItem("tokenExpiry"));
+  const isProfileComplete = localStorage.getItem("isProfileComplete");
+ const role = localStorage.getItem("role");
+
+    if (token && expiry && Date.now() < expiry) {
+    if (role === "SUPERADMIN") {
+      navigate("/superadmin/dashboard");
+    } else if (role === "AGENT" || role === "ADMIN") {
+ if (isProfileComplete === "true") {
+      navigate("/admin/");
+    } else {
+      navigate("/admin/profile");
+    }
+  }
+  }else {
+    localStorage.clear();
+  }
+}, [navigate]);
   
-  const navigate = useNavigate();
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
+  
+  
+ 
 
   const handleInputChange = useCallback((field, value) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
@@ -57,16 +69,18 @@ const B2BLogin = () => {
         newErrors.password = "Password is required";
       }
     } else {
+      if (loginMode !== "superadmin" && isOtpSent) {
       if (!otp.trim() || otp.length < 6) {
         newErrors.otp = "Valid 6-digit OTP is required";
       }
     }
+  }
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   }, [formData, isOtpSent, otp]);
 
-  if (isSubmitting) return;
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -78,12 +92,15 @@ const B2BLogin = () => {
 
     try {
       if (!isOtpSent) {
-        // --- STEP 1: Request OTP ---
-        const response = await axios.post("http://localhost:5000/api/auth/login", { 
-          email: formData.email, 
-          password: formData.password ,
-           rememberMe: rememberMe 
+        // --- STEP 1: Request login or OTP ---
+        const response = await axios.post("http://localhost:5000/api/auth/login", {
+          email: formData.email,
+          password: formData.password,
+          rememberMe,
+        
         });
+
+       
 
         if (response.data.otpSent) {
           //console.log("OTP Sent! Switching UI...");
@@ -102,20 +119,21 @@ const B2BLogin = () => {
         });
           
         const token = response.data.accessToken;
-       
         const expiry = rememberMe
           ? Date.now() + 7 * 24 * 60 * 60 * 1000 // 7 days
           : Date.now() + 24 * 60 * 60 * 1000; // 1 day
 
-        localStorage.setItem("token", token);
-        localStorage.setItem("tokenExpiry", expiry);
-         //console.log(localStorage.getItem("token"));
-        localStorage.setItem("isProfileComplete", response.data.user.isProfileComplete);
-        if (!response.data.user.isProfileComplete) {
-            navigate("/admin/profile"); // go complete profile
-          } else {
-            navigate("/admin/"); // go dashboard
-          }
+            localStorage.setItem("token", token);
+            localStorage.setItem("tokenExpiry", String(expiry));
+            localStorage.setItem("role", response.data.user.role);
+            localStorage.setItem("isProfileComplete", String(response.data.user.isProfileComplete));
+            localStorage.setItem("user", JSON.stringify(response.data.user));
+
+            if (!response.data.user.isProfileComplete) {
+              navigate("/admin/profile");
+            } else {
+              navigate("/admin/");
+            }
               }
             } catch (error) {
               setErrors({
@@ -132,6 +150,8 @@ const B2BLogin = () => {
       <div className="hidden md:flex w-1/2 bg-gray-100 flex-col justify-center items-center p-10">
         <img src={agenlogin} alt="Illustration" className="mb-6 rounded-md object-cover" />
       </div>
+
+
 
       {/* Right side - Form */}
       <div className="flex-1 flex flex-col justify-center items-center bg-white shadow-lg">
@@ -172,17 +192,25 @@ const B2BLogin = () => {
             {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
           </div>
 
-          {!isOtpSent ? (
+          {loginMode === "superadmin" || !isOtpSent ? (
             /* Password UI */
-            <div>
+            <div className="relative">
               <label className="block text-xs font-medium text-gray-700 mb-1">Password *</label>
               <input
-                type="password"
+                type={showPassword ? "text" : "password"}
                 value={formData.password}
                 onChange={(e) => handleInputChange("password", e.target.value)}
                 disabled={isSubmitting}
-                className={`w-full px-3 py-2 border rounded-lg text-sm outline-none focus:ring-1 focus:ring-blue-500 ${errors.password ? "border-red-300 bg-red-50" : "border-gray-300"}`}
+                className={`w-full pr-10 px-3 py-2 border rounded-lg text-sm outline-none focus:ring-1 focus:ring-blue-500 ${errors.password ? "border-red-300 bg-red-50" : "border-gray-300"}`}
               />
+              <button
+                type="button"
+                onClick={() => setShowPassword((prev) => !prev)}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-800"
+                aria-label={showPassword ? "Hide password" : "Show password"}
+              >
+                {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+              </button>
               {errors.password && <p className="text-red-500 text-xs mt-1">{errors.password}</p>}
             </div>
           ) : (
@@ -212,10 +240,21 @@ const B2BLogin = () => {
           </label>
         </div>
 
-          <button type="submit" disabled={isSubmitting} className="w-full bg-indigo-500 hover:bg-indigo-600 text-white py-2 rounded-md font-medium flex items-center justify-center gap-2">
-            {isSubmitting ? <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" /> : null}
-            {isSubmitting ? "Processing..." : isOtpSent ? "Verify & Login" : "Login with email"}
-          </button>
+         <button
+  type="submit"
+  disabled={isSubmitting}
+  className="w-full bg-indigo-500 hover:bg-indigo-600 text-white py-2 rounded-md font-medium flex items-center justify-center gap-2 transition-all duration-200 disabled:opacity-70"
+>
+  {isSubmitting && (
+    <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+  )}
+
+  {isSubmitting
+    ? "Processing..."
+    : isOtpSent
+    ? "Verify & Login"
+    : "Login"}
+</button>
 
           <p className="text-center text-sm text-gray-600">
             New User? <Link to="/b2bSignup" className="text-blue-600 hover:underline">Signup Here</Link>
