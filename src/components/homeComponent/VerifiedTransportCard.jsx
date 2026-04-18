@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
-import transportData from "../../data/transportData";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import Facelessphoto from "../../assets/Facelessphoto.jpg"; // Default image for agents without photos
  
 const CARD_WIDTH = 260;
 const CARD_GAP = 24;
@@ -8,20 +9,44 @@ const AUTO_SCROLL_SPEED = 1; // px per frame
 const PAUSE_DURATION = 1000; // ms
  
 const VerifiedTransportCard = () => {
-  const data = transportData;
+  const [data, setData] = useState([]);
   const scrollRef = useRef(null);
   const rafRef = useRef(null);
   const pauseTimeout = useRef(null);
   const [isPaused, setIsPaused] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
- 
+
   const isDragging = useRef(false);
   const startX = useRef(0);
   const scrollLeft = useRef(0);
- 
+
   const navigate = useNavigate();
 
+  useEffect(() => {
+    const fetchVerifiedAgents = async () => {
+      try {
+        const apiBase = import.meta.env.VITE_API_BASE || "";
+        const res = await axios.get(`${apiBase}/api/agents/verified`);
+        const agents = res.data;
+        // Map agents to transport data format
+        const mappedAgents = agents.map(agent => ({
+          id: agent._id,
+          image: agent.photo || Facelessphoto, // Use default if no photo
+          title: agent.company || `${agent.firstName} ${agent.lastName}`,
+          location: agent.companyAddress ? `${agent.companyAddress.city}, ${agent.companyAddress.state}` : "Location not specified",
+          rating: 4.5, // Default rating
+          reviews: 0, // Default reviews
+          verified: true,
+        }));
+        setData(mappedAgents);
+      } catch (error) {
+        console.error("Error fetching verified agents", error);
+        setData([]); // No data if error
+      }
+    };
+    fetchVerifiedAgents();
+  }, []);
   // Check if mobile
   useEffect(() => {
     const checkMobile = () => {
@@ -34,7 +59,7 @@ const VerifiedTransportCard = () => {
 
   // Auto-advance for mobile
   useEffect(() => {
-    if (!isMobile || isPaused) return;
+    if (!isMobile || isPaused || data.length === 0) return;
     
     const interval = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % data.length);
@@ -206,14 +231,19 @@ const VerifiedTransportCard = () => {
       {isMobile ? (
         /* Mobile: Single Card View */
         <div className="w-full px-12">
-          <div className="bg-white rounded-lg shadow-md hover:shadow-lg transition-all duration-300 max-w-sm mx-auto">
-            <div className="h-40 w-full p-1 flex items-center justify-center overflow-hidden bg-white rounded-t-lg">
-              <img
-                src={data[currentIndex].image}
-                alt={data[currentIndex].title}
-                className="max-h-full max-w-full object-contain"
-              />
+          {data.length === 0 ? (
+            <div className="bg-white rounded-lg shadow-md p-8 text-center text-gray-600">
+              No verified partners available yet.
             </div>
+          ) : (
+            <div className="bg-white rounded-lg shadow-md hover:shadow-lg transition-all duration-300 max-w-sm mx-auto">
+              <div className="h-40 w-full p-1 flex items-center justify-center overflow-hidden bg-white rounded-t-lg">
+                <img
+                  src={data[currentIndex].image}
+                  alt={data[currentIndex].title}
+                  className="max-h-full max-w-full object-contain"
+                />
+              </div>
 
             
             <div className="flex flex-col p-4">
@@ -255,26 +285,34 @@ const VerifiedTransportCard = () => {
               </button>
             </div>
           </div>
+          )}
           
-          {/* Dots Indicator */}
-          <div className="flex justify-center mt-6 space-x-2">
-            {data.map((_, index) => (
-              <button
-                key={index}
-                onClick={() => {
-                  setCurrentIndex(index);
-                  setIsPaused(true);
-                  setTimeout(() => setIsPaused(false), 2000);
-                }}
-                className={`w-3 h-3 rounded-full transition-all duration-200 ${
-                  index === currentIndex ? 'bg-blue-600 scale-125 shadow-lg' : 'bg-gray-300 hover:bg-gray-400'
-                }`}
-                aria-label={`Go to ${data[index].title}`}
-              />
-            ))}
-          </div>
+          {data.length > 0 && (
+            <div className="flex justify-center mt-6 space-x-2">
+              {data.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => {
+                    setCurrentIndex(index);
+                    setIsPaused(true);
+                    setTimeout(() => setIsPaused(false), 2000);
+                  }}
+                  className={`w-3 h-3 rounded-full transition-all duration-200 ${
+                    index === currentIndex ? 'bg-blue-600 scale-125 shadow-lg' : 'bg-gray-300 hover:bg-gray-400'
+                  }`}
+                  aria-label={`Go to ${data[index].title}`}
+                />
+              ))}
+            </div>
+          )}
+        </div>
+      ) : data.length === 0 ? (
+        <div className="bg-white rounded-lg shadow-md p-8 text-center text-gray-600 w-full">
+          No verified partners available yet.
         </div>
       ) : (
+     
+      
         /* Desktop: Scroll Area with Multiple Cards */
         <div
           ref={scrollRef}
@@ -288,7 +326,7 @@ const VerifiedTransportCard = () => {
           className="overflow-hidden no-scrollbar w-full px-1 sm:px-2 md:px-4"
           style={{ whiteSpace: "nowrap" }}
         >
-          {[...data, ...data].map((item, index) => (
+          {[...data].map((item, index) => (
             <div
               key={index}
               className="inline-block align-top w-[260px] mr-[24px] last:mr-0 bg-white rounded-lg shadow-md hover:shadow-lg transition-all duration-300 flex-shrink-0"

@@ -141,7 +141,7 @@ const transportData = [
         description: "Darshan & Sightseeing tour",
         price: "₹2999",
       },
-    ], // ✅ Add this
+    ], //  Add this
   },
   {
     id: 4,
