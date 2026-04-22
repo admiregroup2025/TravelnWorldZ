@@ -8,15 +8,7 @@ import { useNavigate } from "react-router-dom";
 
 const MAX_FILE_SIZE = 2 * 1024 * 1024;
 
-const normalizeApiBase = (rawApiBase) => {
-  if (!rawApiBase || rawApiBase === "undefined" || rawApiBase === "null") {
-    return "http://localhost:5000";
-  }
-  if (rawApiBase.startsWith(":")) {
-    return `http://localhost${rawApiBase}`;
-  }
-  return rawApiBase;
-};
+import { API_BASE } from "../../../utils/api";
 
 const emptyAddress = {
   houseNo: "",
@@ -195,7 +187,7 @@ useEffect(() => {
     }
 
     try {
-      const apiBase = normalizeApiBase(import.meta.env.VITE_API_BASE);
+      const apiBase = API_BASE;
       
       // 2. Only if token exists, make the API call
   
@@ -246,8 +238,7 @@ const handleSubmit = async (e) => {
   setIsSubmitting(true);
 
   try {
-    const rawApiBase = import.meta.env.VITE_API_BASE;
-    const apiBase = normalizeApiBase(rawApiBase);
+    const apiBase = API_BASE;
     
 
     const token = localStorage.getItem("token"); //  FIXED KEY

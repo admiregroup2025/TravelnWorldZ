@@ -4,10 +4,7 @@ import TopMostBanner from '../components/homeComponent/TopMostBanner.jsx';
 // Import your faceless image here
 import FacelessPhoto from '../assets/Facelessphoto.jpg'; 
 
-const normalizeApiBase = (rawApiBase) => {
-  if (!rawApiBase || rawApiBase === 'undefined' || rawApiBase === 'null') return 'http://localhost:5000';
-  return rawApiBase.startsWith(':') ? `http://localhost${rawApiBase}` : rawApiBase;
-};
+import { API_BASE } from '../utils/api';
 
 const maskPhone = (phone) => {
   if (!phone || phone === 'Not provided') return 'Not provided';
@@ -45,8 +42,7 @@ const FreeAgents = () => {
   useEffect(() => {
     const loadPublicAgents = async () => {
       try {
-        const apiBase = normalizeApiBase(import.meta.env.VITE_API_BASE);
-        const res = await axios.get(`${apiBase}/api/agents/public`);
+        const res = await axios.get(`${API_BASE}/api/agents/public`);
         const data = res.data?.data || res.data || [];
         setAgents(Array.isArray(data) ? data.map(buildAgentCard) : []);
       } catch (error) {

@@ -5,8 +5,7 @@ import agenlogin from "../assets/images/agentlogin.jpeg";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
-
-
+import { API_BASE } from "../utils/api";
 
 const B2BLogin = () => {
    
@@ -93,7 +92,7 @@ const B2BLogin = () => {
     try {
       if (!isOtpSent) {
         // --- STEP 1: Request login or OTP ---
-        const response = await axios.post("http://localhost:5000/api/auth/login", {
+        const response = await axios.post(`${API_BASE}/api/auth/login`, {
           email: formData.email,
           password: formData.password,
           rememberMe,
@@ -112,7 +111,7 @@ const B2BLogin = () => {
         }
       } else {
         // --- STEP 2: Verify OTP ---
-        const response = await axios.post("http://localhost:5000/api/auth/verify-otp", { 
+        const response = await axios.post(`${API_BASE}/api/auth/verify-otp`, { 
           email: formData.email, 
           otp: otp ,
           rememberMe: rememberMe

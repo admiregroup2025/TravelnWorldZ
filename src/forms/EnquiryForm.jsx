@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Swal from "sweetalert2";
+import { API_BASE } from "../utils/api";
 
 const countryCodes = [
   { code: "+91", label: "IND" },
@@ -63,7 +64,7 @@ const EnquiryForm = ({ variant = "transparent" }) => {
     e.preventDefault();
 
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_BASE || "http://localhost:5000"}/api/enquiries`, {
+      const response = await fetch(`${API_BASE}/api/enquiries`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

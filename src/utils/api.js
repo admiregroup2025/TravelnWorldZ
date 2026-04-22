@@ -1,16 +1,11 @@
 const rawApiBase = import.meta.env.VITE_API_BASE;
-const normalizedApiBase =
-  rawApiBase && rawApiBase !== "undefined" && rawApiBase !== "null"
+export const API_BASE = (rawApiBase && rawApiBase !== "undefined" && rawApiBase !== "null")
     ? rawApiBase
-    : "";
+    : (typeof window !== "undefined" && /^(localhost|127\.0\.0\.1)$/.test(window.location.hostname)
+        ? "http://localhost:5000"
+        : "");
 
-export const API_BASE =
-  normalizedApiBase ||
-  (typeof window !== "undefined" && /^(localhost|127\.0\.0\.1)$/.test(window.location.hostname)
-    ? "http://localhost:5000"
-    : "");
-
-export const USE_BACKEND = Boolean(normalizedApiBase);
+export const USE_BACKEND = Boolean(API_BASE);
 
 
 export async function getJson(path) {

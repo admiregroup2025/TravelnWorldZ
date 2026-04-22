@@ -8,15 +8,7 @@ import agenlogin from "../assets/images/agentlogin.jpg";
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 
-const normalizeApiBase = (rawApiBase) => {
-  if (!rawApiBase || rawApiBase === "undefined" || rawApiBase === "null") {
-    return "http://localhost:5000";
-  }
-  if (rawApiBase.startsWith(":")) {
-    return `http://localhost${rawApiBase}`;
-  }
-  return rawApiBase;
-};
+import { API_BASE } from "../utils/api";
 
 const B2BSignup = () => {
   const navigate = useNavigate();
@@ -78,8 +70,7 @@ const [otp, setOtp] = useState("");
       password: data.password,
     };
 
-    const rawApiBase = import.meta.env.VITE_API_BASE;
-    const apiBase = normalizeApiBase(rawApiBase);
+    const apiBase = API_BASE;
 
   try {
     const res = await fetch(`${apiBase}/api/auth/register`, {
@@ -121,8 +112,7 @@ return signupResult;
   setFormError("");
 
   try {
-    const rawApiBase = import.meta.env.VITE_API_BASE;
-    const apiBase = normalizeApiBase(rawApiBase);
+    const apiBase = API_BASE;
 
     if (!isOtpSent) {
       //  STEP 1: SIGNUP
@@ -180,8 +170,7 @@ return signupResult;
 
 //   const handleVerifyOtp = async () => {
 //   try {
-//     const rawApiBase = import.meta.env.VITE_API_BASE;
-//     const apiBase = normalizeApiBase(rawApiBase);
+//     const apiBase = API_BASE;
 
 //     const res = await fetch(`${apiBase}/api/auth/verify-otp`, {
 //       method: "POST",
