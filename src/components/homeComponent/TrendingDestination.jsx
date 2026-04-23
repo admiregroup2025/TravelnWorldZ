@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
+import { getJson } from "../../utils/api";
 import { useNavigate } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, EffectFade } from "swiper/modules";
@@ -9,7 +10,7 @@ import "swiper/css/effect-fade";
 const CARD_WIDTH = 320;
 const CARD_GAP = 24;
 
-const destinations = [
+const fallbackDestinations = [
     {
       id: "uttarakhand",
       title: "Uttarakhand",
@@ -203,7 +204,9 @@ const DestinationCard = ({
   );
 };
 
+
 const TrendingDestination = () => {
+  const [destinations, setDestinations] = useState(fallbackDestinations);
   const [isPaused, setIsPaused] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -212,6 +215,22 @@ const TrendingDestination = () => {
   const startX = useRef(0);
   const scrollLeft = useRef(0);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    getJson("/api/destinations/cards?category=trending")
+      .then((response) => {
+        if (response?.data && response.data.length > 0) {
+          const formattedData = response.data.map(dest => ({
+            id: dest.slug,
+            title: dest.name,
+            description: dest.shortDescription || "",
+            images: [dest.coverImageUrl]
+          }));
+          setDestinations(formattedData);
+        }
+      })
+      .catch(console.error);
+  }, []);
 
   // Check if mobile
   useEffect(() => {

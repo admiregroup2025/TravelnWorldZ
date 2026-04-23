@@ -1,15 +1,35 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import DestinationCard from "../components/DestinationCard";
 import domesticDestinations from "../data/domesticDestinationData";
+import { getJson } from "../utils/api";
 
 const DomesticDestinationsList = () => {
   const [showAll, setShowAll] = useState(false);
+  const [apiDestinations, setApiDestinations] = useState(null);
   const navigate = useNavigate();
-  const visibleDestinations = showAll
-    ? domesticDestinations
-    : domesticDestinations.slice(0, 8);
-   const handleCardClick = (title) => {
+
+  useEffect(() => {
+    getJson("/api/destinations/type/domestic")
+      .then((items) => {
+        const mapped = items.data.map((dest) => ({
+          title: dest.name,
+          description: dest.shortDescription || "",
+          image: dest.coverImageUrl,
+          slug: dest.slug,
+        }));
+        setApiDestinations(mapped);
+      })
+      .catch(() => setApiDestinations(null));
+  }, []);
+
+  const source =
+    apiDestinations && apiDestinations.length > 0
+      ? apiDestinations
+      : domesticDestinations;
+  const visibleDestinations = showAll ? source : source.slice(0, 8);
+
+  const handleCardClick = (title) => {
     const slug = title.toLowerCase().replace(/\s+/g, "-");
     navigate(`/domestic-itinerary/${slug}`);
   };

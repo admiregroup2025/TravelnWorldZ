@@ -7,24 +7,28 @@ import { getJson } from "../utils/api";
 const InternationalDestinationsList = () => {
   const [showAll, setShowAll] = useState(false);
   const navigate = useNavigate();
-  
+
   const [apiDestinations, setApiDestinations] = useState(null);
 
   useEffect(() => {
-    getJson("/api/itineraries/cards?type=international")
+    getJson("/api/destinations/type/international")
       .then((items) => {
         // Map to shape used by DestinationCard without changing UI
-        const mapped = items.map((it) => ({
-          title: it.country ? it.country.replace(/-/g, " ") : it.title,
-          description: it.shortDescription || "",
-          image: it.coverImageUrl,
+        const mapped = items.data.map((dest) => ({
+          title: dest.name,
+          description: dest.shortDescription || "",
+          image: dest.coverImageUrl,
+          slug: dest.slug,
         }));
         setApiDestinations(mapped);
       })
       .catch(() => setApiDestinations(null));
   }, []);
 
-  const source = apiDestinations && apiDestinations.length > 0 ? apiDestinations : internationalDestinations;
+  const source =
+    apiDestinations && apiDestinations.length > 0
+      ? apiDestinations
+      : internationalDestinations;
   const visibleDestinations = showAll ? source : source.slice(0, 8);
   
   const handleCardClick = (title) => {
