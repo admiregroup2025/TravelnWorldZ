@@ -4,7 +4,9 @@ import img2 from "../../assets/images/places/goa.jpg";
 import img3 from "../../assets/images/places/goa.jpg";
 import { useState } from "react";
  
-const places = [
+import { getJson } from "../../utils/api";
+
+const defaultPlaces = [
   { id: 1, name: "Goa", desc: "Sun, sand, and nightlife on India's western coast.", img: img1 },
   { id: 2, name: "Darjeeling", desc: "A peaceful hill station with scenic beauty and tea gardens.", img: img2 },
   { id: 3, name: "Kashmir", desc: "Heaven on earth – valleys, lakes, and snowcapped peaks.", img: img3 },
@@ -17,10 +19,26 @@ const PlaceToVisit = () => {
   const rafRef = useRef(null);
   const isPaused = useRef(false);
   const scrollPos = useRef(0);
+  const [places, setPlaces] = useState(defaultPlaces);
   const [currentCardIndex, setCurrentCardIndex] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
   const [cardWidth, setCardWidth] = useState(300);
   const [cardGap, setCardGap] = useState(24);
+
+  useEffect(() => {
+    getJson("/api/destinations/cards?category=weekend")
+      .then((res) => {
+        if (res?.data && res.data.length > 0) {
+          setPlaces(res.data.map((d, i) => ({
+            id: d._id || i,
+            name: d.name,
+            desc: d.shortDescription || "Explore top attractions.",
+            img: d.coverImageUrl
+          })));
+        }
+      })
+      .catch(console.error);
+  }, []);
 
   // Check screen size and adjust card dimensions
   useEffect(() => {
