@@ -72,7 +72,7 @@ const App = () => {
         <Route path="/b2blogin" element={<B2BLogin />} />
         <Route path="/b2bSignup" element={<B2BSignup />} />
         <Route path="/blogs" element={<Blogs />} />
-        <Route path="/blogs/:id" element={<BlogDetails />} />
+        <Route path="/blogs/:slug" element={<BlogDetails />} />
         <Route path="/testimonials" element={<Testimonials />} />
         <Route path="/contactUs" element={<ContactUs />} />
         <Route path="/trending" element={<TrendingDestination />} />

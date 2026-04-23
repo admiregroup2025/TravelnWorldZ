@@ -16,6 +16,11 @@ const DomesticItineraryDetailPage = () => {
   const { destinationId, itineraryId } = useParams();
   const [itinerary, setItinerary] = useState(null);
   const [activeTab, setActiveTab] = useState("overview");
+  const [policies, setPolicies] = useState({
+    terms: "",
+    cancellation: "",
+    payment: ""
+  });
 
   useEffect(() => {
     if (!itineraryId) return;
@@ -28,7 +33,26 @@ const DomesticItineraryDetailPage = () => {
     getJson(`/api/itineraries/${itineraryId}`)
       .then((doc) => setItinerary(doc))
       .catch(() => setItinerary(null));
-  }, [itineraryId]);
+
+    // Fetch policies
+    const fetchPolicies = async () => {
+      try {
+        const [termsRes, cancelRes, paymentRes] = await Promise.all([
+          getJson(`/api/policies?type=terms&category=Domestic&destination=${destinationId}`),
+          getJson(`/api/policies?type=cancellation&category=General&destination=General`),
+          getJson(`/api/policies?type=payment&category=Domestic&destination=General`)
+        ]);
+        setPolicies({
+          terms: termsRes.data?.content || "",
+          cancellation: cancelRes.data?.content || "",
+          payment: paymentRes.data?.content || ""
+        });
+      } catch (error) {
+        console.error("Error fetching policies:", error);
+      }
+    };
+    fetchPolicies();
+  }, [itineraryId, destinationId]);
 
   if (!itinerary) {
     return (
@@ -187,9 +211,16 @@ const DomesticItineraryDetailPage = () => {
             <h2 className="text-xl font-semibold text-gray-800 mb-4">
               Terms & Conditions
             </h2>
-            <p className="text-gray-700 leading-relaxed">
-              No terms available.
-            </p>
+            {policies.terms ? (
+              <div 
+                className="text-gray-700 leading-relaxed prose prose-sm max-w-none"
+                dangerouslySetInnerHTML={{ __html: policies.terms }}
+              />
+            ) : (
+              <p className="text-gray-700 leading-relaxed">
+                No terms available.
+              </p>
+            )}
           </div>
         )}
 
@@ -198,9 +229,16 @@ const DomesticItineraryDetailPage = () => {
             <h2 className="text-xl font-semibold text-gray-800 mb-4">
               Cancellation Policy
             </h2>
-            <p className="text-gray-700 leading-relaxed">
-              No cancellation policy available.
-            </p>
+            {policies.cancellation ? (
+              <div 
+                className="text-gray-700 leading-relaxed prose prose-sm max-w-none"
+                dangerouslySetInnerHTML={{ __html: policies.cancellation }}
+              />
+            ) : (
+              <p className="text-gray-700 leading-relaxed">
+                No cancellation policy available.
+              </p>
+            )}
           </div>
         )}
 
@@ -209,9 +247,16 @@ const DomesticItineraryDetailPage = () => {
             <h2 className="text-xl font-semibold text-gray-800 mb-4">
               Payment Policy
             </h2>
-            <p className="text-gray-700 leading-relaxed">
-              No payment policy specified.
-            </p>
+            {policies.payment ? (
+              <div 
+                className="text-gray-700 leading-relaxed prose prose-sm max-w-none"
+                dangerouslySetInnerHTML={{ __html: policies.payment }}
+              />
+            ) : (
+              <p className="text-gray-700 leading-relaxed">
+                No payment policy specified.
+              </p>
+            )}
           </div>
         )}
       </div>

@@ -1,112 +1,121 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import blogs from '../data/blogs';
+import axios from 'axios';
 import ShareButton from '../components/blogs/ShareButton';
-import { FaFacebookF, FaTwitter, FaLinkedinIn } from 'react-icons/fa';
+import { FaFacebookF, FaTwitter, FaLinkedinIn, FaArrowLeft } from 'react-icons/fa';
 import logo from '../assets/images/logo/logo.jpeg';
 
 const BlogDetails = () => {
-  const { id } = useParams();
+  const { slug } = useParams();
   const navigate = useNavigate();
-  const blog = blogs.find((b) => b.id === parseInt(id));
+  const [blog, setBlog] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchBlog = async () => {
+      try {
+        const response = await axios.get(`http://localhost:5000/api/blogs/${slug}`);
+        setBlog(response.data.data);
+        setLoading(false);
+      } catch (error) {
+        console.error("Error fetching blog:", error);
+        setLoading(false);
+      }
+    };
+    fetchBlog();
+  }, [slug]);
+
+  if (loading) {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-[60vh] text-gray-400">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-orange-500 mb-4"></div>
+        <p className="font-medium">Loading story...</p>
+      </div>
+    );
+  }
 
   if (!blog) {
-    return <p className="text-center py-10 text-red-500">Blog not found.</p>;
+    return (
+      <div className="text-center py-20">
+        <p className="text-red-500 font-bold mb-4 text-xl">Oops! Story not found.</p>
+        <button onClick={() => navigate('/blogs')} className="text-orange-500 hover:underline font-bold flex items-center justify-center gap-2 mx-auto">
+          <FaArrowLeft /> Back to Blogs
+        </button>
+      </div>
+    );
   }
 
   return (
-    <div className="max-w-3xl mx-auto px-4 py-8 font-sans text-gray-900">
-      {/* Header */}
-      <div className="flex items-center justify-between border-b pb-4 mb-8">
+    <div className="max-w-4xl mx-auto px-4 py-12 font-sans text-gray-900">
+      {/* Navigation Header */}
+      <div className="flex items-center justify-between border-b border-gray-100 pb-6 mb-10">
         <button
           onClick={() => navigate(-1)}
-          className="text-sm text-gray-600 hover:text-gray-900 font-medium transition"
+          className="flex items-center gap-2 text-sm text-gray-500 hover:text-orange-600 font-black transition-all uppercase tracking-widest"
         >
-          ← Back
+          <FaArrowLeft /> Back
         </button>
 
-        <img src={logo} alt="Logo" className="h-10" />
+        <img src={logo} alt="Travel N World" className="h-12 object-contain" />
 
         <ShareButton
           title={blog.title}
-          text={
-            // For share text, use first paragraph or first item of list if first is a list
-            typeof blog.content[0] === 'string' 
-              ? blog.content[0] 
-              : blog.content[0].items?.join(', ') || ''
-          }
+          text={blog.title}
           url={window.location.href}
         />
       </div>
 
-      {/* Blog Image */}
-      <img
-        src={blog.img}
-        alt={blog.title}
-        className="w-full rounded-lg mb-8 shadow-md"
-      />
-
-      {/* Title */}
-      <h1 className="text-4xl font-semibold tracking-wide mb-6">{blog.title}</h1>
-
-      {/* Content */}
-      <div className="space-y-6 text-gray-700 leading-relaxed">
-        {blog.content.map((block, i) => {
-          if (typeof block === 'string') {
-            return (
-              <p key={i} className="text-lg">
-                {block}
-              </p>
-            );
-          } else if (block.type === 'list' && Array.isArray(block.items)) {
-            return (
-              <ul key={i} className="list-disc list-inside ml-5 space-y-1 text-lg">
-                {block.items.map((item, idx) => (
-                  <li key={idx}>{item}</li>
-                ))}
-              </ul>
-            );
-          }
-          return null;
-        })}
+      {/* Hero Section */}
+      <div className="mb-12 text-center">
+        <h1 className="text-4xl md:text-5xl lg:text-6xl font-black text-gray-800 leading-tight mb-6">
+          {blog.title}
+        </h1>
+        <div className="flex items-center justify-center gap-4 text-gray-400 text-sm font-bold uppercase tracking-wider">
+          <span>By {blog.author || "Admin"}</span>
+          <span className="w-1.5 h-1.5 bg-orange-500 rounded-full"></span>
+          <span>{new Date(blog.createdAt).toLocaleDateString('en-US', { day: 'numeric', month: 'long', year: 'numeric' })}</span>
+        </div>
       </div>
 
-      {/* Share Section */}
-      <div className="mt-12 pt-8 border-t text-center">
-        <p className="text-sm text-gray-600 mb-4 font-medium">Share this post:</p>
-        <div className="flex justify-center gap-5 text-white text-xl">
+      {/* Featured Image */}
+      <div className="relative rounded-[2rem] overflow-hidden shadow-2xl mb-16 ring-8 ring-gray-50/50">
+        <img
+          src={blog.coverImage || "https://via.placeholder.com/1200x675?text=Travel+N+World"}
+          alt={blog.title}
+          className="w-full h-auto object-cover max-h-[600px] hover:scale-105 transition-transform duration-700"
+        />
+      </div>
+
+      {/* Main content using HTML renderer */}
+      <article 
+        className="prose prose-lg max-w-none prose-orange leading-relaxed text-gray-700 blog-content-body"
+        dangerouslySetInnerHTML={{ __html: blog.content }}
+      />
+
+      {/* Social Footer */}
+      <div className="mt-24 pt-12 border-t border-gray-100 text-center">
+        <p className="text-xs font-black uppercase tracking-[0.2em] text-gray-400 mb-8">Share this journey</p>
+        <div className="flex justify-center gap-6">
           <a
-            href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
-              window.location.href
-            )}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="bg-blue-600 p-3 rounded-full hover:bg-blue-700 transition"
-            aria-label="Share on Facebook"
+            href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}`}
+            target="_blank" rel="noopener noreferrer"
+            className="bg-[#1877F2] text-white p-4 rounded-2xl hover:-translate-y-2 transition-all shadow-xl shadow-blue-100"
           >
-            <FaFacebookF />
+            <FaFacebookF size={20} />
           </a>
           <a
-            href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(
-              window.location.href
-            )}&text=${encodeURIComponent(blog.title)}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="bg-sky-500 p-3 rounded-full hover:bg-sky-600 transition"
-            aria-label="Share on Twitter"
+            href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(window.location.href)}&text=${encodeURIComponent(blog.title)}`}
+            target="_blank" rel="noopener noreferrer"
+            className="bg-[#1DA1F2] text-white p-4 rounded-2xl hover:-translate-y-2 transition-all shadow-xl shadow-sky-100"
           >
-            <FaTwitter />
+            <FaTwitter size={20} />
           </a>
           <a
-            href={`https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(
-              window.location.href
-            )}&title=${encodeURIComponent(blog.title)}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="bg-blue-800 p-3 rounded-full hover:bg-blue-900 transition"
-            aria-label="Share on LinkedIn"
+            href={`https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(window.location.href)}`}
+            target="_blank" rel="noopener noreferrer"
+            className="bg-[#0A66C2] text-white p-4 rounded-2xl hover:-translate-y-2 transition-all shadow-xl shadow-blue-200"
           >
-            <FaLinkedinIn />
+            <FaLinkedinIn size={20} />
           </a>
         </div>
       </div>
@@ -115,3 +124,4 @@ const BlogDetails = () => {
 };
 
 export default BlogDetails;
+

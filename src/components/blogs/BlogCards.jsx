@@ -1,77 +1,78 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import ShareButton from './ShareButton';
 import { Link } from 'react-router-dom';
-import img1 from "../../assets/images/blogs/blogIce.jpg";
-import img2 from "../../assets/images/blogs/blogSahara.jpg";
-import img3 from "../../assets/images/blogs/blogcolorOfIndia.jpg";
-
-
+import axios from 'axios';
 
 const BlogCards = () => {
-  const blogs = [
-    {
-      id: 1,
-      title: "Discover the Beauty of Iceland",
-      desc: "From waterfalls to glaciers, explore nature’s most stunning creations.",
-      img: img1,
-      url: "https://travelnworld.com/blog/iceland",
-    },
-    {
-      id: 2,
-      title: "A Journey Through the Sahara",
-      desc: "Feel the golden dunes and magical sunsets of the vast desert.",
-      img:img2,
-      url: "https://travelnworld.com/blog/sahara",
-    },
-    {
-      id: 3,
-      title: "Colors of India",
-      desc: "Dive into the rich culture, food, and traditions of India.",
-      img: img3,
-      url: "https://travelnworld.com/blog/india",
-    },
-  ];
+  const [blogs, setBlogs] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchBlogs = async () => {
+      try {
+        const response = await axios.get('http://localhost:5000/api/blogs');
+        setBlogs(response.data.data);
+        setLoading(false);
+      } catch (error) {
+        console.error("Error fetching blogs:", error);
+        setLoading(false);
+      }
+    };
+    fetchBlogs();
+  }, []);
+
+  if (loading) {
+    return <div className="text-center py-20 text-gray-400 font-medium italic">Discovering stories...</div>;
+  }
 
   return (
-    <div className="py-12 px-4 bg-gray-100">
+    <div className="py-12 px-4 bg-gray-50">
       <div className="max-w-6xl mx-auto grid gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
         {blogs.map((blog) => (
           <div
-            key={blog.id}
-            className="bg-white rounded-xl shadow-md hover:shadow-lg transition duration-300 flex flex-col overflow-hidden"
+            key={blog._id}
+            className="bg-white rounded-2xl shadow-sm hover:shadow-2xl transition-all duration-500 flex flex-col overflow-hidden border border-gray-100 group"
           >
             {/* Image at Top */}
-            <img
-              src={blog.img}
-              alt={blog.title}
-              className="w-full h-48 object-cover"
-            />
+            <div className="h-56 overflow-hidden">
+              <img
+                src={blog.coverImage || "https://via.placeholder.com/400x250?text=Travel+N+World"}
+                alt={blog.title}
+                className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+              />
+            </div>
 
             {/* Content */}
             <div className="p-6 flex flex-col flex-grow">
-              <h2 className="text-xl font-bold text-gray-800 mb-2">{blog.title}</h2>
-              <p className="text-gray-600 text-sm flex-grow">{blog.desc}</p>
-
+              <div className="text-xs font-bold text-orange-500 uppercase tracking-widest mb-3">
+                {new Date(blog.createdAt).toLocaleDateString()}
+              </div>
+              <h2 className="text-xl font-black text-gray-800 mb-3 line-clamp-2 leading-tight group-hover:text-orange-600 transition-colors">
+                {blog.title}
+              </h2>
+              
               {/* Footer */}
-              <div className="mt-4 flex justify-between items-center">
+              <div className="mt-auto pt-6 flex justify-between items-center border-t border-gray-50">
                 <Link
-                  to={`/blogs/${blog.id}`}
-                  className="text-orange-500 text-sm font-semibold hover:underline"
+                  to={`/blogs/${blog.slug}`}
+                  className="bg-orange-50 text-orange-600 px-4 py-2 rounded-lg text-sm font-bold hover:bg-orange-600 hover:text-white transition-all shadow-sm"
                 >
-                  Read More →
+                  Read Story
                 </Link>
 
-                {/* ✅ Share button component */}
                 <ShareButton
                   title={blog.title}
-                  text={blog.desc}
-                  url={blog.url}
+                  text={blog.title}
+                  url={window.location.origin + `/blogs/${blog.slug}`}
                 />
               </div>
             </div>
           </div>
         ))}
       </div>
+      {blogs.length === 0 && (
+        <div className="text-center py-20 text-gray-400 font-medium">No stories found. Stay tuned!</div>
+      )}
     </div>
   );
 };

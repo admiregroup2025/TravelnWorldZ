@@ -307,7 +307,7 @@ const TrendingDestination = () => {
         {/* Heading -*/}
         <div className="w-full sm:w-auto text-center sm:absolute left-1/2 sm:-translate-x-1/2">
           <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-black">
-            Trending Tour Packages
+            Trending Tour Destinations
           </h1>
         </div>
         {/* Button */}
