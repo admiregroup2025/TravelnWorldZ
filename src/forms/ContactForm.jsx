@@ -3,6 +3,8 @@ import Swal from 'sweetalert2';
 import { Mail, Phone, MapPin } from 'lucide-react';
 import { FaWhatsapp } from 'react-icons/fa';
 
+import axios from 'axios';
+
 const ContactForm = () => {
   const [formData, setFormData] = useState({
     firstName: '',
@@ -13,6 +15,7 @@ const ContactForm = () => {
   });
 
   const [errors, setErrors] = useState({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const validate = () => {
     const newErrors = {};
@@ -21,12 +24,6 @@ const ContactForm = () => {
       newErrors.firstName = 'First name is required';
     } else if (/\d/.test(formData.firstName)) {
       newErrors.firstName = 'First name cannot contain numbers';
-    }
-
-    if (!formData.lastName.trim()) {
-      newErrors.lastName = 'Company name is required';
-    } else if (/\d/.test(formData.lastName)) {
-      newErrors.lastName = 'Company name cannot contain numbers';
     }
 
     if (!formData.phone.trim()) {
@@ -54,30 +51,48 @@ const ContactForm = () => {
     setErrors({ ...errors, [e.target.name]: '' });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (validate()) {
-      Swal.fire({
-        title: 'Success!',
-        text: 'Your message has been sent.',
-        icon: 'success',
-        confirmButtonColor: '#2563eb',
-      });
-
-      setFormData({
-        firstName: '',
-        lastName: '',
-        phone: '',
-        email: '',
-        description: '',
-      });
-    } else {
+    if (!validate()) {
       Swal.fire({
         title: 'Error!',
         text: 'Please correct the highlighted fields.',
         icon: 'error',
         confirmButtonColor: '#dc2626',
       });
+      return;
+    }
+
+    setIsSubmitting(true);
+    try {
+      const response = await axios.post('http://localhost:5000/api/contacts', formData);
+      
+      if (response.data.success) {
+        Swal.fire({
+          title: 'Success!',
+          text: response.data.message || 'Your message has been sent.',
+          icon: 'success',
+          confirmButtonColor: '#2563eb',
+        });
+
+        setFormData({
+          firstName: '',
+          lastName: '',
+          phone: '',
+          email: '',
+          description: '',
+        });
+      }
+    } catch (error) {
+      console.error("Submission error:", error);
+      Swal.fire({
+        title: 'Error!',
+        text: error.response?.data?.message || 'Something went wrong. Please try again later.',
+        icon: 'error',
+        confirmButtonColor: '#dc2626',
+      });
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -178,9 +193,10 @@ const ContactForm = () => {
             {/* Centered Button */}
             <button
               type="submit"
-              className="mt-3 mx-auto block bg-blue-600 hover:bg-blue-700 transition text-white font-semibold py-2 px-6 rounded-md shadow-sm"
+              disabled={isSubmitting}
+              className={`mt-3 mx-auto block bg-blue-600 hover:bg-blue-700 transition text-white font-semibold py-2 px-6 rounded-md shadow-sm ${isSubmitting ? 'opacity-50 cursor-not-allowed' : ''}`}
             >
-              Send Message
+              {isSubmitting ? 'Sending...' : 'Send Message'}
             </button>
           </form>
         </div>
