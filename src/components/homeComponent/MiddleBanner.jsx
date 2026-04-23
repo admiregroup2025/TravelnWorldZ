@@ -70,8 +70,13 @@ const MiddleBanner = () => {
   const [banners, setBanners] = useState([]);
 
   useEffect(() => {
-    axios.get("/api/banners?position=middle")
-      .then(res => setBanners(res.data));
+    const apiBase = import.meta.env.VITE_API_BASE || "";
+    axios.get(`${apiBase}/api/banners?position=middle`)
+      .then(res => setBanners(res.data))
+      .catch(err => {
+        console.error("Error fetching banners:", err);
+        setBanners([]);
+      });
   }, []);
 
   if (!banners.length) return null;
